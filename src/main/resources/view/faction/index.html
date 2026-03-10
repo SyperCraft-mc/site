@@ -1,0 +1,49 @@
+{% extends "view/layout/front.html" %}
+{% block content %}
+<div class="relative z-10 max-w-[1280px] mx-auto px-14 pt-20 pb-20">
+    <div class="reveal mb-10">
+        <div class="page-eyebrow">— POLITIQUE DU SERVEUR —</div>
+        <h1 class="font-display font-black page-h1">Factions & <em class="em-accent">Guerres</em></h1>
+        <div class="page-rule"></div>
+    </div>
+
+    <div id="t-liste">
+        <div class="grid grid-cols-2 gap-px mb-px fc-grid-bg">
+
+            <div class="fc reveal">
+                <div class="fc-top fc-top-red"></div>
+                <div class="fc-corner fc-corner-red"></div>
+                <div class="flex justify-between items-start mb-5">
+                    <div>
+                        <div class="fc-eyebrow c-red">⚔ FACTION</div>
+                        <div class="font-display font-bold text-[1.35rem]" class="c-t">IronLords</div>
+                        <div class="mn-68it">« L'acier ne plie pas »</div>
+                    </div>
+                    <div class="text-right"><div class="font-display font-bold text-[1.4rem]" class="c-red">Lv.42</div><div class="mn-58m">niveau</div></div>
+                </div>
+                <div class="grid grid-cols-3 gap-px mb-4 fc-stats-bg-red">
+                    <div class="sc text-center p-3"><div class="font-display font-bold text-[.95rem]" class="c-t">94 200</div><div class="mn-55m">Pouvoir</div></div>
+                    <div class="sc text-center p-3"><div class="font-display font-bold text-[.95rem]" class="c-t">12 840</div><div class="mn-55m">Kills</div></div>
+                    <div class="sc text-center p-3"><div class="font-display font-bold text-[.95rem]" class="c-t">34</div><div class="mn-55m">Zones</div></div>
+                </div>
+                <div class="mb-4">
+                    <div class="flex justify-between mb-1" class="mn-6m"><span>Membres</span><span class="c-red">87/100</span></div>
+                    <div class="fc-prog-track"><div style="width:87%;height:100%;background:#ef4444"></div></div>
+                </div>
+                <div class="flex gap-1.5 flex-wrap mb-4">
+                    <span class="tag" class="tag-red">Attaque +15%</span>
+                    <span class="tag" class="tag-red">Défense +10%</span>
+                    <span class="tag" class="tag-red">Butin x1.5</span>
+                </div>
+                <a href="/factions/s/test">
+                    <button class="w-full py-2.5 font-display text-[.68rem] font-semibold tracking-[.14em] uppercase transition-all fc-btn-base tag-red">Voir la fiche →</button>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>
+{% endblock %}

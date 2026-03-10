@@ -2,9 +2,7 @@ package fr.kainovaii.obsidian.app.security;
 
 import fr.kainovaii.obsidian.app.domain.user.User;
 import fr.kainovaii.obsidian.app.domain.user.UserRepository;
-import fr.kainovaii.obsidian.app.http.websockets.AuthWebSocket;
 import fr.kainovaii.obsidian.database.DB;
-import fr.kainovaii.obsidian.security.user.UserDetails;
 import fr.kainovaii.obsidian.security.user.UserDetailsService;
 import fr.kainovaii.obsidian.security.user.UserDetailsServiceImpl;
 

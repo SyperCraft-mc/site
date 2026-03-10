@@ -21,7 +21,7 @@
             <ul class="nav-links">
                 <li><a href="/">Accueil</a></li>
                 <li><a href="/factions">Factions</a></li>
-                <li><a href="/forum">Forum</a></li>
+                <li><a href="/joueurs">Joueurs</a></li>
             </ul>
             <div class="nav-right">
                 <div class="nav-pill">
@@ -31,13 +31,13 @@
                 {% if isLogged %}
                 <div class="nav-user" id="navUser">
                     <button class="nav-user-btn" onclick="toggleUserMenu()">
-                        <img src="https://mc-heads.net/avatar/{{ loggedUser.username }}/28" class="nav-avatar" alt="avatar" />
+                        <img src="https://mc-heads.net/avatar/{{ loggedUser.username }}/28" class="nav-avatar avatar" alt="avatar" />
                         <span class="nav-user-name">{{ loggedUser.username }}</span>
                         <span class="nav-caret">▼</span>
                     </button>
                     <div class="nav-dropdown">
                         <div class="nav-dd-header">
-                            <img src="https://mc-heads.net/avatar/{{ loggedUser.username }}/36" class="nav-dd-avatar" alt="avatar" />
+                            <img src="https://mc-heads.net/avatar/{{ loggedUser.username }}/36" class="nav-dd-avatar avatar" alt="avatar" />
                             <div>
                                 <span class="nav-dd-pseudo">{{ loggedUser.username }}</span>
                                 <span class="nav-dd-rank">{{ loggedUser.role }}</span>
@@ -72,6 +72,7 @@
         </div>
     </footer>
 
+    {{ flash() | raw }}
     <script src="/assets/main.js"></script>
 </body>
 </html>

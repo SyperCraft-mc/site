@@ -1,0 +1,72 @@
+{% extends "view/layout/front.html" %}
+{% block content %}
+<div class="relative z-10 max-w-[1280px] mx-auto px-14 pt-20 pb-20">
+
+    <div class="flex items-end justify-between mb-10 reveal">
+        <div>
+            <div class="page-eyebrow">— COMMUNAUTÉ —</div>
+            <h1 class="font-display font-black page-h1">Annuaire des <em class="em-accent">Guerriers</em></h1>
+            <div class="page-rule"></div>
+        </div>
+        <div class="mn-64m"><span style="color:var(--e)">{{ players | length }}</span> membres · <span class="mb-val-gr">NaN en ligne</span></div>
+    </div>
+
+    <!-- Filtres + recherche -->
+    <div class="scard p-5 mb-4 reveal">
+        <div class="grid gap-4 mb-filter-grid">
+            <div class="relative">
+                <span class="mb-search-icon">⌕</span>
+                <input type="text" class="search-input mb-search-pl" placeholder="Rechercher un joueur…">
+            </div>
+            <select class="f-select">
+                <option value="">Toutes factions</option>
+                <option>⚔ IronLords</option>
+                <option>🌿 Sylvan Sentinels</option>
+                <option>🌑 Moonwolves</option>
+                <option>🗡 Sans faction</option>
+            </select>
+            <select class="f-select">
+                <option value="">Tous rangs</option>
+                <option>🛡 Staff</option>
+                <option>⚔ Commandant</option>
+                <option>🏹 Officier</option>
+                <option>💪 Guerrier</option>
+                <option>🗡 Chevalier</option>
+            </select>
+            <select class="f-select">
+                <option value="">Tous</option>
+                <option>🟢 En ligne</option>
+                <option>⚫ Hors ligne</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Résultats -->
+    <div class="mn-58m mb-2">Affichage de {{ players | length }} joueurs</div>
+    <div class="grid mb-grid-new">
+
+        {% for player in players %}
+        <div class="mb-card-new reveal">
+            <div class="mb-card-top">
+                <div class="mb-card-identity">
+                    <div class="mb-card-ico"><img class="avatar" src="https://mc-heads.net/avatar/{{ player.username }}" alt=""></div>
+                    <div>
+                        <div class="mb-card-pseudo">{{ player.username }}</div>
+                        <div class="mb-card-lvl">LVL <span>0</span> · Sans faction</div>
+                    </div>
+                </div>
+                <span class="mb-card-sdot online" title="En ligne"></span>
+            </div>
+            <div class="mb-card-stats">
+                <div class="mb-stat-col"><div class="mb-stat-lbl2">Kills</div><div class="mb-stat-kills">0</div></div>
+                <div class="mb-stat-col"><div class="mb-stat-lbl2">Temps</div><div class="mb-stat-time">0h</div></div>
+                <div class="mb-stat-col"><div class="mb-stat-lbl2">Rang</div><span class="mb-rang-pill">{{ player.role }}</span></div>
+            </div>
+            <a href="/joueurs/s/{{ player.username }}" class="mb-card-link">Voir le profil →</a>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

@@ -3,6 +3,8 @@ package fr.kainovaii.obsidian.app.domain.user;
 import fr.kainovaii.obsidian.app.security.AppUserDetails;
 import org.javalite.activejdbc.Model;
 
+import java.sql.Date;
+
 public class User extends Model implements AppUserDetails
 {
     // Getters
@@ -21,6 +23,11 @@ public class User extends Model implements AppUserDetails
 
     public String getMinecraftUuid() {
         return getString("minecraft_uuid");
+    }
+
+    public Date createdAt() {
+        Long timestamp = getLong("created_at");
+        return timestamp != null ? new Date(timestamp) : null;
     }
 
     // Setters
