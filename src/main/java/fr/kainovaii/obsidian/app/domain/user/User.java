@@ -10,16 +10,17 @@ public class User extends Model implements AppUserDetails
         return getString("username");
     }
 
-    public String getEmail() {
-        return getString("email");
-    }
-
+    @Override
     public String getPassword() {
-        return getString("password");
+        return "";
     }
 
     public String getRole() {
         return getString("role");
+    }
+
+    public String getMinecraftUuid() {
+        return getString("minecraft_uuid");
     }
 
     // Setters
@@ -27,15 +28,11 @@ public class User extends Model implements AppUserDetails
         set("username", username);
     }
 
-    public void setEmail(String email) {
-        set("email", email);
-    }
-
-    public void setPassword(String password) {
-        set("password", password);
-    }
-
     public void setRole(String role) {
         set("role", role);
+    }
+
+    public void setMinecraftUuid(String uuid) {
+        set("minecraft_uuid", uuid);
     }
 }

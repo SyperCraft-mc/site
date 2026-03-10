@@ -1,29 +1,110 @@
 {% extends "view/layout/front.html" %}
 {% block content %}
-<div class="max-w-4xl mx-auto px-6 py-12">
-    <div class="mb-12">
-        <div class="flex items-baseline gap-4 mb-3">
-            <h1 class="text-4xl font-bold text-white tracking-tight">Articles_</h1>
-            <span class="text-red-500 text-xl animate-pulse-dot">●</span>
-        </div>
+<section id="hero" class="hero-section">
+    <svg class="hero-arch hero-arch-pos"
+         viewBox="0 0 600 180"
+         fill="none"
+         xmlns="http://www.w3.org/2000/svg"
+
+    >
+        <path d="M20 160 Q300 20 580 160" stroke="#f97316" stroke-width="1" fill="none" />
+        <path d="M60 160 Q300 50 540 160" stroke="#f97316" stroke-width=".5" fill="none" opacity=".5" />
+        <circle cx="300" cy="28" r="5" fill="#f97316" opacity=".8" />
+        <circle cx="20" cy="160" r="3" fill="#f97316" opacity=".6" />
+        <circle cx="580" cy="160" r="3" fill="#f97316" opacity=".6" />
+        <line x1="280" y1="28" x2="20" y2="160" stroke="#f97316" stroke-width=".4" opacity=".3" />
+        <line x1="320" y1="28" x2="580" y2="160" stroke="#f97316" stroke-width=".4" opacity=".3" />
+        <!-- petites croix -->
+        <g opacity=".5" stroke="#f97316" stroke-width=".8">
+            <line x1="296" y1="24" x2="304" y2="32" />
+            <line x1="304" y1="24" x2="296" y2="32" />
+            <line x1="16" y1="156" x2="24" y2="164" />
+            <line x1="24" y1="156" x2="16" y2="164" />
+            <line x1="576" y1="156" x2="584" y2="164" />
+            <line x1="584" y1="156" x2="576" y2="164" />
+        </g>
+    </svg>
+    <div class="hero-badge reveal">
+        <span class="hero-badge-dot"></span>
+        <span>Serveur Java 1.9.4 · Faction</span>
     </div>
 
-    {% for post in posts %}
-    <div class="card-link block bg-zinc-950 border border-zinc-800 hover:border-red-500/40 transition-colors p-8 mb-px">
-        <h2 class="text-white text-2xl font-bold leading-snug mb-3 hover:text-red-400 transition-colors">
-            <a href="/posts/s/{{ post.slug }}">{{ post.title }}</a>
-        </h2>
-        <p class="text-zinc-600 text-sm leading-relaxed mb-6 max-w-2xl">
-            {{ post.content | striptags | abbreviate(200) }}
-        </p>
-        <div class="flex items-center justify-between">
-            <div class="flex gap-6 text-xs text-zinc-700">
-                <span>{{ post.createdAt | date("dd MMM yyy") }}</span>
-                <span><a href="/users/s/{{ post.user }}" class="text-red-500 hover:text-red-400 transition-colors">{{ post.user }}</a></span>
+    <h1 class="hero-title reveal d1">
+        <span class="line1">Syper</span>
+        <span class="line2">Craft</span>
+    </h1>
+    <div class="rune-sep reveal d2">◈</div>
+
+    <div class="hero-cta reveal d3">
+        <a href="#join" class="btn-forge">
+            Rejoins l'aventure
+            <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+            >
+                <polyline points="9 18 15 12 9 6" />
+            </svg>
+        </a>
+        <a href="#features" class="btn-stone">Découvrir</a>
+    </div>
+</section>
+
+<section id="join" class="section">
+    <div class="join-grid">
+        <div class="reveal">
+            <span class="sh-roman">— V —</span>
+            <div class="sh-title idx-sh-title-mb">
+                L'aventure t'attend
             </div>
-            <span class="text-red-500 card-arrow">→</span>
+            <div class="sh-rule idx-sh-rule-mb"></div>
+            <p class="sh-desc">
+                Lance Minecraft Java Edition 1.9.4, clique sur
+                <strong class="c-t">Multijoueur</strong>, ajoute un serveur et
+                entre l'adresse ci-dessous.
+            </p>
+            <div class="idx-hero-btn-group">
+                <a href="#ranks" class="btn-forge btn-forge-sm"
+                >Voir les grades</a
+                >
+                <a href="#features" class="btn-stone btn-stone-sm"
+                >Fonctionnalités</a
+                >
+            </div>
+            <div class="ip-box">
+                <span class="ip-lbl">IP</span>
+                <span class="ip-val">play.sypercraft.fr</span>
+                <button onclick="copyIP()" class="ip-copy">⧉</button>
+            </div>
+        </div>
+        <div class="reveal d1 disc-card">
+            <span class="idx-rank-emoji-lg">💬</span>
+            <div class="idx-ip-title">
+                Rejoins le Discord
+            </div>
+            <p class="disc-desc">
+                Annonces, événements, recrutement de guilde, support. Une communauté active de plus de 0
+                membres.
+            </p>
+            <div class="disc-online-row">
+                        <span
+                                class="idx-nav-dot-lg"
+                                class="ab"
+                        ></span>
+                0 membres en ligne · 0 au total
+            </div>
+            <a href="#" class="disc-btn">
+                <svg width="16" height="12" viewBox="0 0 71 55" fill="currentColor">
+                    <path
+                            d="M60.1 4.9A58.5 58.5 0 0045.7.4a.2.2 0 00-.2.1 40.7 40.7 0 00-1.8 3.7 54.1 54.1 0 00-16.2 0A37.8 37.8 0 0025.7.5a.2.2 0 00-.2-.1A58.4 58.4 0 0010.9 4.9a.2.2 0 00-.1.1C1.6 18.4-.9 31.6.3 44.5a.3.3 0 00.1.2 58.8 58.8 0 0017.7 8.9.2.2 0 00.3-.1 41.6 41.6 0 003.6-5.8.2.2 0 00-.1-.3 38.7 38.7 0 01-5.5-2.6.2.2 0 010-.3l1.1-.9a.2.2 0 01.2 0c11.5 5.3 24 5.3 35.4 0a.2.2 0 01.2 0l1.1.9a.2.2 0 010 .3 36 36 0 01-5.5 2.6.2.2 0 00-.1.3c1.1 2 2.3 3.9 3.6 5.8a.2.2 0 00.3.1 58.6 58.6 0 0017.7-8.9.2.2 0 00.1-.2c1.5-15.3-2.5-28.5-10.5-40.2a.2.2 0 00-.1-.2z"
+                    />
+                </svg>
+                Rejoindre le serveur
+            </a>
         </div>
     </div>
-    {% endfor %}
-</div>
+</section>
 {% endblock %}

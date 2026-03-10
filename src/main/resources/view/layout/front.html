@@ -1,39 +1,77 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Obsidian</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SyperCraft — Serveur Minecraft</title>
+    <link rel="stylesheet" href="/assets/style.css" />
     <script src="/assets/tailwind.js"></script>
-    <link rel="stylesheet" href="/assets/style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: { fontFamily: { display: ["Cinzel", "serif"], mono: ['"JetBrains Mono"', "monospace"] } },
+            },
+        };
+    </script>
 </head>
-<body class="bg-black text-zinc-300 min-h-screen">
-    <nav class="sticky top-0 z-50 border-b border-zinc-900 bg-black/90 backdrop-blur">
-        <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="/" class="text-white font-bold text-lg hover:text-red-500 transition-colors">
-                Blog_<span class="text-red-500 animate-blink">|</span>
-            </a>
-            <div class="flex items-center gap-6 text-xs text-zinc-500">
-                <a href="/" class="hover:text-white transition-colors">Articles</a>
+<body>
+    <nav id="nav">
+        <div class="nav-inner">
+            <a href="/" class="logo"><img src="/assets/logo.png" width="40px" alt=""></a>
+            <ul class="nav-links">
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/factions">Factions</a></li>
+                <li><a href="/forum">Forum</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="nav-pill">
+                    <span class="nav-pill-dot ab"></span>
+                    <span id="">0 joueurs en ligne</span>
+                </div>
                 {% if isLogged %}
-                <a href="/posts/new" class="hover:text-white transition-colors">New post</a>
-                {% endif %}
-                <span class="text-zinc-800">|</span>
-                {% if isLogged %}
-                <a href="/users/s/{{ loggedUser.username }}" class="text-red-500 hover:text-red-400 transition-colors">{{ loggedUser.username }}</a>
+                <div class="nav-user" id="navUser">
+                    <button class="nav-user-btn" onclick="toggleUserMenu()">
+                        <img src="https://mc-heads.net/avatar/{{ loggedUser.username }}/28" class="nav-avatar" alt="avatar" />
+                        <span class="nav-user-name">{{ loggedUser.username }}</span>
+                        <span class="nav-caret">▼</span>
+                    </button>
+                    <div class="nav-dropdown">
+                        <div class="nav-dd-header">
+                            <img src="https://mc-heads.net/avatar/{{ loggedUser.username }}/36" class="nav-dd-avatar" alt="avatar" />
+                            <div>
+                                <span class="nav-dd-pseudo">{{ loggedUser.username }}</span>
+                                <span class="nav-dd-rank">{{ loggedUser.role }}</span>
+                            </div>
+                        </div>
+                        <div class="nav-dd-sep"></div>
+                        <a href="/mon-compte/logout" class="nav-dd-item danger">⬡ Déconnexion</a>
+                    </div>
+                </div>
                 {% else %}
-                <a href="/users/login" class="text-red-500 hover:text-red-400 transition-colors">→ Login</a>
+                <a href="/mon-compte/login" class="nav-user-btn">
+                    Mon compte
+                </a>
                 {% endif %}
             </div>
         </div>
     </nav>
+
     {% block content %}
     <!-- Contenu de la page -->
     {% endblock %}
-    <footer class="border-t border-zinc-900 mt-16 py-8 text-center text-xs text-zinc-700">
-        <p>© 2026 KainoVaii — MIT License {% if isLogged %}| <a href="/users/logout" class="text-red-500 hover:text-red-400 transition-colors">Disconnect</a>{% endif %}</p>
+
+    <footer>
+        <div class="ft-inner">
+            <a href="#hero" class="logo logo-sm">SyperCraft</a>
+            <div class="ft-copy">© 2025 SyperCraft — Not affiliated with Mojang Studios</div>
+            <div class="ft-links">
+                <a href="#" class="ft-link">CGU</a>
+                <a href="#" class="ft-link">Règles</a>
+                <a href="#" class="ft-link">Contact</a>
+            </div>
+        </div>
     </footer>
-    {{ flash() | raw }}
-    {{ livecomponents_scripts | raw }}
+
+    <script src="/assets/main.js"></script>
 </body>
 </html>

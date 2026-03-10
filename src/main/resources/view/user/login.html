@@ -1,62 +1,354 @@
-{% extends "view/layout/front.html" %}
-{% block content %}
-<div class="flex-1 flex items-center justify-center px-6 py-12">
-    <div class="w-full max-w-sm">
-        <!-- Logo / icon -->
-        <div class="flex flex-col items-center mb-8">
-            <h1 class="text-2xl font-bold text-white tracking-tight animate-glitch mb-1">
-                Welcome back_
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SyperCraft — Connexion</title>
+    <link rel="stylesheet" href="/assets/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config={theme:{extend:{fontFamily:{display:['Cinzel','serif'],mono:['"JetBrains Mono"','monospace']}}}}</script>
+    <style>
+        .btn-microsoft {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 13px 20px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: var(--t);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .65rem;
+            letter-spacing: .08em;
+            transition: background .2s, border-color .2s, transform .15s;
+        }
+        .btn-microsoft:hover {
+            background: rgba(255,255,255,0.09);
+            border-color: rgba(255,255,255,0.22);
+            transform: translateY(-1px);
+        }
+        .btn-microsoft:active { transform: translateY(0); }
+
+        .device-wrap {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            animation: fadeUp .4s ease;
+        }
+        .device-wrap.show { display: flex; }
+
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(10px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+
+        .device-code-box {
+            width: 100%;
+            background: rgba(0,0,0,.4);
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 12px;
+            padding: 22px 28px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .device-code-box::before {
+            content:'';
+            position:absolute;
+            inset:0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.04) 0%, transparent 70%);
+            pointer-events:none;
+        }
+        .device-code-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .5rem;
+            letter-spacing: .4em;
+            color: var(--e);
+            opacity: .5;
+            margin-bottom: 12px;
+        }
+        .device-code-value {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: .25em;
+            color: var(--t);
+            transition: color .2s;
+            cursor: pointer;
+            display: block;
+        }
+        .device-code-value:hover { color: var(--e); }
+
+        .copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            padding: 6px 14px;
+            border-radius: 6px;
+            background: rgba(255,255,255,.05);
+            border: 1px solid rgba(255,255,255,.09);
+            color: var(--m);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .55rem;
+            letter-spacing: .06em;
+            transition: all .2s;
+        }
+        .copy-btn:hover { background: rgba(255,255,255,.1); color: var(--t); }
+        .copy-btn.copied { color: #4ade80; border-color: rgba(74,222,128,.25); }
+
+        .device-hint {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .6rem;
+            color: var(--m);
+            text-align: center;
+            line-height: 1.8;
+        }
+        .device-hint a {
+            color: var(--t);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,.2);
+            transition: color .2s, border-color .2s;
+            padding-bottom: 1px;
+        }
+        .device-hint a:hover { color: var(--e); border-color: var(--e); }
+
+        .waiting-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .57rem;
+            color: var(--m);
+            opacity: .7;
+        }
+        .pulse-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--e);
+            flex-shrink: 0;
+            animation: pd 1.4s ease-in-out infinite;
+        }
+        @keyframes pd {
+            0%,100% { opacity:.25; transform:scale(.8); }
+            50%      { opacity:1;   transform:scale(1.2); }
+        }
+
+        .load-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 28px 0;
+        }
+        .load-wrap .pulse-dot { width:10px; height:10px; }
+
+        .success-wrap {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            padding: 20px 0;
+            animation: fadeUp .4s ease;
+        }
+        .success-wrap.show { display: flex; }
+        .success-icon { font-size: 2.6rem; animation: floaty 3s ease-in-out infinite; }
+        .success-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--t);
+            letter-spacing: .1em;
+        }
+        .success-sub {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .57rem;
+            color: var(--m);
+        }
+
+        .cancel-btn {
+            background: none;
+            border: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .55rem;
+            color: var(--m);
+            opacity: .4;
+            transition: opacity .2s;
+        }
+        .cancel-btn:hover { opacity: .85; }
+    </style>
+</head>
+<body>
+<div class="login-wrap">
+    <div class="login-panel reveal">
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
+
+        <div class="lp-header">
+            <div class="flex justify-center mb-4" style="animation:floaty 4s ease-in-out infinite">
+                <img src="https://avatars.githubusercontent.com/u/94019278?s=200&v=4" class="w-[80px]">
+            </div>
+            <div style="font-size:.52rem;letter-spacing:.4em;color:var(--e);opacity:.5;margin-bottom:8px">— PORTAIL —</div>
+            <h1 class="font-display font-black" style="font-size:1.7rem;color:var(--t);margin-bottom:6px">
+                Entrer dans<br><em style="font-style:normal;color:var(--e)">le Royaume</em>
             </h1>
-            <p class="text-xs text-zinc-600">Sign in to manage your blog</p>
+            <div style="width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--e),transparent);margin:12px auto 0"></div>
         </div>
 
-        <!-- Alert -->
-        <div id="alert" class="hidden text-xs px-4 py-3 border mb-5"></div>
+        <div class="lp-body">
 
-        <!-- Form -->
-        <form id="login-form" class="space-y-5" method="POST" action="/users/login">
-            {{ csrf_field() | raw }}
-            <div>
-                <label for="username" class="block text-xs text-zinc-500 uppercase tracking-widest mb-2">
-                    Email
-                </label>
-                <div class="input-wrap">
-                    <input
-                            id="username" name="username" type="text"
-                            placeholder="you@example.com"
-                            autocomplete="email"
-                            class="peer w-full bg-zinc-950 border border-zinc-800 focus:border-red-500/50 text-zinc-300 placeholder-zinc-700 px-3 py-2.5 text-sm outline-none transition-colors"
-                    >
-                    <div class="input-line"></div>
+            <!-- État 1 : bouton -->
+            <div id="view-start" style="display:flex;flex-direction:column;gap:0">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--m);text-align:center;line-height:1.8;margin-bottom:22px">
+                    Connectez-vous avec votre compte Microsoft<br>pour rejoindre le serveur.
                 </div>
+                <button class="btn-microsoft" onclick="startSSO()">
+                    <svg width="16" height="16" viewBox="0 0 21 21" fill="none">
+                        <rect x="1"  y="1"  width="9" height="9" fill="#f25022"/>
+                        <rect x="11" y="1"  width="9" height="9" fill="#7fba00"/>
+                        <rect x="1"  y="11" width="9" height="9" fill="#00a4ef"/>
+                        <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
+                    </svg>
+                    Continuer avec Microsoft
+                </button>
             </div>
-            <div>
-                <div class="flex items-center justify-between mb-2">
-                    <label for="password" class="text-xs text-zinc-500 uppercase tracking-widest">
-                        Password
-                    </label>
-                </div>
-                <div class="input-wrap relative">
-                    <input
-                            id="password" name="password" type="password"
-                            placeholder="••••••••"
-                            autocomplete="current-password"
-                            class="peer w-full bg-zinc-950 border border-zinc-800 focus:border-red-500/50 text-zinc-300 placeholder-zinc-700 px-3 py-2.5 pr-12 text-sm outline-none transition-colors"
-                    >
-                    <div class="input-line"></div>
+
+            <!-- État 2 : chargement -->
+            <div id="view-loading" style="display:none">
+                <div class="load-wrap">
+                    <div class="pulse-dot"></div>
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--m)">Génération du code…</span>
                 </div>
             </div>
 
-            <button id="submit-btn" type="submit"
-                    class="w-full bg-red-500 hover:bg-red-600 active:scale-99 text-black font-bold text-xs uppercase tracking-widest py-3 transition-colors">
-                Sign In →
-            </button>
-        </form>
+            <!-- État 3 : code prêt -->
+            <div id="view-device" class="device-wrap">
+                <div class="device-code-box">
+                    <div class="device-code-label">VOTRE CODE</div>
+                    <span class="device-code-value" id="code-value" onclick="copyCode()" title="Cliquer pour copier">——————</span>
+                    <button class="copy-btn" id="copy-btn" onclick="copyCode()">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        Copier
+                    </button>
+                </div>
 
-        <p class="text-center text-xs text-zinc-700 mt-6">
-            No account yet?
-            <a href="/users/register" class="text-red-500 hover:text-red-400 transition-colors ml-1">Create one →</a>
-        </p>
+                <div class="device-hint">
+                    Rendez-vous sur<br>
+                    <a href="#" target="_blank" id="device-link">—</a><br>
+                    et entrez le code ci-dessus.
+                </div>
+
+                <div class="waiting-row">
+                    <div class="pulse-dot"></div>
+                    En attente de la validation…
+                </div>
+
+                <button class="cancel-btn" onclick="cancelSSO()">✕ Annuler</button>
+            </div>
+
+            <!-- État 4 : succès -->
+            <div id="view-success" class="success-wrap">
+                <div class="success-name" id="success-name">default-value</div>
+                <div class="success-sub">Authentification réussie — redirection…</div>
+            </div>
+
+        </div>
     </div>
 </div>
-{% endblock %}
+
+<div class="toast" id="toast"></div>
+
+<footer>
+    <div class="ft-inner">
+        <a href="#hero" class="logo logo-sm">SyperCraft</a>
+        <div class="ft-copy">© 2025 SyperCraft — Not affiliated with Mojang Studios</div>
+        <div class="ft-links">
+            <a href="#" class="ft-link">CGU</a>
+            <a href="#" class="ft-link">Règles</a>
+            <a href="#" class="ft-link">Contact</a>
+        </div>
+    </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script>
+    let ssoSocket = null;
+
+    const VIEWS = ['view-start', 'view-loading', 'view-device', 'view-success'];
+
+    function show(id) {
+        VIEWS.forEach(v => {
+            const el = document.getElementById(v);
+            el.style.display = 'none';
+            el.classList.remove('show');
+        });
+        const el = document.getElementById(id);
+        el.style.display = 'flex';
+        setTimeout(() => el.classList.add('show'), 10);
+    }
+
+    async function startSSO() {
+        show('view-loading');
+        try {
+            const res  = await fetch('/minecraft-auth/start');
+            const data = await res.json();
+
+            document.getElementById('code-value').textContent = data.code;
+            document.getElementById('device-link').href        = data.link;
+            document.getElementById('device-link').textContent = data.link.replace('https://', '');
+
+            show('view-device');
+
+            ssoSocket = new WebSocket(`ws://${location.host}/ws/auth?sid=${data.sessionId}`);
+            ssoSocket.onmessage = (e) => {
+                const msg = JSON.parse(e.data);
+                console.log(msg)
+                if (msg.type === 'auth_success') onSuccess(msg.pseudo);
+                if (msg.type === 'auth_error')   onError(msg.message);
+            };
+            ssoSocket.onerror = () => onError('Connexion perdue.');
+
+        } catch(e) {
+            show('view-start');
+            showToast('Impossible de contacter le serveur.');
+        }
+    }
+
+    async function onSuccess(pseudo) {
+        if (ssoSocket) { ssoSocket.close(); ssoSocket = null; }
+        await fetch('/minecraft-auth/session');
+
+        document.getElementById('success-name').textContent = pseudo;
+        show('view-success');
+        setTimeout(() => { window.location.href = '/'; }, 2000);
+    }
+
+    function onError(msg) {
+        cancelSSO();
+        showToast('Erreur : ' + msg);
+    }
+
+    function cancelSSO() {
+        if (ssoSocket) { ssoSocket.close(); ssoSocket = null; }
+        show('view-start');
+    }
+
+    function copyCode() {
+        const code = document.getElementById('code-value').textContent.trim();
+        navigator.clipboard.writeText(code).then(() => {
+            const btn = document.getElementById('copy-btn');
+            btn.classList.add('copied');
+            btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copié !`;
+            setTimeout(() => {
+                btn.classList.remove('copied');
+                btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copier`;
+            }, 2000);
+        });
+    }
+</script>
+</body>
+</html>

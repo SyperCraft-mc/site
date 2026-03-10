@@ -10,8 +10,7 @@ public class CreateUserTable extends Migration
         createTable("users", table -> {
             table.id();
             table.string("username").notNull();
-            table.string("email").notNull();
-            table.string("password").notNull();
+            table.string("minecraft_uuid").notNull().unique();
             table.string("role").notNull();
             table.timestamps();
         });

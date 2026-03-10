@@ -2,6 +2,7 @@ package fr.kainovaii.obsidian.app.security;
 
 import fr.kainovaii.obsidian.app.domain.user.User;
 import fr.kainovaii.obsidian.app.domain.user.UserRepository;
+import fr.kainovaii.obsidian.app.http.websockets.AuthWebSocket;
 import fr.kainovaii.obsidian.database.DB;
 import fr.kainovaii.obsidian.security.user.UserDetails;
 import fr.kainovaii.obsidian.security.user.UserDetailsService;
@@ -42,7 +43,6 @@ public class AppUserDetailsService implements UserDetailsService
             public String getUsername() { return user.getUsername(); }
             public String getPassword() { return user.getPassword(); }
             public String getRole() { return user.getRole(); }
-            public String getEmail() { return user.getEmail(); }
         };
     }
 }

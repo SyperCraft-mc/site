@@ -14,6 +14,23 @@ public class UserRepository
         return User.findFirst("username = ?", username);
     }
 
+    public User findByMinecraftUuid(String uuid) {
+        return User.findFirst("minecraft_uuid = ?", uuid);
+    }
+
+    public User findOrCreateByMinecraftProfile(String uuid, String username)
+    {
+        User user = findByMinecraftUuid(uuid);
+        if (user == null) {
+            user = new User();
+            user.setUsername(username);
+            user.setMinecraftUuid(uuid);
+            user.setRole("DEFAULT");
+            user.saveIt();
+        }
+        return user;
+    }
+
     public static boolean userExist(String username) {
         return User.findFirst("username = ?", username) != null;
     }
@@ -24,22 +41,19 @@ public class UserRepository
         return user.delete();
     }
 
-    public Boolean create(String username, String email, String password, String role)
+    public Boolean create(String username, String minecraftUuid, String role)
     {
         User user = new User();
         user.setUsername(username);
-        user.setEmail(email);
-        user.setPassword(password);
+        user.setMinecraftUuid(minecraftUuid);
         user.setRole(role);
         return user.saveIt();
     }
 
-    public Boolean update(String usernameCurrent, String username, String email, String password, String role)
+    public Boolean update(String usernameCurrent, String username, String role)
     {
         User user = findByUsername(usernameCurrent);
         user.setUsername(username);
-        user.setEmail(email);
-        user.setPassword(password);
         user.setRole(role);
         return user.saveIt();
     }

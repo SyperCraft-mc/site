@@ -20,9 +20,19 @@
   </repositories>
   <dependencies>
     <dependency>
+      <groupId>com.github.RaphiMC</groupId>
+      <artifactId>MinecraftAuth</artifactId>
+      <version>v4.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20240303</version>
+    </dependency>
+    <dependency>
       <groupId>com.github.obsidian-framework</groupId>
       <artifactId>core</artifactId>
-      <version>v1.1.8</version>
+      <version>dev-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
