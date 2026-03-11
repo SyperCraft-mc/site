@@ -1,6 +1,7 @@
-package fr.kainovaii.obsidian.app.domain.faction.models;
+package fr.kainovaii.obsidian.app.domain.faction.repositories;
 
 
+import fr.kainovaii.obsidian.app.domain.faction.models.Faction;
 import fr.kainovaii.obsidian.di.annotations.Repository;
 
 import java.util.List;

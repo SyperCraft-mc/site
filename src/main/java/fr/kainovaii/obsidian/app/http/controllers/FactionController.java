@@ -2,7 +2,7 @@ package fr.kainovaii.obsidian.app.http.controllers;
 
 import fr.kainovaii.obsidian.app.domain.faction.models.Faction;
 import fr.kainovaii.obsidian.app.domain.faction.FactionDTO;
-import fr.kainovaii.obsidian.app.domain.faction.models.FactionRepository;
+import fr.kainovaii.obsidian.app.domain.faction.repositories.FactionRepository;
 import fr.kainovaii.obsidian.app.domain.faction.FactionService;
 import fr.kainovaii.obsidian.database.DB;
 import fr.kainovaii.obsidian.http.controller.BaseController;

@@ -1,6 +1,10 @@
 package fr.kainovaii.obsidian.app.domain.faction;
 
-import fr.kainovaii.obsidian.app.domain.faction.models.*;
+import fr.kainovaii.obsidian.app.domain.faction.models.Faction;
+import fr.kainovaii.obsidian.app.domain.faction.models.FactionRank;
+import fr.kainovaii.obsidian.app.domain.faction.repositories.FactionPlayerRepository;
+import fr.kainovaii.obsidian.app.domain.faction.repositories.FactionRankRepository;
+import fr.kainovaii.obsidian.app.domain.faction.repositories.FactionRepository;
 import fr.kainovaii.obsidian.app.domain.user.User;
 import fr.kainovaii.obsidian.app.domain.user.UserRepository;
 import fr.kainovaii.obsidian.di.annotations.Inject;
