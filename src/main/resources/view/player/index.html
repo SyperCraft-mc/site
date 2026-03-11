@@ -1,17 +1,15 @@
 {% extends "view/layout/front.html" %}
 {% block content %}
 <div class="relative z-10 max-w-[1280px] mx-auto px-14 pt-20 pb-20">
-
-    <div class="flex items-end justify-between mb-10 reveal">
+    <div class="flex items-end justify-between mb-10 reveal mt-5">
         <div>
             <div class="page-eyebrow">— COMMUNAUTÉ —</div>
             <h1 class="font-display font-black page-h1">Annuaire des <em class="em-accent">Guerriers</em></h1>
             <div class="page-rule"></div>
         </div>
-        <div class="mn-64m"><span style="color:var(--e)">{{ players | length }}</span> membres · <span class="mb-val-gr">NaN en ligne</span></div>
+        <div class="mn-64m"><span style="color:var(--e)">{{ players | length }}</span> membres · <span class="mb-val-gr">{{ allPlayerOnline }} en ligne</span></div>
     </div>
 
-    <!-- Filtres + recherche -->
     <div class="scard p-5 mb-4 reveal">
         <div class="grid gap-4 mb-filter-grid">
             <div class="relative">
@@ -41,31 +39,52 @@
         </div>
     </div>
 
-    <!-- Résultats -->
     <div class="mn-58m mb-2">Affichage de {{ players | length }} joueurs</div>
     <div class="grid mb-grid-new">
-
         {% for player in players %}
         <div class="mb-card-new reveal">
             <div class="mb-card-top">
                 <div class="mb-card-identity">
-                    <div class="mb-card-ico"><img class="avatar" src="https://mc-heads.net/avatar/{{ player.username }}" alt=""></div>
+                    <div class="mb-card-ico"><img class="avatar" src="https://mc-heads.net/avatar/{{ player.pseudo }}" alt=""></div>
                     <div>
-                        <div class="mb-card-pseudo">{{ player.username }}</div>
-                        <div class="mb-card-lvl">LVL <span>0</span> · Sans faction</div>
+                        <div class="mb-card-pseudo">
+                            {{ player.pseudo }}
+                            {% if player.staffRank.label %}
+                            <span class="ml-[3px] tag">🛡 {{ player.staffRank.label }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="mb-card-lvl capitalize">LVL <span>0</span> ·
+                            {% if player.hasFaction %}
+                            {{ player.getFaction.name }}
+                            {% else %}
+                            Sans faction
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
+                {% if player.online %}
                 <span class="mb-card-sdot online" title="En ligne"></span>
+                {% else %}
+                <span class="mb-card-sdot offline" title="En ligne"></span>
+                {% endif %}
             </div>
             <div class="mb-card-stats">
-                <div class="mb-stat-col"><div class="mb-stat-lbl2">Kills</div><div class="mb-stat-kills">0</div></div>
-                <div class="mb-stat-col"><div class="mb-stat-lbl2">Temps</div><div class="mb-stat-time">0h</div></div>
-                <div class="mb-stat-col"><div class="mb-stat-lbl2">Rang</div><span class="mb-rang-pill">{{ player.role }}</span></div>
+                <div class="mb-stat-col">
+                    <div class="mb-stat-lbl2">Dernière connexion</div>
+                    {% if player.hasLastConnection %}
+                    <div class="mb-stat-time">{{ player.lastConnection | date("dd MMM yyy") }}</div>
+                    {% else %}
+                    <div class="mb-stat-time">N/A</div>
+                    {% endif %}
+                </div>
+                <div class="mb-stat-col">
+                    <div class="mb-stat-lbl2">Temps de jeu</div>
+                    <div class="mb-stat-time">{{ player.getPlaytimeFormatted }}</div>
+                </div>
             </div>
-            <a href="/joueurs/s/{{ player.username }}" class="mb-card-link">Voir le profil →</a>
+            <a href="/joueurs/s/{{ player.pseudo }}" class="mb-card-link">Voir le profil →</a>
         </div>
         {% endfor %}
-
     </div>
 </div>
 

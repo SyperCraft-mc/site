@@ -60,24 +60,20 @@ public class AuthController extends BaseController
             return "No profile ready for this session.";
         }
 
-        User user = DB.withConnection(() ->
-            userRepository.findOrCreateByMinecraftProfile(
-                profile.getId().toString(),
-                profile.getName()
-            )
-        );
+        if (!DB.withConnection(() -> UserRepository.userExist(profile.getName()))) {
+            res.status(401);
+            return "No profile ready for this session.";
+        }
+
+        User user = DB.withConnection(() -> userRepository.findByPseudo(profile.getName()));
 
         Session session = req.session(true);
         session.attribute("logged", true);
-        session.attribute("user_id", user.getLongId()); // ID BDD, pas UUID Minecraft
-        session.attribute("username", user.getUsername());
-        session.attribute("role", user.getRole());
+        session.attribute("user_id", user.getUUID());
+        session.attribute("username", user.getPseudo());
+        session.attribute("role", "DEFAULT");
 
-        System.out.println("User logged in: " + user.getUsername());
-
-        res.type("application/json");
-        res.status(200);
-        return "{\"username\":\"" + user.getUsername() + "\"}";
+        return profile;
     }
 
     @HasRole("DEFAULT")

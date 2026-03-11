@@ -1,60 +1,48 @@
 package fr.kainovaii.obsidian.app.domain.user;
 
 import fr.kainovaii.obsidian.di.annotations.Repository;
-import org.javalite.activejdbc.LazyList;
+
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class UserRepository
 {
-    public LazyList<User> findAll() {
-        return User.findAll();
+    public User findByUUID(String uuid) {
+        return User.findByUUID(uuid);
     }
 
-    public User findByUsername(String username) {
-        return User.findFirst("username = ?", username);
+    public User findByPseudo(String pseudo) {
+        return User.findByPseudo(pseudo);
     }
 
-    public User findByMinecraftUuid(String uuid) {
-        return User.findFirst("minecraft_uuid = ?", uuid);
+    public List<User> findAll() {
+        return User.findAll().load();
     }
 
-    public User findOrCreateByMinecraftProfile(String uuid, String username)
-    {
-        User user = findByMinecraftUuid(uuid);
-        if (user == null) {
-            user = new User();
-            user.setUsername(username);
-            user.setMinecraftUuid(uuid);
-            user.setRole("DEFAULT");
-            user.saveIt();
-        }
-        return user;
+    public List<User> findByVipRank(int vipRankId) {
+        return User.<User>where("VipRankID = ?", vipRankId).load();
     }
 
-    public static boolean userExist(String username) {
-        return User.findFirst("username = ?", username) != null;
+    public List<User> findByStaffRank(int staffRankId) {
+        return User.<User>where("StaffRankID = ?", staffRankId).load();
     }
 
-    public boolean delete(String username)
-    {
-        User user = findByUsername(username);
+    public List<User> findInCombat() {
+        return User.<User>where("combat = ?", true).load();
+    }
+
+    public static boolean userExist(String pseudo) {
+        return User.findFirst("Pseudo = ?", pseudo) != null;
+    }
+
+    public boolean save(User user) {
+        return user.saveIt();
+    }
+
+    public boolean delete(String uuid) {
+        User user = User.findByUUID(uuid);
+        if (user == null) return false;
         return user.delete();
-    }
-
-    public Boolean create(String username, String minecraftUuid, String role)
-    {
-        User user = new User();
-        user.setUsername(username);
-        user.setMinecraftUuid(minecraftUuid);
-        user.setRole(role);
-        return user.saveIt();
-    }
-
-    public Boolean update(String usernameCurrent, String username, String role)
-    {
-        User user = findByUsername(usernameCurrent);
-        user.setUsername(username);
-        user.setRole(role);
-        return user.saveIt();
     }
 }

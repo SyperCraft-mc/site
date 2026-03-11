@@ -20,7 +20,7 @@ public class AppUserDetailsService implements UserDetailsService
     {
         return DB.withConnection(() -> {
             if (!UserRepository.userExist(username)) return null;
-            User user = userRepository.findByUsername(username);
+            User user = userRepository.findByPseudo(username);
             return adapt(user);
         });
     }
@@ -34,13 +34,20 @@ public class AppUserDetailsService implements UserDetailsService
         });
     }
 
-    private AppUserDetails adapt(User user) {
-        if (user == null) return null;
-        return new AppUserDetails() {
-            public Object getId() { return user.getId(); }
-            public String getUsername() { return user.getUsername(); }
-            public String getPassword() { return user.getPassword(); }
-            public String getRole() { return user.getRole(); }
+    private AppUserDetails adapt(User player) {
+        if (player == null) return null;
+        return new AppUserDetails()
+        {
+            // Obsidian input
+            public String getPassword() { return ""; }
+            public String getRole() { return "DEFAULT"; }
+
+            // SyperCraft input
+            public Object getId() { return player.getId(); }
+            public String getUsername() { return player.getPseudo(); }
+            public int getStaffRank() { return player.getStaffRankID(); }
+            public int getVipRank() { return player.getVipRankID(); }
+            public long getPlaytimeSeconds() { return player.getPlaytimeSeconds(); }
         };
     }
 }

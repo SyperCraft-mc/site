@@ -31,5 +31,4 @@ public class FPlayer
     public int getFactionId()     { return factionId; }
     public int getFactionRankId() { return factionRankId; }
     public String getJoinedAt()   { return joinedAt; }
-
 }

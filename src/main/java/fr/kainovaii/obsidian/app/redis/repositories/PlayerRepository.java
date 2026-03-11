@@ -99,4 +99,29 @@ public class PlayerRepository
         if (data == null || data.isEmpty()) return null;
         return VipRank.fromRedis(data);
     }
+
+    /** Returns true if the player is currently online on the network. */
+    public boolean isOnline(String uuid)
+    {
+        return redis().exists("SERVER:" + uuid);
+    }
+
+    /** Returns the server name the player is on, or null if offline. */
+    public String getCurrentServer(String uuid)
+    {
+        return redis().get("SERVER:" + uuid);
+    }
+
+    /** Returns all players currently online on the network. */
+    public List<Player> findAllOnline()
+    {
+        Set<String> keys = redis().keys("SERVER:*");
+        List<Player> players = new ArrayList<>();
+        for (String key : keys) {
+            String uuid = key.replace("SERVER:", "");
+            Player player = findByUuid(uuid);
+            if (player != null) players.add(player);
+        }
+        return players;
+    }
 }

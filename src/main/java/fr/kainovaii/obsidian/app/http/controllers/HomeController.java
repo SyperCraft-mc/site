@@ -20,8 +20,11 @@ public class HomeController extends BaseController
     }
 
     @GET(value = "/building", name = "site.building")
-    private Object building()
+    private Object building() { return render("building.html", Map.of()); }
+
+    @GET(value = "/redis/debug", name = "site.building")
+    private Object debug()
     {
-        return render("building.html", Map.of());
+        return Main.loadRedis().keys("*");
     }
 }

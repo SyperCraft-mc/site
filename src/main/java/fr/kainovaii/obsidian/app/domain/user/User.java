@@ -1,45 +1,104 @@
 package fr.kainovaii.obsidian.app.domain.user;
 
-import fr.kainovaii.obsidian.app.security.AppUserDetails;
 import org.javalite.activejdbc.Model;
+import org.javalite.activejdbc.annotations.Table;
+import org.javalite.activejdbc.annotations.IdName;
 
 import java.sql.Date;
 
-public class User extends Model implements AppUserDetails
+@Table("game_users")
+@IdName("UUID")
+public class User extends Model
 {
-    // Getters
-    public String getUsername() {
-        return getString("username");
+    public String getUUID() {
+        return getString("UUID");
     }
 
-    @Override
-    public String getPassword() {
-        return "";
+    public String getPseudo() { return getString("Pseudo"); }
+
+    public void setPseudo(String pseudo) {
+        set("Pseudo", pseudo);
     }
 
-    public String getRole() {
-        return getString("role");
+    public int getStaffRankID() {
+        return getInteger("StaffRankID");
     }
 
-    public String getMinecraftUuid() {
-        return getString("minecraft_uuid");
+    public void setStaffRankID(int rankId) {
+        set("StaffRankID", rankId);
     }
 
-    public Date createdAt() {
-        Long timestamp = getLong("created_at");
+    public int getVipRankID() {
+        return getInteger("VipRankID");
+    }
+
+    public void setVipRankID(int rankId) {
+        set("VipRankID", rankId);
+    }
+
+    public Long getVipRankAssignedAt() {
+        return getLong("vip_rank_assigned_at");
+    }
+
+    public void setVipRankAssignedAt(Long timestamp) {
+        set("vip_rank_assigned_at", timestamp);
+    }
+
+    public int getPointBoutique() {
+        return getInteger("PointBoutique");
+    }
+
+    public void setPointBoutique(int points) {
+        set("PointBoutique", points);
+    }
+
+    public boolean isInCombat() {
+        return getBoolean("combat");
+    }
+
+    public void setCombat(boolean combat) {
+        set("combat", combat);
+    }
+
+    public String getIgnorePlayers() {
+        return getString("ignorePlayers");
+    }
+
+    public void setIgnorePlayers(String ignorePlayers) {
+        set("ignorePlayers", ignorePlayers);
+    }
+
+    public String getDiscordId() {
+        return getString("discordid");
+    }
+
+    public void setDiscordId(String discordId) {
+        set("discordid", discordId);
+    }
+
+    public long getPlaytimeSeconds() {
+        return getLong("playtime_seconds");
+    }
+
+    public void setPlaytimeSeconds(long seconds) {
+        set("playtime_seconds", seconds);
+    }
+
+    public static User findByUUID(String uuid) {
+        return findFirst("UUID = ?", uuid);
+    }
+
+    public static User findByPseudo(String pseudo) {
+        return findFirst("Pseudo = ?", pseudo);
+    }
+
+    public Date firstConnection() {
+        Long timestamp = getLong("first_join");
         return timestamp != null ? new Date(timestamp) : null;
     }
 
-    // Setters
-    public void setUsername(String username) {
-        set("username", username);
-    }
-
-    public void setRole(String role) {
-        set("role", role);
-    }
-
-    public void setMinecraftUuid(String uuid) {
-        set("minecraft_uuid", uuid);
+    public Date lastConnection() {
+        Long timestamp = getLong("last_logout");
+        return timestamp != null ? new Date(timestamp) : null;
     }
 }

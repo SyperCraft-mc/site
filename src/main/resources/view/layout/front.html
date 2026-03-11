@@ -26,7 +26,7 @@
             <div class="nav-right">
                 <div class="nav-pill">
                     <span class="nav-pill-dot ab"></span>
-                    <span id="">0 joueurs en ligne</span>
+                    <span id="">{{ allPlayerOnline }} joueurs en ligne</span>
                 </div>
                 {% if isLogged %}
                 <div class="nav-user" id="navUser">
@@ -56,9 +56,11 @@
         </div>
     </nav>
 
-    {% block content %}
-    <!-- Contenu de la page -->
-    {% endblock %}
+    <div class="main">
+        {% block content %}
+        <!-- Contenu de la page -->
+        {% endblock %}
+    </div>
 
     <footer>
         <div class="ft-inner">

@@ -6,8 +6,27 @@
     --bdr:rgba(249,115,22,.18); --bdd:rgba(249,115,22,.07); --gr:#3a6e40;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--t);font-family:'Cinzel',serif;overflow-x:hidden;background-image:radial-gradient(ellipse 40% 80% at 0% 50%,rgba(160,72,24,.07),transparent),radial-gradient(ellipse 40% 80% at 100% 50%,rgba(160,72,24,.07),transparent),radial-gradient(ellipse 80% 40% at 50% 0%,rgba(160,72,24,.06),transparent),radial-gradient(ellipse 80% 40% at 50% 100%,rgba(160,72,24,.09),transparent)}
+html {
+    scroll-behavior: smooth;
+}
+body {
+    background: var(--bg);
+    color: var(--t);
+    font-family: "Cinzel", serif;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-image: radial-gradient(ellipse 40% 80% at 0% 50%, rgba(160, 72, 24, 0.07), transparent),
+    radial-gradient(ellipse 40% 80% at 100% 50%, rgba(160, 72, 24, 0.07), transparent),
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(160, 72, 24, 0.06), transparent),
+    radial-gradient(ellipse 80% 40% at 50% 100%, rgba(160, 72, 24, 0.09), transparent);
+}
+
+.main {
+    flex: 1;
+}
+
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--e)}
 
 /* GRAIN OFF / CANVAS */
@@ -999,10 +1018,10 @@ h1.hero-title{font-size:clamp(3.5rem,10vw,9rem);font-weight:900;line-height:.88;
 .mb-card-sdot.online    { background:var(--gr); box-shadow:0 0 7px rgba(58,110,64,.6) }
 .mb-card-sdot.offline   { background:var(--m) }
 
-.mb-card-stats          { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--bdd); padding-top:14px; margin-bottom:14px }
+.mb-card-stats          { display:grid; grid-template-columns:repeat(2,1fr); border-top:1px solid var(--bdd); padding-top:14px; margin-bottom:14px }
 .mb-stat-col            { padding:0 10px; text-align:center }
 .mb-stat-col:first-child{ padding-left:0; text-align:left }
-.mb-stat-col:last-child { padding-right:0; text-align:right }
+.mb-stat-col:last-child { padding-right:0; text-align:left }
 .mb-stat-col + .mb-stat-col { border-left:1px solid var(--bdd) }
 
 .mb-stat-lbl2           { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--m); margin-bottom:4px }
