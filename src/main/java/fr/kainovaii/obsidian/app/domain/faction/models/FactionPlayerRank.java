@@ -1,4 +1,4 @@
-package fr.kainovaii.obsidian.app.domain.faction;
+package fr.kainovaii.obsidian.app.domain.faction.models;
 
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.Table;

@@ -1,10 +1,9 @@
 package fr.kainovaii.obsidian.app.http.controllers;
 
-import fr.kainovaii.obsidian.app.domain.faction.Faction;
+import fr.kainovaii.obsidian.app.domain.faction.models.Faction;
 import fr.kainovaii.obsidian.app.domain.faction.FactionDTO;
-import fr.kainovaii.obsidian.app.domain.faction.FactionRepository;
+import fr.kainovaii.obsidian.app.domain.faction.models.FactionRepository;
 import fr.kainovaii.obsidian.app.domain.faction.FactionService;
-import fr.kainovaii.obsidian.app.domain.user.UserDTO;
 import fr.kainovaii.obsidian.database.DB;
 import fr.kainovaii.obsidian.http.controller.BaseController;
 import fr.kainovaii.obsidian.http.controller.annotations.Controller;

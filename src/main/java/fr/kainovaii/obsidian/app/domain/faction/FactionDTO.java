@@ -1,5 +1,9 @@
 package fr.kainovaii.obsidian.app.domain.faction;
 
+import fr.kainovaii.obsidian.app.domain.faction.models.Faction;
+import fr.kainovaii.obsidian.app.domain.faction.models.FactionPlayer;
+import fr.kainovaii.obsidian.app.domain.faction.models.FactionRank;
+
 import java.util.List;
 
 public class FactionDTO

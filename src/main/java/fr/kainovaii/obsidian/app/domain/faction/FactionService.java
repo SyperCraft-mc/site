@@ -1,5 +1,6 @@
 package fr.kainovaii.obsidian.app.domain.faction;
 
+import fr.kainovaii.obsidian.app.domain.faction.models.*;
 import fr.kainovaii.obsidian.app.domain.user.User;
 import fr.kainovaii.obsidian.app.domain.user.UserRepository;
 import fr.kainovaii.obsidian.di.annotations.Inject;
