@@ -14,17 +14,16 @@ import java.util.Map;
 public class HomeController extends BaseController
 {
     @GET(value = "/", name = "site.home")
-    private Object homepage()
+    private Object index(Response res)
     {
-        return render("home.html", Map.of());
+        if (Main.loadEnv().get("ENVIRONMENT").equalsIgnoreCase("PROD")) {
+            res.redirect("/construction");
+            return "";
+        } else {
+            return render("home.html", Map.of());
+        }
     }
 
-    @GET(value = "/building", name = "site.building")
+    @GET(value = "/construction", name = "site.building")
     private Object building() { return render("building.html", Map.of()); }
-
-    @GET(value = "/redis/debug", name = "site.building")
-    private Object debug()
-    {
-        return Main.loadRedis().keys("*");
-    }
 }

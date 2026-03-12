@@ -47,6 +47,7 @@ public class AppUserDetailsService implements UserDetailsService
             public String getUsername() { return player.getPseudo(); }
             public int getStaffRank() { return player.getStaffRankID(); }
             public int getVipRank() { return player.getVipRankID(); }
+            public String getUUID() { return player.getUUID(); }
             public long getPlaytimeSeconds() { return player.getPlaytimeSeconds(); }
         };
     }

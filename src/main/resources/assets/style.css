@@ -965,7 +965,7 @@ h1.hero-title{font-size:clamp(3.5rem,10vw,9rem);font-weight:900;line-height:.88;
 @media(min-width:900px){.g-main-grid{grid-template-columns:1fr 280px}}
 .g-stats-grid   { grid-template-columns:repeat(2,1fr); background:rgba(249,115,22,.06) }
 @media(min-width:600px){.g-stats-grid{grid-template-columns:repeat(4,1fr)}}
-.g-banner-wrap  { height:280px; background:linear-gradient(135deg,#1a0c04,#0d0602); overflow:hidden; margin-top:48px }
+.g-banner-wrap  { height:200px; background:linear-gradient(135deg,#1a0c04,#0d0602); overflow:hidden; margin-top:48px }
 .g-banner-grad1 { position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 30% 50%,rgba(249,115,22,.12),transparent) }
 .g-banner-grad2 { position:absolute; inset:0; background:radial-gradient(ellipse 40% 60% at 80% 50%,rgba(200,90,10,.07),transparent) }
 .g-banner-hatch { position:absolute; inset:0; opacity:.04; background-image:repeating-linear-gradient(45deg,var(--e) 0,var(--e) 1px,transparent 0,transparent 50%); background-size:32px 32px }

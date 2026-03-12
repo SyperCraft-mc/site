@@ -1,6 +1,7 @@
 package fr.kainovaii.obsidian.app.domain.faction;
 
 import fr.kainovaii.obsidian.app.domain.faction.models.Faction;
+import fr.kainovaii.obsidian.app.domain.faction.models.FactionChunk;
 import fr.kainovaii.obsidian.app.domain.faction.models.FactionPlayer;
 import fr.kainovaii.obsidian.app.domain.faction.models.FactionRank;
 
@@ -16,8 +17,10 @@ public class FactionDTO
     private final int points;
     private final long balance;
     private final int memberCount;
+    private final int chunkCount;
     private final List<FactionRankDTO> ranks;
     private final List<FactionPlayerDTO> members;
+    private final List<FactionChunkDTO> chunks;
 
     private FactionDTO(Builder builder)
     {
@@ -29,11 +32,13 @@ public class FactionDTO
         this.points = builder.points;
         this.balance = builder.balance;
         this.memberCount = builder.memberCount;
+        this.chunkCount = builder.chunkCount;
         this.ranks = builder.ranks;
         this.members = builder.members;
+        this.chunks = builder.chunks;
     }
 
-    public static FactionDTO from(Faction faction, int memberCount, List<FactionRank> ranks, List<FactionPlayerDTO> members)
+    public static FactionDTO from(Faction faction, int memberCount, int chunkCount, List<FactionRank> ranks, List<FactionPlayerDTO> members, List<FactionChunk> chunks)
     {
         return new Builder()
                 .id((Integer) faction.getId())
@@ -44,8 +49,10 @@ public class FactionDTO
                 .points(faction.getPoint())
                 .balance(faction.getBalance())
                 .memberCount(memberCount)
+                .chunkCount(chunkCount)
                 .ranks(ranks.stream().map(FactionRankDTO::from).toList())
                 .members(members)
+                .chunks(chunks.stream().map(FactionChunkDTO::from).toList())
                 .build();
     }
 
@@ -57,8 +64,10 @@ public class FactionDTO
     public int getPoints() { return points; }
     public long getBalance() { return balance; }
     public int getMemberCount() { return memberCount; }
+    public int getChunkCount() { return chunkCount; }
     public List<FactionRankDTO> getRanks() { return ranks; }
     public List<FactionPlayerDTO> getMembers() { return members; }
+    public List<FactionChunkDTO> getChunks() { return chunks; }
 
     // --- Nested DTOs ---
 
@@ -104,6 +113,22 @@ public class FactionDTO
         }
     }
 
+    public record FactionChunkDTO(
+            int id,
+            int x,
+            int z,
+            int type
+    ) {
+        public static FactionChunkDTO from(FactionChunk chunk) {
+            return new FactionChunkDTO(
+                    (Integer) chunk.getId(),
+                    chunk.getX(),
+                    chunk.getZ(),
+                    chunk.getType()
+            );
+        }
+    }
+
     // --- Builder ---
 
     public static class Builder
@@ -116,8 +141,10 @@ public class FactionDTO
         private int points;
         private long balance;
         private int memberCount;
+        private int chunkCount;
         private List<FactionRankDTO> ranks;
         private List<FactionPlayerDTO> members;
+        private List<FactionChunkDTO> chunks;
 
         public Builder id(int id) { this.id = id; return this; }
         public Builder name(String name) { this.name = name; return this; }
@@ -127,8 +154,10 @@ public class FactionDTO
         public Builder points(int points) { this.points = points; return this; }
         public Builder balance(long balance) { this.balance = balance; return this; }
         public Builder memberCount(int memberCount) { this.memberCount = memberCount; return this; }
+        public Builder chunkCount(int chunkCount) { this.chunkCount = chunkCount; return this; }
         public Builder ranks(List<FactionRankDTO> ranks) { this.ranks = ranks; return this; }
         public Builder members(List<FactionPlayerDTO> members) { this.members = members; return this; }
+        public Builder chunks(List<FactionChunkDTO> chunks) { this.chunks = chunks; return this; }
 
         public FactionDTO build() { return new FactionDTO(this); }
     }

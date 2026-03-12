@@ -17,10 +17,9 @@ import java.util.Map;
 public class FactionController extends BaseController
 {
     @GET(value = "/factions", name = "faction.index")
-    private Object index(FactionRepository factionRepository)
+    private Object index(FactionService factionService)
     {
-        List<Faction> factions = DB.withConnection(() -> factionRepository.findAll().stream().toList());
-
+        List<FactionDTO> factions = DB.withConnection(() -> factionService.findAll().stream().toList());
         return render("faction/index.html", Map.of("factions", factions));
     }
 

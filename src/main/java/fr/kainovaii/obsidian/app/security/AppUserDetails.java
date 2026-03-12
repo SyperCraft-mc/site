@@ -7,4 +7,5 @@ public interface AppUserDetails extends UserDetails
     int getStaffRank();
     int getVipRank();
     long getPlaytimeSeconds();
+    String getUUID();
 }

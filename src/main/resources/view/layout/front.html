@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SyperCraft — Serveur Minecraft</title>
+    <link rel="icon" href="/assets/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="/assets/style.css" />
     <script src="/assets/tailwind.js"></script>
     <script>
@@ -43,6 +44,8 @@
                                 <span class="nav-dd-rank">{{ loggedUser.role }}</span>
                             </div>
                         </div>
+                        <a href="/joueurs/s/{{ loggedUser.username }}" class="nav-dd-item">⚔ Mon profil</a>
+                        <a href="/mon-compte/faction" class="nav-dd-item">◈ Ma faction</a>
                         <div class="nav-dd-sep"></div>
                         <a href="/mon-compte/logout" class="nav-dd-item danger">⬡ Déconnexion</a>
                     </div>

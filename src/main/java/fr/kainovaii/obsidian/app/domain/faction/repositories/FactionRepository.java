@@ -1,7 +1,9 @@
 package fr.kainovaii.obsidian.app.domain.faction.repositories;
 
 
+import fr.kainovaii.obsidian.app.domain.faction.FactionDTO;
 import fr.kainovaii.obsidian.app.domain.faction.models.Faction;
+import fr.kainovaii.obsidian.app.domain.faction.models.FactionPlayer;
 import fr.kainovaii.obsidian.di.annotations.Repository;
 
 import java.util.List;
@@ -19,6 +21,13 @@ public class FactionRepository
 
     public List<Faction> findAll() {
         return Faction.findAll().load();
+    }
+
+    public Faction findByUser(String uuid)
+    {
+        FactionPlayer fp = FactionPlayer.findByUUID(uuid);
+        if (fp == null || !fp.hasFaction()) return null;
+        return findById(fp.getFactionId());
     }
 
     public List<Faction> findByLevel(int level) {

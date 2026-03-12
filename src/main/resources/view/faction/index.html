@@ -27,10 +27,10 @@
                 <div class="grid grid-cols-3 gap-px mb-4 fc-stats-bg-red">
                     <div class="sc text-center p-3"><div class="font-display font-bold text-[.95rem]" class="c-t">{{ faction.point }}</div><div class="mn-55m">Pouvoir</div></div>
                     <div class="sc text-center p-3"><div class="font-display font-bold text-[.95rem]" class="c-t">{{ faction.xp }}</div><div class="mn-55m">XP</div></div>
-                    <div class="sc text-center p-3"><div class="font-display font-bold text-[.95rem]" class="c-t">NaN</div><div class="mn-55m">Zones</div></div>
+                    <div class="sc text-center p-3"><div class="font-display font-bold text-[.95rem]" class="c-t">{{ faction.chunkCount }}</div><div class="mn-55m">Zones</div></div>
                 </div>
                 <div class="mb-4">
-                    <div class="flex justify-between mb-1" class="mn-6m"><span>Membres</span><span class="c-red">NaN/100</span></div>
+                    <div class="flex justify-between mb-1" class="mn-6m"><span>Membres</span><span class="c-red">{{ faction.memberCount }}/100</span></div>
 
                 </div>
                 <a href="/factions/s/{{ faction.name }}">

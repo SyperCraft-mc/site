@@ -1,0 +1,227 @@
+{% extends "view/layout/front.html" %}
+{% block content %}
+<div class="relative z-10 max-w-[1280px] mx-auto px-14 pt-20 pb-20">
+
+    <div class="flex items-center gap-3 mb-8 reveal mn-64m mt-3">
+        <a href="/factions" class="bc-link">Factions</a>
+        <span>›</span>
+        <a href="/factions/s/{{ faction.name }}" class="bc-link" id="bc-name">{{ faction.name }}</a>
+        <span>›</span>
+        <span class="c-t2">Modifier</span>
+    </div>
+
+    <!-- Page header -->
+    <div class="mb-8 reveal">
+        <div class="page-eyebrow">— GESTION —</div>
+        <h1 class="font-display font-black page-h1-sm">
+            Modifier la <em class="em-accent" id="h-name">Faction</em>
+        </h1>
+        <div class="page-rule"></div>
+    </div>
+
+    <div class="grid gap-5 ef-main-grid">
+
+        <!-- ══ MAIN COLUMN ══ -->
+        <div class="flex flex-col gap-px">
+
+            <!-- Identité & Emblème -->
+            <div class="scard p-6 reveal">
+                <div class="sec-title">Identité & Emblème</div>
+                <div class="grid gap-8 ef-header-grid">
+                    <!-- Live preview -->
+                    <div class="text-center flex-shrink-0">
+                        <div class="w-24 h-24 grid place-items-center text-[2.8rem] mx-auto mb-3"
+                             class="ef-preview-faction-bg"
+                             id="em-preview">⚔️</div>
+                        <div class="font-display font-bold text-[.88rem] mb-0.5 ef-name-preview" id="name-preview">{{ faction.name }}</div>
+                        <div class="mono-muted">Aperçu</div>
+                    </div>
+                    <!-- Controls -->
+                    <div>
+                        <div class="f-label mb-3">Choisir un emblème <span>*</span></div>
+                        <div class="grid gap-1.5 mb-5 ef-color-grid">
+                            <button class="em-slot sel">⚔️</button>
+                            <button class="em-slot">🛡️</button>
+                            <button class="em-slot">🏹</button>
+                            <button class="em-slot">🔮</button>
+                            <button class="em-slot">🐉</button>
+                            <button class="em-slot">💀</button>
+                            <button class="em-slot">⚡</button>
+                            <button class="em-slot">🔥</button>
+                            <button class="em-slot">🌑</button>
+                            <button class="em-slot">❄️</button>
+                            <button class="em-slot">💎</button>
+                            <button class="em-slot">🦅</button>
+                            <button class="em-slot">🐺</button>
+                            <button class="em-slot">⚗️</button>
+                            <button class="em-slot">🌿</button>
+                            <button class="em-slot">◈</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scard p-6 reveal">
+                <div class="sec-title">Informations générales</div>
+                <div class="grid gap-4">
+                    <div>
+                        <div class="f-label">Nom de la faction <span>*</span></div>
+                        <input type="text" class="f-input" id="faction-name" value="{{ faction.name }}">
+                    </div>
+                    <div>
+                        <div class="f-label">Devise</div>
+                        <input type="text" class="f-input" id="faction-motto" value="{{ faction.description }}" placeholder="Votre devise…">
+                    </div>
+                    <div>
+                        <div class="f-label">Description</div>
+                        <textarea class="f-input" id="faction-desc"></textarea>
+                    </div>
+                    <div class="grid gap-4 grid-cols-2-eq">
+                        <div>
+                            <div class="f-label">Tag (3–5 car.) <span>*</span></div>
+                            <input type="text" class="f-input" maxlength="5" placeholder="[TAG]">
+                        </div>
+                        <div>
+                            <div class="f-label">Serveur Discord</div>
+                            <input type="text" class="f-input" value="" placeholder="discord.gg/…">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if faction.recruit %}
+            <div class="scard p-6 reveal">
+                <div class="sec-title">Recrutement & Accès</div>
+                <div class="grid gap-5">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="font-display font-semibold text-[.9rem] ef-opt-title">Recrutement ouvert</div>
+                            <div class="mn-62m">Les joueurs peuvent postuler librement</div>
+                        </div>
+                        <label class="toggle">
+                            <input type="checkbox" checked>
+                            <div class="toggle-track"></div>
+                            <div class="toggle-thumb"></div>
+                        </label>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="font-display font-semibold text-[.9rem] ef-opt-title">Invitation uniquement</div>
+                            <div class="mn-62m">Seuls les officiers peuvent inviter</div>
+                        </div>
+                        <label class="toggle">
+                            <input type="checkbox">
+                            <div class="toggle-track"></div>
+                            <div class="toggle-thumb"></div>
+                        </label>
+                    </div>
+                    <div>
+                        <div class="f-label">Limite de membres</div>
+                        <input type="number" class="f-input ef-input-sm" value="100" min="10" max="200">
+                    </div>
+                    <div>
+                        <div class="f-label">Niveau minimum requis</div>
+                        <input type="number" class="f-input ef-input-sm" value="10" min="1" max="100">
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="scard p-6 reveal">
+                <div class="sec-title">Membres (87)</div>
+                <div class="flex flex-col">
+                    {% for member in faction.members %}
+                    <div class="member-row">
+                        <div class="w-10 h-10 grid place-items-center text-xl flex-shrink-0">
+                            <img class="avatar w-[35px]" src="https://mc-heads.net/avatar/{{ member.pseudo }}" />
+                        </div>
+                        <a href="/joueurs/s/{{ member.pseudo }}" class="flex-1 min-w-0">
+                            <div class="font-display font-semibold text-[.9rem]" class="c-t">{{ member.pseudo }}</div>
+                            <div class="mn-58m">Fondateur · lv.87</div>
+                        </a>
+                        <span class="member-role role-founder">Fondateur</span>
+                    </div>
+                    {% endfor %}
+                    <div class="ef-members-more ef-more-wrap">
+                        <a href="/factions/s/{{ faction.name }}" class="c-e" style="text-decoration:none">Voir tous →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal" style="margin-top:4px">
+                <div class="danger-card">
+                    <div class="ef-danger-label">⚠ Zone dangereuse</div>
+                    <div class="flex items-center justify-between flex-wrap gap-4">
+                        <div>
+                            <div class="font-display font-semibold text-[.9rem] ef-opt-title">Dissoudre la faction</div>
+                            <div class="mn-62m">Cette action est irréversible. Tous les membres seront exclus.</div>
+                        </div>
+                        <button class="btn-danger">💀 Dissoudre</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="flex flex-col gap-px">
+
+            <div class="scard p-5 reveal">
+                <div class="sec-title">Aperçu de la fiche</div>
+                <div id="preview-card" class="ef-preview-card">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-12 h-12 grid place-items-center text-2xl flex-shrink-0" class="ef-preview-em" id="prev-em">⚔️</div>
+                        <div>
+                            <div class="font-display font-bold text-[1rem]" id="prev-name" class="c-t">{{ faction.name }}</div>
+                            <div class="mn-6m" style="font-style:italic" id="prev-motto">{{ faction.description }}</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-px mb-3 ef-preview-stats">
+                        <div class="ef-stat-cell">
+                            <div class="font-display font-bold text-[.9rem] c-t">Lv.{{ faction.level }}</div>
+                            <div class="mn-5m">Niveau</div>
+                        </div>
+                        <div class="ef-stat-cell">
+                            <div class="font-display font-bold text-[.9rem] c-t">{{ faction.memberCount }}</div>
+                            <div class="mn-5m">Membres</div>
+                        </div>
+                        <div class="ef-stat-cell">
+                            <div class="font-display font-bold text-[.9rem] c-t">{{ faction.chunkCount }}</div>
+                            <div class="mn-5m">Chunks</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scard p-5 reveal">
+                <div class="sec-title">Alliances & Guerres</div>
+                <div class="mn-62m" style="margin-bottom:12px">Relations actives</div>
+                <div class="flex flex-col gap-2 mb-4">
+                    <div class="flex items-center justify-between p-2 ef-rel-ally">
+                        <span class="font-display text-[.8rem]" class="c-t">◈ VoidBreakers</span>
+                        <span class="ef-ally-label">Allié</span>
+                    </div>
+                    <div class="flex items-center justify-between p-2 ef-rel-war">
+                        <span class="font-display text-[.8rem]" class="c-t">☽ Moonwolves</span>
+                        <span class="ef-war-label">Guerre</span>
+                    </div>
+                </div>
+                <button class="w-full py-2 font-display text-[.62rem] uppercase tracking-widest btn-ghost">+ Gérer les relations</button>
+            </div>
+
+            <div class="scard p-5 reveal">
+                <div class="sec-title">Coffre commun</div>
+                <div class="flex items-center justify-between mb-3">
+                    <span class="mn-68m">Solde</span>
+                    <span class="font-display font-bold ef-treasury-val">{{ faction.balance }} 💰</span>
+                </div>
+
+            </div>
+
+            <div class="scard p-5 reveal">
+                <button class="btn-save w-full justify-center mb-3">◈ Sauvegarder</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

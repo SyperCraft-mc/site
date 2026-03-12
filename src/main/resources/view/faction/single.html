@@ -1,51 +1,106 @@
 {% extends "view/layout/front.html" %}
 {% block content %}
-<div class="relative z-10 max-w-[1280px] mx-auto px-14 pt-20 pb-20">
-    <div id="d-il" class="">
-        <div class="scard p-9 mb-px">
-            <div class="fc-hdr-bar" style="background:linear-gradient(90deg,transparent,#ef4444,transparent)"></div>
-            <div class="flex items-start gap-8">
-                <div class="text-[4rem] float flex-shrink-0">⚔</div>
-                <div>
-                    <div class="flex items-center gap-3 mb-2">
-                        <h2 class="font-display font-black text-[2rem]" class="c-t">{{ faction.name }}</h2>
-                        <span class="tag" class="tag-red-bg">Lv.{{ faction.level }}</span>
-                    </div>
-                    <p class="fc-quote c-red">« {{ faction.description }} »</p>
+<div class="relative g-banner-wrap">
+    <div class="g-banner-grad1"></div>
+    <div class="g-banner-grad2"></div>
+    <div class="g-banner-hatch"></div>
+    <div class="g-banner-fade"></div>
+    <div class="max-w-[1280px] mx-auto px-14 h-full flex items-center gap-8">
+        <div class="g-banner-logo">⚔️</div>
+        <div class="g-zidx">
+            <div class="flex items-center gap-3 mb-2">
+                <h2 class="font-display font-black text-[2rem] c-t">{{ faction.name }}</h2>
+                <span class="tag tag-red-bg">Lv.{{ faction.level }}</span>
+            </div>
+            <p class="fc-quote c-red">« {{ faction.description }} »</p>
+        </div>
+        <div class="ml-auto flex gap-4 items-center g-zidx">
+            <button class="btn-forge g-apply-btn">Rejoindre la faction</button>
+        </div>
+    </div>
+</div>
+
+<div class="relative z-10 max-w-[1280px] mx-auto px-14 pb-20">
+    <div class="flex items-center gap-3 my-6 reveal mn-62m">
+        <a href="/factions" class="bc-link">Factions</a>
+        <span>›</span><span class="c-t2">{{ faction.name }}</span>
+    </div>
+    <div class="grid gap-5 g-main-grid">
+        <div class="flex flex-col gap-px">
+            <div class="grid gap-px mb-px reveal g-stats-grid">
+                <div class="scard p-5 text-center scard-no-border">
+                    <div class="font-display font-black g-stat-num">{{ faction.memberCount }}/100</div>
+                    <div class="g-stat-lbl">Membres</div>
+                </div>
+                <div class="scard p-5 text-center scard-no-border">
+                    <div class="font-display font-black g-stat-num">{{ faction.chunkCount }}</div>
+                    <div class="g-stat-lbl">Chunks</div>
+                </div>
+                <div class="scard p-5 text-center scard-no-border">
+                    <div class="font-display font-black g-stat-num">{{ faction.xp }}</div>
+                    <div class="g-stat-lbl">XP</div>
+                </div>
+                <div class="scard p-5 text-center scard-no-border">
+                    <div class="font-display font-black g-stat-num"> {{ faction.points }}</div>
+                    <div class="g-stat-lbl">Points</div>
                 </div>
             </div>
-        </div>
-        <div class="grid grid-cols-4 gap-px mb-px fc-section-bg-red">
-            <div class="scard p-5 text-center"><div class="font-display font-bold text-[1.7rem] mb-1" class="c-red">{{ faction.points }}</div><div class="mn-58-up">Points</div></div>
-            <div class="scard p-5 text-center"><div class="font-display font-bold text-[1.7rem] mb-1" class="c-red">N/A</div><div class="mn-58-up">Chunks</div></div>
-            <div class="scard p-5 text-center"><div class="font-display font-bold text-[1.7rem] mb-1" class="c-red">{{ faction.xp }}</div><div class="mn-58-up">XP</div></div>
-            <div class="scard p-5 text-center"><div class="font-display font-bold text-[1.7rem] mb-1" class="c-red">{{ faction.memberCount }}/100</div><div class="mn-58-up">Membres</div></div>
-        </div>
-        <div class="grid grid-cols-2 gap-px" class="fc-section-bg">
-            <div class="scard p-6">
-                <div class="sidebar-label sidebar-label--mb16">Membres</div>
-                {% for member in faction.members %}
-                <div class="flex items-center gap-3 py-3 bb-dim">
-                    <span class="text-xl w-8 text-center">
-                        <img class="avatar" src="https://mc-heads.net/avatar/{{ member.pseudo }}" alt="">
-                    </span>
-                    <div>
-                        <div class="font-display font-semibold text-[.88rem]" class="c-t">
-                            <a href="/joueurs/s/{{ member.pseudo }}">{{ member.pseudo }}</a>
+
+            <div class="scard p-6 reveal">
+                <div class="sec-title">À propos</div>
+                <p class="g-banner-desc">Quam ob rem circumspecta cautela observatum est deinceps et cum edita montium petere coeperint grassatores, loci iniquitati milites cedunt. ubi autem in planitie potuerint reperiri, quod contingit adsidue, nec exsertare lacertos nec crispare permissi tela, quae vehunt bina vel terna, pecudum ritu inertium trucidantur.</p>
+                <div class="flex gap-2 mt-4 flex-wrap">
+                    <span class="tag tag-e">PvP</span>
+                </div>
+            </div>
+
+            <div class="scard p-6 reveal">
+                <div class="sec-title">Membres ({{ faction.memberCount }})</div>
+                <div class="flex flex-col gap-px">
+                    {% for member in faction.members %}
+                    <a href="/joueurs/s/{{ member.pseudo }}" class="flex items-center gap-3 py-3 bb-dim">
+                        <div class="g-icon-lg">
+                            <img class="avatar w-[35px]" src="https://mc-heads.net/avatar/{{ member.pseudo }}" />
                         </div>
-                        <div class="mn-6m c-red">{{ member.factionRankName }}</div>
+                        <div class="flex-1">
+                            <div class="font-display font-semibold text-[.84rem] c-e">{{ member.pseudo }}</div>
+                            <div class="mono-muted">Fondateur · LVL 87 · 847h</div>
+                        </div>
+                        <span class="member-role tag-e">{{ member.factionRankName }}</span>
+                    </a>
+
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="flex flex-col gap-px">
+            <div class="scard p-5 reveal">
+                <div class="sidebar-label">Alliances</div>
+                <div class="flex flex-col gap-3">
+                    <div class="flex items-center gap-3">
+                        <span class="g-icon-md">⚔️</span>
+                        <div>
+                            <div class="font-display text-[.78rem] c-t">N/A</div>
+                            <div class="g-ally-name">Alliance active</div>
+                        </div>
                     </div>
                 </div>
-                {% endfor %}
             </div>
-            <div class="scard p-6">
-                <div class="sidebar-label sidebar-label--mb16">Avantages</div>
-                <div class="flex items-center gap-2 py-2" class="bb-dim"><span class="c-red">◈</span><span class="mn-74t">Attaque 0%</span></div>
-                <div class="flex items-center gap-2 py-2" class="bb-dim"><span class="c-red">◈</span><span class="mn-74t">Défense 0%</span></div>
-                <div class="flex items-center gap-2 py-2 mb-5"><span class="c-red">◈</span><span class="mn-74t">Butin x0</span></div>
-                <button class="join-btn font-display" style="background:#ef4444;color:#080604">Rejoindre IronLords</button>
+
+            <div class="scard p-5 reveal">
+                <div class="sidebar-label">Infos</div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between">
+                        <span class="mn-62m">Fondée</span><span class="mn-62t">N/A</span>
+                    </div>
+                </div>
             </div>
+
         </div>
+
+
     </div>
 </div>
 {% endblock %}
