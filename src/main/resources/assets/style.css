@@ -969,7 +969,7 @@ h1.hero-title {
     font-size: 11px;
     letter-spacing: .5em;
     color: var(--e);
-    opacity: .35;
+    opacity: 100%;
     margin-bottom: 6px;
     display: block;
     text-shadow: 0 1px 8px rgba(0,0,0,.95);
@@ -5639,7 +5639,7 @@ h1.hero-title {
 }
 
 .avatar {
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 /* ═══ RESPONSIVE GÉNÉRAL ═══ */
@@ -6283,4 +6283,60 @@ h1.hero-title {
 @keyframes hero-scroll-fade {
     0%, 100% { opacity: .25; transform: translateX(-50%) translateY(0); }
     50%       { opacity: .65; transform: translateX(-50%) translateY(5px); }
+}
+
+.cookie-banner {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    width: calc(100% - 48px);
+    max-width: 1280px;
+    background: rgba(14, 11, 8, .96);
+    border: 1px solid var(--bdr);
+    backdrop-filter: blur(8px);
+    animation: cookie-in .3s ease;
+}
+
+@keyframes cookie-in {
+    from { opacity: 0; transform: translateX(-50%) translateY(16px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.cookie-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 20px 24px;
+    flex-wrap: wrap;
+}
+
+.cookie-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.cookie-title {
+    font-family: 'Philosopher', serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--t);
+    display: block;
+    margin-bottom: 6px;
+}
+
+.cookie-text p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--t2);
+    line-height: 1.7;
+    margin: 0 0 4px;
+}
+
+.cookie-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
 }

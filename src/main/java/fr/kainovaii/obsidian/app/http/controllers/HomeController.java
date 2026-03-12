@@ -28,4 +28,10 @@ public class HomeController extends BaseController
 
     @GET(value = "/construction", name = "site.building")
     private Object building() { return render("building.html", Map.of()); }
+
+    @GET(value = "/mentions-legales", name = "site.legal")
+    private Object legal() { return render("legal.html", Map.of()); }
+
+    @GET(value = "/contact", name = "site.legal")
+    private Object contact() { return render("contact.html", Map.of()); }
 }

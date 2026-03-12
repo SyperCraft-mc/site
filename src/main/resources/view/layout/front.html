@@ -14,7 +14,7 @@
         <div class="nav-inner">
             <a href="/" class="logo"><img src="/assets/logo.png" width="40px" alt=""></a>
             <ul class="nav-links">
-                <li><a href="/">Accueil</a></li>
+                <li><a href="/accueil">Accueil</a></li>
                 <li><a href="/factions">Factions</a></li>
                 <li><a href="/joueurs">Joueurs</a></li>
             </ul>
@@ -57,14 +57,28 @@
         {% endblock %}
     </div>
 
+    <div id="cookie-banner" class="cookie-banner" style="display:none">
+        <div class="cookie-inner">
+            <div class="cookie-text">
+                <span class="cookie-title">🍪 Cookies</span>
+                <p>Ce site utilise uniquement des cookies strictement nécessaires à votre session de connexion. Aucun cookie publicitaire ou de tracking.</p>
+                <a href="/mentions-legales" class="c-e" style="text-decoration:none;font-size:12px">En savoir plus</a>
+            </div>
+            <div class="cookie-actions">
+                <button id="cookie-accept" class="btn-forge btn-forge-sm">Accepter</button>
+                <button id="cookie-refuse" class="btn-stone btn-stone-sm">Refuser</button>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="ft-inner">
             <a href="/" class="logo logo-sm">SyperCraft</a>
             <div class="ft-copy">© 2025 SyperCraft — Not affiliated with Mojang Studios</div>
             <div class="ft-links">
                 <a href="" class="ft-link">CGU</a>
-                <a href="#" class="ft-link">Règles</a>
-                <a href="#" class="ft-link">Contact</a>
+                <a href="/mentions-legales" class="ft-link">Mentions Légales</a>
+                <a href="/contact" class="ft-link">Contact</a>
             </div>
         </div>
     </footer>

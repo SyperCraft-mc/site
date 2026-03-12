@@ -6,12 +6,19 @@
             <div class="flex items-end justify-between">
                 <div>
                     <div class="page-eyebrow">— COMMUNAUTÉ —</div>
-                    <h1 class="font-display font-black page-h1">Factions</h1>
+                    <h1 class="font-display font-black page-h1">Annuaire des <em class="em-accent">Factions</em></h1>
                     <div class="page-rule"></div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="scard p-5 mb-4 reveal">
+        <div class="relative">
+            <span class="mb-search-icon">⌕</span>
+            <input type="text" class="search-input mb-search-pl" placeholder="Rechercher une faction…">
+        </div>
+    </div>
+    <div class="mn-58m mb-2">Affichage de {{ factions | length }} factions</div>
     <div id="t-liste">
         <div class="grid grid-cols-2 gap-px mb-px fc-grid-bg">
             {% for faction in factions %}
@@ -42,8 +49,5 @@
             {% endfor %}
         </div>
     </div>
-
-
-
 </div>
 {% endblock %}
