@@ -24,6 +24,12 @@ public class HomeController extends BaseController
         }
     }
 
+    @GET(value = "/home", name = "site.home")
+    private Object homepage()
+    {
+        return render("home.html", Map.of());
+    }
+
     @GET(value = "/construction", name = "site.building")
     private Object building() { return render("building.html", Map.of()); }
 }

@@ -31,4 +31,13 @@ public class AccountController extends BaseController
         FactionDTO faction = DB.withConnection(() -> factionService.findByUser(loggedUser.getUUID()));
         return render("faction/edit.html", Map.of("faction", faction));
     }
+
+    @HasRole("DEFAULT")
+    @GET(value = "/mon-compte/faction/relation", name = "account.index")
+    private Object editFactionRelationship(Request req, FactionService factionService)
+    {
+        AppUserDetails loggedUser = getLoggedUser(req);
+        FactionDTO faction = DB.withConnection(() -> factionService.findByUser(loggedUser.getUUID()));
+        return render("faction/relationship.html", Map.of("faction", faction));
+    }
 }

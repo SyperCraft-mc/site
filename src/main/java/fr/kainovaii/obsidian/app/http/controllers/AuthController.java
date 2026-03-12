@@ -18,6 +18,13 @@ import java.util.Map;
 @Controller
 public class AuthController extends BaseController
 {
+    @GET(value = "/users/login", name = "redirectLogin")
+    public Object redirectLogin(Request req, Response res)
+    {
+        res.redirect("/mon-compte/login");
+        return "";
+    }
+
     @GET(value = "/mon-compte/login", name = "login")
     public Object loginPage(Request req, Response res)
     {

@@ -1,0 +1,23 @@
+{% extends "view/layout/front.html" %}
+{% block content %}
+<div class="relative z-10 max-w-[1280px] mx-auto px-14 pt-20 pb-20">
+    <div class="flex items-center gap-3 mb-8 reveal mn-64m mt-3">
+        <a href="/factions" class="bc-link">Factions</a>
+        <span>›</span>
+        <a href="/factions/s/{{ faction.name }}" class="bc-link" id="bc-name">{{ faction.name }}</a>
+        <span>›</span>
+        <a href="/mon-compte/faction" class="bc-link">Modifier</a>
+        <span>›</span>
+        <span class="c-t2">Relations</span>
+    </div>
+
+    <div class="mb-8 reveal">
+        <div class="page-eyebrow">— DIPLOMATIE —</div>
+        <h1 class="font-display font-black page-h1-sm">
+            Gérer les <em class="em-accent">Relations</em>
+        </h1>
+        <div class="page-rule"></div>
+    </div>
+
+</div>
+{% endblock %}

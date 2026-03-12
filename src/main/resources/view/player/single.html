@@ -13,7 +13,7 @@
             <!-- Infos -->
             <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-3 mb-2 flex-wrap">
-                    <h1 class="font-display font-black text-[2rem]" class="c-t">{{ player.pseudo }}</h1>
+                    <h1 class="font-display font-black text-[2rem]">{{ player.pseudo }}</h1>
                     {% if player.vipRank.label %}
                     <span class="tag">⭐ {{ player.vipRank.label }}</span>
                     {% endif %}
@@ -22,56 +22,52 @@
                     {% endif %}
                 </div>
                 <p class="pf-bio">
-                    Membre depuis <span class="c-t">{{ player.firstConnection | date("dd MMM yyy") }}</span> ·
+                    Membre depuis <span>{{ player.firstConnection | date("dd MMM yyy") }}</span> ·
                     Dernière connexion
                     {% if player.online %}
                     <span class="pf-val-gr">En ligne</span>
                     {% else %}
-                    <span class="c-t">{{ player.lastConnection | date("dd MMM yyy") }}</span>
+                    <span>{{ player.lastConnection | date("dd MMM yyy") }}</span>
                     {% endif %}
                 </p>
                 <div class="flex gap-8 mb-5 flex-wrap">
                     <div>
                         {% if player.hasFaction %}
-                        <div class="font-display font-semibold text-[.9rem]" class="c-e">{{ player.getFaction.name }}</div>
+                        <div class="font-display font-semibold text-[.9rem] c-e">
+                            <a href="/factions/s/{{ player.getFaction.name }}">{{ player.getFaction.name }}</a>
+                        </div>
                         {% else %}
-                        <div class="font-display font-semibold text-[.9rem]" class="c-e">Sans faction</div>
+                        <div class="font-display font-semibold text-[.9rem] c-e">Sans faction</div>
                         {% endif %}
-
                         <div class="stat-sub">Faction</div>
                     </div>
-                    <div><div class="font-display font-semibold text-[.9rem]" class="c-t">0</div><div class="stat-sub">Classement</div></div>
+                    <div><div class="font-display font-semibold text-[.9rem]">0</div><div class="stat-sub">Classement</div></div>
                 </div>
             </div>
             <!-- Stats rapides -->
             <!--
             <div class="grid grid-cols-2 gap-px flex-shrink-0" class="pf-grid-stats">
-                <div class="scard px-5 py-4 text-center" class="pf-stat-min"><div class="font-display font-bold text-[1.1rem]" class="c-t">1.2M</div><div class="stat-sub">Points</div></div>
-                <div class="scard px-5 py-4 text-center"><div class="font-display font-bold text-[1.1rem]" class="c-t">847h</div><div class="stat-sub">Jeu</div></div>
-                <div class="scard px-5 py-4 text-center"><div class="font-display font-bold text-[1.1rem]" class="c-t">14 230</div><div class="stat-sub">Kills</div></div>
-                <div class="scard px-5 py-4 text-center"><div class="font-display font-bold text-[1.1rem]" class="c-t">47</div><div class="stat-sub">Morts</div></div>
+                <div class="scard px-5 py-4 text-center" class="pf-stat-min"><div class="font-display font-bold text-[1.1rem]">1.2M</div><div class="stat-sub">Points</div></div>
+                <div class="scard px-5 py-4 text-center"><div class="font-display font-bold text-[1.1rem]">847h</div><div class="stat-sub">Jeu</div></div>
+                <div class="scard px-5 py-4 text-center"><div class="font-display font-bold text-[1.1rem]">14 230</div><div class="stat-sub">Kills</div></div>
+                <div class="scard px-5 py-4 text-center"><div class="font-display font-bold text-[1.1rem]">47</div><div class="stat-sub">Morts</div></div>
             </div>
             -->
         </div>
     </div>
 
-    <!-- Onglets -->
-    <div class="flex gap-px mb-px mt-3 hidden">
-        <button class="tbtn on" onclick="tab('stats',this)">Statistiques</button>
-        <button class="tbtn" onclick="tab('inv',this)">Inventaire</button>
-        <button class="tbtn" onclick="tab('suc',this)">Succès</button>
-    </div>
-
-    <!-- STATS -->
     <div id="p-stats" class="">
-        <div class="grid grid-cols-3 gap-px mb-px" class="pf-grid-stats">
-            <div class="scard p-5 reveal"><div class="font-display font-bold text-[1.35rem] mb-1" class="c-t">NaN</div><div class="stat-sub">Temps de jeu</div></div>
-            <div class="scard p-5 reveal"><div class="font-display font-bold text-[1.35rem] mb-1" class="c-t">NaN</div><div class="stat-sub">Mobs tués</div></div>
-            <div class="scard p-5 reveal"><div class="font-display font-bold text-[1.35rem] mb-1" class="c-t">NaN</div><div class="stat-sub">Blocs minés</div></div>
-            <div class="scard p-5 reveal"><div class="font-display font-bold text-[1.35rem] mb-1" class="c-t">NaN</div><div class="stat-sub">Morts</div></div>
-            <div class="scard p-5 reveal"><div class="font-display font-bold text-[1.35rem] mb-1" class="c-t">NaN</div><div class="stat-sub">Distance</div></div>
-            <div class="scard p-5 reveal"><div class="font-display font-bold text-[1.35rem] mb-1" class="c-t">NaN</div><div class="stat-sub">Crafts</div></div>
+        <div class="grid grid-cols-2 gap-px mb-px pf-grid-stats">
+            <div class="scard p-5 reveal">
+                <div class="font-display font-bold text-[1.35rem] mb-1 c-t">{{ player.getPlaytimeFormatted }}</div>
+                <div class="stat-sub">Temps de jeu</div>
+            </div>
+            <div class="scard p-5 reveal">
+                <div class="font-display font-bold text-[1.35rem] mb-1 c-t">NaN</div>
+                <div class="stat-sub">Balance</div>
+            </div>
         </div>
+
         <div class="scard p-6 reveal">
             <div class="sidebar-label sidebar-label--mb16">Activité — 30 derniers jours</div>
             <div class="flex items-end gap-px h-16" id="abars"></div>

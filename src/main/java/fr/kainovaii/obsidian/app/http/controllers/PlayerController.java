@@ -33,14 +33,11 @@ public class PlayerController extends BaseController
     private Object single(Request req, Response res, UserService userService)
     {
         String username = req.params("username");
-
         return DB.withConnection(() -> {
             UserDTO player = userService.findByPseudo(username);
-
             if (player == null) {
                 return redirectWithFlash(req, res, "warning", "Player does not exist", "/joueurs");
             }
-
             return render("player/single.html", Map.of("player", player));
         });
     }

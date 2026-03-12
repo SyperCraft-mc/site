@@ -7,13 +7,7 @@
     <link rel="icon" href="/assets/logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="/assets/style.css" />
     <script src="/assets/tailwind.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: { fontFamily: { display: ["Cinzel", "serif"], mono: ['"JetBrains Mono"', "monospace"] } },
-            },
-        };
-    </script>
+    <script>tailwind.config = { theme: { extend: { fontFamily: { display: ["Cinzel", "serif"], mono: ['"JetBrains Mono"', "monospace"] } }, }, };</script>
 </head>
 <body>
     <nav id="nav">
@@ -51,8 +45,14 @@
                     </div>
                 </div>
                 {% else %}
-                <a href="/mon-compte/login" class="nav-user-btn">
-                    Mon compte
+                <a href="/mon-compte/login" class="btn-microsoft sm">
+                    <svg width="12" height="12" viewBox="0 0 21 21" fill="none">
+                        <rect x="1"  y="1"  width="9" height="9" fill="#f25022"/>
+                        <rect x="11" y="1"  width="9" height="9" fill="#7fba00"/>
+                        <rect x="1"  y="11" width="9" height="9" fill="#00a4ef"/>
+                        <rect x="11" y="11" width="9" height="9" fill="#ffb900"/>
+                    </svg>
+                    Connexion avec Microsoft
                 </a>
                 {% endif %}
             </div>
@@ -67,10 +67,10 @@
 
     <footer>
         <div class="ft-inner">
-            <a href="#hero" class="logo logo-sm">SyperCraft</a>
+            <a href="/" class="logo logo-sm">SyperCraft</a>
             <div class="ft-copy">© 2025 SyperCraft — Not affiliated with Mojang Studios</div>
             <div class="ft-links">
-                <a href="#" class="ft-link">CGU</a>
+                <a href="" class="ft-link">CGU</a>
                 <a href="#" class="ft-link">Règles</a>
                 <a href="#" class="ft-link">Contact</a>
             </div>
