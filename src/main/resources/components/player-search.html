@@ -1,27 +1,26 @@
 <div live:id="{{ _id }}" xmlns:live="http://www.w3.org/1999/xhtml">
-    <div class="scard p-5 mb-4">
+    <div class="scard p-5 mb-4 ">
         <div class="grid gap-4 mb-filter-grid">
             <div class="relative">
                 <span class="mb-search-icon">⌕</span>
                 <input
                         live:model="search"
                         live:debounce="300"
-                        live:input="search"
                         type="text"
                         class="search-input mb-search-pl"
                         placeholder="Rechercher un joueur…"
                         value="{{ search }}"
                 >
             </div>
-            <select class="f-select" live:model="factionFilter" live:change="search">
+            <select class="f-select" live:model="factionFilter">
                 <option value="">Toutes factions</option>
                 <option value="Mock">⚔ Mock</option>
             </select>
-            <select class="f-select" live:model="rankFilter" live:change="search">
+            <select class="f-select" live:model="rankFilter">
                 <option value="">Tous rangs</option>
                 <option value="Admin">🛡 Admin</option>
             </select>
-            <select class="f-select" live:model="statusFilter" live:change="search">
+            <select class="f-select" live:model="statusFilter">
                 <option value="">Tous</option>
                 <option value="online">🟢 En ligne</option>
                 <option value="offline">⚫ Hors ligne</option>
@@ -33,7 +32,7 @@
 
     <div class="grid mb-grid-new">
         {% for player in filteredPlayers %}
-        <div class="mb-card-new ">
+        <div class="mb-card-new">
             <div class="mb-card-top">
                 <div class="mb-card-identity">
                     <div class="mb-card-ico">

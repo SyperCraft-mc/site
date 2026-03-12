@@ -32,10 +32,19 @@ public class PlayerSearch extends LiveComponent
     @State
     private int page = 0;
 
-    private static final int PAGE_SIZE = 21;
+    private static final int PAGE_SIZE = 12;
 
-    // Cache pour le render courant — évite N requêtes DB par render
     private transient List<UserDTO> cachedFiltered = null;
+
+    @Override
+    public void updateField(String fieldName, Object value)
+    {
+        super.updateField(fieldName, value);
+        if (!fieldName.equals("page")) {
+            page = 0;
+            cachedFiltered = null;
+        }
+    }
 
     private List<UserDTO> filtered()
     {
@@ -71,7 +80,6 @@ public class PlayerSearch extends LiveComponent
     public boolean isHasPrev() { return page > 0; }
     public boolean isHasNext() { return (page + 1) * PAGE_SIZE < filtered().size(); }
     public int getPage() { return page; }
-
     public String getSearch() { return search; }
     public String getFactionFilter() { return factionFilter; }
     public String getRankFilter() { return rankFilter; }
@@ -79,7 +87,6 @@ public class PlayerSearch extends LiveComponent
 
     public void prev() { if (page > 0) page--; }
     public void next() { if (isHasNext()) page++; }
-    public void search() { page = 0; }
 
     @Override
     public String template() { return "components/player-search.html"; }

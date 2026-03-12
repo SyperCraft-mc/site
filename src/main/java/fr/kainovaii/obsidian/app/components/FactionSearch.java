@@ -27,6 +27,16 @@ public class FactionSearch extends LiveComponent
 
     private transient List<FactionDTO> cachedFiltered = null;
 
+    @Override
+    public void updateField(String fieldName, Object value)
+    {
+        super.updateField(fieldName, value);
+        if (!fieldName.equals("page")) {
+            page = 0;
+            cachedFiltered = null;
+        }
+    }
+
     private List<FactionDTO> filtered()
     {
         if (cachedFiltered != null) return cachedFiltered;
@@ -58,7 +68,6 @@ public class FactionSearch extends LiveComponent
 
     public void prev() { if (page > 0) page--; }
     public void next() { if (isHasNext()) page++; }
-    public void search() { page = 0; }
 
     @Override
     public String template() { return "components/faction-search.html"; }
