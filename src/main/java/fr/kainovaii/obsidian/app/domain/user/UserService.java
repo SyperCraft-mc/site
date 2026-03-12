@@ -49,7 +49,6 @@ public class UserService
         List<User> users = userRepository.findAll();
         if (users.isEmpty()) return Collections.emptyList();
 
-        // --- SQL : 1 requête par table rank ---
         Map<Integer, StaffRank> staffRanks = staffRankRepository.findAll()
                 .stream()
                 .collect(Collectors.toMap(r -> (Integer) r.getId(), r -> r));
@@ -58,21 +57,17 @@ public class UserService
                 .stream()
                 .collect(Collectors.toMap(r -> (Integer) r.getId(), r -> r));
 
-        // --- Redis : tous les serveurs en une passe ---
         Map<String, String> onlineMap = buildOnlineMap();
 
-        // --- Redis : tous les FPlayers en une passe ---
-        Set<String> uuids = users.stream().map(User::getUUID).collect(Collectors.toSet());
-        Map<String, FPlayer> fplayers = batchFPlayers(uuids);
+        List<String> uuidList = users.stream().map(User::getUUID).toList();
+        Map<String, FPlayer> fplayers = batchFPlayers(uuidList);
 
-        // --- Redis : toutes les factions nécessaires en une passe ---
         Set<Integer> factionIds = fplayers.values().stream()
                 .filter(fp -> fp != null && fp.hasFaction())
                 .map(FPlayer::getFactionId)
                 .collect(Collectors.toSet());
-        Map<Integer, Faction> factions = batchFactions(factionIds);
+        Map<Integer, Faction> factions = batchFactions(new ArrayList<>(factionIds));
 
-        // --- Assembly ---
         return users.stream()
                 .map(u -> toDTOBatch(u, staffRanks, vipRanks, onlineMap, fplayers, factions))
                 .toList();
@@ -80,29 +75,47 @@ public class UserService
 
     private Map<String, String> buildOnlineMap() {
         Set<String> keys = Main.loadRedis().keys("SERVER:*");
+        if (keys.isEmpty()) return Collections.emptyMap();
+
+        List<String> keyList = new ArrayList<>(keys);
+        List<String> servers = Main.loadRedis().getPipeline(keyList);
+
         Map<String, String> map = new HashMap<>();
-        for (String key : keys) {
-            String uuid = key.replace("SERVER:", "");
-            String server = Main.loadRedis().get(key);
-            if (server != null) map.put(uuid, server);
+        for (int i = 0; i < keyList.size(); i++) {
+            String server = servers.get(i);
+            if (server != null) {
+                map.put(keyList.get(i).replace("SERVER:", ""), server);
+            }
         }
         return map;
     }
 
-    private Map<String, FPlayer> batchFPlayers(Set<String> uuids) {
+    private Map<String, FPlayer> batchFPlayers(List<String> uuids) {
+        if (uuids.isEmpty()) return Collections.emptyMap();
+        List<String> keys = uuids.stream().map(u -> "FPLAYER:" + u).toList();
+        List<Map<String, String>> results = Main.loadRedis().hgetAllPipeline(keys);
+
         Map<String, FPlayer> result = new HashMap<>();
-        for (String uuid : uuids) {
-            FPlayer fp = factionRepository.findFPlayer(uuid);
-            result.put(uuid, fp); // null si pas de faction, géré à l'assembly
+        for (int i = 0; i < uuids.size(); i++) {
+            Map<String, String> data = results.get(i);
+            if (data != null && !data.isEmpty()) {
+                result.put(uuids.get(i), FPlayer.fromRedis(uuids.get(i), data));
+            }
         }
         return result;
     }
 
-    private Map<Integer, Faction> batchFactions(Set<Integer> ids) {
+    private Map<Integer, Faction> batchFactions(List<Integer> ids) {
+        if (ids.isEmpty()) return Collections.emptyMap();
+        List<String> keys = ids.stream().map(id -> "FACTION:" + id).toList();
+        List<Map<String, String>> results = Main.loadRedis().hgetAllPipeline(keys);
+
         Map<Integer, Faction> result = new HashMap<>();
-        for (int id : ids) {
-            Faction f = factionRepository.findById(id);
-            if (f != null) result.put(id, f);
+        for (int i = 0; i < ids.size(); i++) {
+            Map<String, String> data = results.get(i);
+            if (data != null && !data.isEmpty()) {
+                result.put(ids.get(i), Faction.fromRedis(data));
+            }
         }
         return result;
     }
@@ -139,7 +152,6 @@ public class UserService
     }
 
     public int allPlayerOnline() {
-        Set<String> keys = Main.loadRedis().keys("SERVER:*");
-        return keys.size();
+        return Main.loadRedis().keys("SERVER:*").size();
     }
 }
