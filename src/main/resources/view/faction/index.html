@@ -1,15 +1,17 @@
 {% extends "view/layout/front.html" %}
 {% block content %}
 <div class="relative z-10 max-w-[1280px] mx-auto px-14 pt-20 pb-20">
-    <div class="flex items-end justify-between mb-10 reveal mt-5">
-        <div>
-            <div class="page-eyebrow">— COMMUNAUTÉ —</div>
-            <h1 class="font-display font-black page-h1">Factions</h1>
-            <div class="page-rule"></div>
+    <div class="page-header-box">
+        <div class="max-w-[1280px] mx-auto px-14">
+            <div class="flex items-end justify-between">
+                <div>
+                    <div class="page-eyebrow">— COMMUNAUTÉ —</div>
+                    <h1 class="font-display font-black page-h1">Factions</h1>
+                    <div class="page-rule"></div>
+                </div>
+            </div>
         </div>
-
     </div>
-
     <div id="t-liste">
         <div class="grid grid-cols-2 gap-px mb-px fc-grid-bg">
             {% for faction in factions %}

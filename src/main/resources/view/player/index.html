@@ -1,15 +1,18 @@
 {% extends "view/layout/front.html" %}
 {% block content %}
 <div class="relative z-10 max-w-[1280px] mx-auto px-14 pt-20 pb-20">
-    <div class="flex items-end justify-between mb-10 reveal mt-5">
-        <div>
-            <div class="page-eyebrow">— COMMUNAUTÉ —</div>
-            <h1 class="font-display font-black page-h1">Annuaire des <em class="em-accent">Guerriers</em></h1>
-            <div class="page-rule"></div>
+    <div class="page-header-box">
+        <div class="max-w-[1280px] mx-auto px-14">
+            <div class="flex items-end justify-between">
+                <div>
+                    <div class="page-eyebrow">— COMMUNAUTÉ —</div>
+                    <h1 class="font-display font-black page-h1">Annuaire des <em class="em-accent">Guerriers</em></h1>
+                    <div class="page-rule"></div>
+                </div>
+                <div class="mn-64m"><span style="color:var(--e)">{{ players | length }}</span> membres · <span class="mb-val-gr">{{ allPlayerOnline }} en ligne</span></div>
+            </div>
         </div>
-        <div class="mn-64m"><span style="color:var(--e)">{{ players | length }}</span> membres · <span class="mb-val-gr">{{ allPlayerOnline }} en ligne</span></div>
     </div>
-
     <div class="scard p-5 mb-4 reveal">
         <div class="grid gap-4 mb-filter-grid">
             <div class="relative">

@@ -16,15 +16,11 @@ public class HomeController extends BaseController
     @GET(value = "/", name = "site.home")
     private Object index(Response res)
     {
-        if (Main.loadEnv().get("ENVIRONMENT").equalsIgnoreCase("PROD")) {
-            res.redirect("/construction");
-            return "";
-        } else {
-            return render("home.html", Map.of());
-        }
+        res.redirect("/accueil");
+        return"";
     }
 
-    @GET(value = "/home", name = "site.home")
+    @GET(value = "/accueil", name = "site.home")
     private Object homepage()
     {
         return render("home.html", Map.of());

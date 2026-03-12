@@ -89,7 +89,7 @@
 
 /* ── COPY IP ── */
 function copyIP() {
-  navigator.clipboard.writeText('play.obsidioncraft.fr').catch(() => {});
+  navigator.clipboard.writeText('play.sypercraft.fr').catch(() => {});
   const t = document.getElementById('toast');
   if (t) { t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2200); }
 }

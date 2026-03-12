@@ -1,29 +1,17 @@
 {% extends "view/layout/front.html" %}
 {% block content %}
-<div class="relative g-banner-wrap">
-    <div class="g-banner-grad1"></div>
-    <div class="g-banner-grad2"></div>
-    <div class="g-banner-hatch"></div>
-    <div class="g-banner-fade"></div>
-    <div class="max-w-[1280px] mx-auto px-14 h-full flex items-center gap-8">
-        <div class="g-banner-logo">⚔️</div>
-        <div class="g-zidx">
-            <div class="flex items-center gap-3 mb-2">
-                <h2 class="font-display font-black text-[2rem] c-t">{{ faction.name }}</h2>
-                <span class="tag tag-red-bg">Lv.{{ faction.level }}</span>
+<div class="relative z-10 max-w-[1280px] mx-auto px-14 mt-20 pb-20">
+    <div class="page-header-box mb-1">
+        <div class="max-w-[1280px] mx-auto px-14 h-full flex items-center gap-8">
+            <div class="g-banner-logo">⚔️</div>
+            <div class="g-zidx">
+                <div class="flex items-center gap-3 mb-2">
+                    <h2 class="font-display font-black text-[2rem] c-t">{{ faction.name }}</h2>
+                    <span class="tag tag-red-bg">Lv.{{ faction.level }}</span>
+                </div>
+                <p class="fc-quote c-red">« {{ faction.description }} »</p>
             </div>
-            <p class="fc-quote c-red">« {{ faction.description }} »</p>
         </div>
-        <div class="ml-auto flex gap-4 items-center g-zidx">
-            <button class="btn-forge g-apply-btn">Rejoindre la faction</button>
-        </div>
-    </div>
-</div>
-
-<div class="relative z-10 max-w-[1280px] mx-auto px-14 pb-20">
-    <div class="flex items-center gap-3 my-6 reveal mn-62m">
-        <a href="/factions" class="bc-link">Factions</a>
-        <span>›</span><span class="c-t2">{{ faction.name }}</span>
     </div>
     <div class="grid gap-5 g-main-grid">
         <div class="flex flex-col gap-px">
