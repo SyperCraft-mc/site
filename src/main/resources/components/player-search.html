@@ -1,0 +1,100 @@
+<div live:id="{{ _id }}" xmlns:live="http://www.w3.org/1999/xhtml">
+    <div class="scard p-5 mb-4">
+        <div class="grid gap-4 mb-filter-grid">
+            <div class="relative">
+                <span class="mb-search-icon">⌕</span>
+                <input
+                        live:model="search"
+                        live:debounce="300"
+                        live:input="search"
+                        type="text"
+                        class="search-input mb-search-pl"
+                        placeholder="Rechercher un joueur…"
+                        value="{{ search }}"
+                >
+            </div>
+            <select class="f-select" live:model="factionFilter" live:change="search">
+                <option value="">Toutes factions</option>
+                <option value="Mock">⚔ Mock</option>
+            </select>
+            <select class="f-select" live:model="rankFilter" live:change="search">
+                <option value="">Tous rangs</option>
+                <option value="Admin">🛡 Admin</option>
+            </select>
+            <select class="f-select" live:model="statusFilter" live:change="search">
+                <option value="">Tous</option>
+                <option value="online">🟢 En ligne</option>
+                <option value="offline">⚫ Hors ligne</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="mn-58m mb-2">Affichage de {{ totalCount }} joueurs · page {{ page + 1 }}/{{ totalPages }}</div>
+
+    <div class="grid mb-grid-new">
+        {% for player in filteredPlayers %}
+        <div class="mb-card-new ">
+            <div class="mb-card-top">
+                <div class="mb-card-identity">
+                    <div class="mb-card-ico">
+                        <img class="avatar" src="https://mc-heads.net/avatar/{{ player.pseudo }}" alt="">
+                    </div>
+                    <div>
+                        <div class="mb-card-pseudo">
+                            {{ player.pseudo }}
+                            {% if player.staffRank != null and player.staffRank.label %}
+                            <span class="ml-[3px] tag">🛡 {{ player.staffRank.label }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="mb-card-lvl capitalize">LVL <span>0</span> ·
+                            {% if player.hasFaction %}
+                            {{ player.getFaction.name }}
+                            {% else %}
+                            Sans faction
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% if player.online %}
+                <span class="mb-card-sdot online" title="En ligne"></span>
+                {% else %}
+                <span class="mb-card-sdot offline" title="Hors ligne"></span>
+                {% endif %}
+            </div>
+            <div class="mb-card-stats">
+                <div class="mb-stat-col">
+                    <div class="mb-stat-lbl2">Dernière connexion</div>
+                    {% if player.hasLastConnection %}
+                    <div class="mb-stat-time">{{ player.lastConnection | date("dd MMM yyy") }}</div>
+                    {% else %}
+                    <div class="mb-stat-time">N/A</div>
+                    {% endif %}
+                </div>
+                <div class="mb-stat-col">
+                    <div class="mb-stat-lbl2">Temps de jeu</div>
+                    <div class="mb-stat-time">{{ player.getPlaytimeFormatted }}</div>
+                </div>
+            </div>
+            <a href="/joueurs/s/{{ player.pseudo }}" class="mb-card-link">Voir le profil →</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if totalPages > 1 %}
+    <div class="flex items-center justify-center gap-3 mt-6">
+        {% if hasPrev %}
+        <button live:click="prev" class="fc-btn-base tag-red px-5 py-2 font-display text-[.68rem] tracking-[.14em] uppercase">← Préc.</button>
+        {% else %}
+        <button disabled class="fc-btn-base px-5 py-2 font-display text-[.68rem] tracking-[.14em] uppercase opacity-30">← Préc.</button>
+        {% endif %}
+
+        <span class="mn-58m">{{ page + 1 }} / {{ totalPages }}</span>
+
+        {% if hasNext %}
+        <button live:click="next" class="fc-btn-base tag-red px-5 py-2 font-display text-[.68rem] tracking-[.14em] uppercase">Suiv. →</button>
+        {% else %}
+        <button disabled class="fc-btn-base px-5 py-2 font-display text-[.68rem] tracking-[.14em] uppercase opacity-30">Suiv. →</button>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>

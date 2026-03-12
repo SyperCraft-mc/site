@@ -13,75 +13,7 @@
             </div>
         </div>
     </div>
-    <div class="scard p-5 mb-4 reveal">
-        <div class="grid gap-4 mb-filter-grid">
-            <div class="relative">
-                <span class="mb-search-icon">⌕</span>
-                <input type="text" class="search-input mb-search-pl" placeholder="Rechercher un joueur…">
-            </div>
-            <select class="f-select">
-                <option value="">Toutes factions</option>
-                <option>⚔ Mock</option>
-            </select>
-            <select class="f-select">
-                <option value="">Tous rangs</option>
-                <option>🛡 Admin</option>
-            </select>
-            <select class="f-select">
-                <option value="">Tous</option>
-                <option>🟢 En ligne</option>
-                <option>⚫ Hors ligne</option>
-            </select>
-        </div>
-    </div>
-
-    <div class="mn-58m mb-2">Affichage de {{ players | length }} joueurs</div>
-    <div class="grid mb-grid-new">
-        {% for player in players %}
-        <div class="mb-card-new reveal">
-            <div class="mb-card-top">
-                <div class="mb-card-identity">
-                    <div class="mb-card-ico"><img class="avatar" src="https://mc-heads.net/avatar/{{ player.pseudo }}" alt=""></div>
-                    <div>
-                        <div class="mb-card-pseudo">
-                            {{ player.pseudo }}
-                            {% if player.staffRank.label %}
-                            <span class="ml-[3px] tag">🛡 {{ player.staffRank.label }}</span>
-                            {% endif %}
-                        </div>
-                        <div class="mb-card-lvl capitalize">LVL <span>0</span> ·
-                            {% if player.hasFaction %}
-                            {{ player.getFaction.name }}
-                            {% else %}
-                            Sans faction
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-                {% if player.online %}
-                <span class="mb-card-sdot online" title="En ligne"></span>
-                {% else %}
-                <span class="mb-card-sdot offline" title="En ligne"></span>
-                {% endif %}
-            </div>
-            <div class="mb-card-stats">
-                <div class="mb-stat-col">
-                    <div class="mb-stat-lbl2">Dernière connexion</div>
-                    {% if player.hasLastConnection %}
-                    <div class="mb-stat-time">{{ player.lastConnection | date("dd MMM yyy") }}</div>
-                    {% else %}
-                    <div class="mb-stat-time">N/A</div>
-                    {% endif %}
-                </div>
-                <div class="mb-stat-col">
-                    <div class="mb-stat-lbl2">Temps de jeu</div>
-                    <div class="mb-stat-time">{{ player.getPlaytimeFormatted }}</div>
-                </div>
-            </div>
-            <a href="/joueurs/s/{{ player.pseudo }}" class="mb-card-link">Voir le profil →</a>
-        </div>
-        {% endfor %}
-    </div>
+    {{ component('PlayerSearch') | raw }}
 </div>
 
 {% endblock %}

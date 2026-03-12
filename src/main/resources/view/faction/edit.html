@@ -19,15 +19,11 @@
     </div>
 
     <div class="grid gap-5 ef-main-grid">
-
-        <!-- ══ MAIN COLUMN ══ -->
         <div class="flex flex-col gap-px">
-
-            <!-- Identité & Emblème -->
+            {% if factionIsEditable %}
             <div class="scard p-6 reveal">
                 <div class="sec-title">Identité & Emblème</div>
                 <div class="grid gap-8 ef-header-grid">
-                    <!-- Live preview -->
                     <div class="text-center flex-shrink-0">
                         <div class="w-24 h-24 grid place-items-center text-[2.8rem] mx-auto mb-3"
                              class="ef-preview-faction-bg"
@@ -35,7 +31,6 @@
                         <div class="font-display font-bold text-[.88rem] mb-0.5 ef-name-preview" id="name-preview">{{ faction.name }}</div>
                         <div class="mono-muted">Aperçu</div>
                     </div>
-                    <!-- Controls -->
                     <div>
                         <div class="f-label mb-3">Choisir un emblème <span>*</span></div>
                         <div class="grid gap-1.5 mb-5 ef-color-grid">
@@ -59,7 +54,7 @@
                     </div>
                 </div>
             </div>
-
+            {% endif %}
             <div class="scard p-6 reveal">
                 <div class="sec-title">Informations générales</div>
                 <div class="grid gap-4">
@@ -73,17 +68,7 @@
                     </div>
                     <div>
                         <div class="f-label">Description</div>
-                        <textarea class="f-input" id="faction-desc"></textarea>
-                    </div>
-                    <div class="grid gap-4 grid-cols-2-eq">
-                        <div>
-                            <div class="f-label">Tag (3–5 car.) <span>*</span></div>
-                            <input type="text" class="f-input" maxlength="5" placeholder="[TAG]">
-                        </div>
-                        <div>
-                            <div class="f-label">Serveur Discord</div>
-                            <input type="text" class="f-input" value="" placeholder="discord.gg/…">
-                        </div>
+                        <textarea class="f-input" id="faction-desc">Quam ob rem circumspecta cautela observatum est deinceps et cum edita montium petere coeperint grassatores, loci iniquitati milites cedunt. ubi autem in planitie potuerint reperiri, quod contingit adsidue, nec exsertare lacertos nec crispare permissi tela, quae vehunt bina vel terna, pecudum ritu inertium trucidantur.</textarea>
                     </div>
                 </div>
             </div>
@@ -127,7 +112,7 @@
             {% endif %}
 
             <div class="scard p-6 reveal">
-                <div class="sec-title">Membres (87)</div>
+                <div class="sec-title">Membres ({{ faction.members | length }})</div>
                 <div class="flex flex-col">
                     {% for member in faction.members %}
                     <div class="member-row">
@@ -155,7 +140,7 @@
                             <div class="font-display font-semibold text-[.9rem] ef-opt-title">Dissoudre la faction</div>
                             <div class="mn-62m">Cette action est irréversible. Tous les membres seront exclus.</div>
                         </div>
-                        <button class="btn-danger">💀 Dissoudre</button>
+                        <button disabled class="btn-danger">💀 Dissoudre</button>
                     </div>
                 </div>
             </div>
@@ -190,7 +175,7 @@
                     </div>
                 </div>
             </div>
-
+            {% if factionIsEditable %}
             <div class="scard p-5 reveal">
                 <div class="sec-title">Alliances & Guerres</div>
                 <div class="mn-62m" style="margin-bottom:12px">Relations actives</div>
@@ -208,20 +193,17 @@
                     <button class="w-full py-2 font-display text-[.62rem] uppercase tracking-widest btn-ghost">+ Gérer les relations</button>
                 </a>
             </div>
-
+            {% endif %}
             <div class="scard p-5 reveal">
                 <div class="sec-title">Coffre commun</div>
                 <div class="flex items-center justify-between mb-3">
                     <span class="mn-68m">Solde</span>
-                    <span class="font-display font-bold ef-treasury-val">{{ faction.balance }} 💰</span>
+                    <span class="font-display font-bold ef-treasury-val">{{ faction.balance }} $</span>
                 </div>
-
             </div>
-
             <div class="scard p-5 reveal">
                 <button class="btn-save w-full justify-center mb-3">◈ Sauvegarder</button>
             </div>
-
         </div>
     </div>
 </div>

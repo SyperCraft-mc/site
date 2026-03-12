@@ -12,42 +12,6 @@
             </div>
         </div>
     </div>
-    <div class="scard p-5 mb-4 reveal">
-        <div class="relative">
-            <span class="mb-search-icon">⌕</span>
-            <input type="text" class="search-input mb-search-pl" placeholder="Rechercher une faction…">
-        </div>
-    </div>
-    <div class="mn-58m mb-2">Affichage de {{ factions | length }} factions</div>
-    <div id="t-liste">
-        <div class="grid grid-cols-2 gap-px mb-px fc-grid-bg">
-            {% for faction in factions %}
-            <div class="fc reveal">
-                <div class="fc-top fc-top-red"></div>
-                <div class="fc-corner fc-corner-red"></div>
-                <div class="flex justify-between items-start mb-5">
-                    <div>
-                        <div class="fc-eyebrow c-red">⚔ FACTION</div>
-                        <div class="font-display font-bold text-[1.35rem]" class="c-t">{{ faction.name }}</div>
-                        <div class="mn-68it">« {{ faction.description }} »</div>
-                    </div>
-                    <div class="text-right"><div class="font-display font-bold text-[1.4rem]" class="c-red">Lv.{{ faction.level }}</div><div class="mn-58m">niveau</div></div>
-                </div>
-                <div class="grid grid-cols-3 gap-px mb-4 fc-stats-bg-red">
-                    <div class="sc text-center p-3"><div class="font-display font-bold text-[.95rem]" class="c-t">{{ faction.point }}</div><div class="mn-55m">Pouvoir</div></div>
-                    <div class="sc text-center p-3"><div class="font-display font-bold text-[.95rem]" class="c-t">{{ faction.xp }}</div><div class="mn-55m">XP</div></div>
-                    <div class="sc text-center p-3"><div class="font-display font-bold text-[.95rem]" class="c-t">{{ faction.chunkCount }}</div><div class="mn-55m">Zones</div></div>
-                </div>
-                <div class="mb-4">
-                    <div class="flex justify-between mb-1" class="mn-6m"><span>Membres</span><span class="c-red">{{ faction.memberCount }}/100</span></div>
-
-                </div>
-                <a href="/factions/s/{{ faction.name }}">
-                    <button class="w-full py-2.5 font-display text-[.68rem] font-semibold tracking-[.14em] uppercase transition-all fc-btn-base tag-red">Voir la fiche →</button>
-                </a>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
+    {{ component('FactionSearch') | raw }}
 </div>
 {% endblock %}

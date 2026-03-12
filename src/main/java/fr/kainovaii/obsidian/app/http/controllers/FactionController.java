@@ -7,6 +7,8 @@ import fr.kainovaii.obsidian.app.domain.faction.FactionService;
 import fr.kainovaii.obsidian.database.DB;
 import fr.kainovaii.obsidian.http.controller.BaseController;
 import fr.kainovaii.obsidian.http.controller.annotations.Controller;
+import fr.kainovaii.obsidian.http.middleware.annotations.Before;
+import fr.kainovaii.obsidian.livecomponents.session.SessionMiddleware;
 import fr.kainovaii.obsidian.routing.methods.GET;
 import spark.Request;
 
@@ -16,11 +18,11 @@ import java.util.Map;
 @Controller
 public class FactionController extends BaseController
 {
+    @Before(SessionMiddleware.class)
     @GET(value = "/factions", name = "faction.index")
-    private Object index(FactionService factionService)
+    private Object index()
     {
-        List<FactionDTO> factions = DB.withConnection(() -> factionService.findAll().stream().toList());
-        return render("faction/index.html", Map.of("factions", factions));
+        return render("faction/index.html", Map.of());
     }
 
     @GET(value = "/factions/s/:name", name = "faction.single")

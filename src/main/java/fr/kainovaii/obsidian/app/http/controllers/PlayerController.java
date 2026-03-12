@@ -1,17 +1,13 @@
 package fr.kainovaii.obsidian.app.http.controllers;
 
-import fr.kainovaii.obsidian.app.domain.staffrank.StaffRank;
-import fr.kainovaii.obsidian.app.domain.staffrank.StaffRankRepository;
-import fr.kainovaii.obsidian.app.domain.user.User;
 import fr.kainovaii.obsidian.app.domain.user.UserDTO;
-import fr.kainovaii.obsidian.app.domain.user.UserRepository;
 import fr.kainovaii.obsidian.app.domain.user.UserService;
-import fr.kainovaii.obsidian.app.domain.viprank.VipRank;
-import fr.kainovaii.obsidian.app.domain.viprank.VipRankRepository;
 import fr.kainovaii.obsidian.app.redis.models.*;
 import fr.kainovaii.obsidian.database.DB;
 import fr.kainovaii.obsidian.http.controller.BaseController;
 import fr.kainovaii.obsidian.http.controller.annotations.Controller;
+import fr.kainovaii.obsidian.http.middleware.annotations.Before;
+import fr.kainovaii.obsidian.livecomponents.session.SessionMiddleware;
 import fr.kainovaii.obsidian.routing.methods.GET;
 import spark.Request;
 import spark.Response;
@@ -22,11 +18,17 @@ import java.util.Map;
 @Controller
 public class PlayerController extends BaseController
 {
+    @Before(SessionMiddleware.class)
     @GET(value = "/joueurs", name = "player.index")
     private Object index(UserService userService)
     {
         List<UserDTO> players = DB.withConnection(() -> userService.findAll().stream().toList());
-        return render("player/index.html", Map.of("players", players));
+        long allPlayerOnline = players.stream().filter(UserDTO::isOnline).count();
+
+        return render("player/index.html", Map.of(
+            "players", players,
+            "allPlayerOnline", allPlayerOnline
+        ));
     }
 
     @GET(value = "/joueurs/s/:username", name = "player.single")

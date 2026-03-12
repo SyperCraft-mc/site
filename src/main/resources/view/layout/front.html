@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SyperCraft — Serveur Minecraft</title>
     <link rel="icon" href="/assets/logo.png" type="image/x-icon" />
@@ -74,9 +75,8 @@
     <footer>
         <div class="ft-inner">
             <a href="/" class="logo logo-sm">SyperCraft</a>
-            <div class="ft-copy">© 2025 SyperCraft — Not affiliated with Mojang Studios</div>
+            <div class="ft-copy">© 2026 SyperCraft — Not affiliated with Mojang Studios</div>
             <div class="ft-links">
-                <a href="" class="ft-link">CGU</a>
                 <a href="/mentions-legales" class="ft-link">Mentions Légales</a>
                 <a href="/contact" class="ft-link">Contact</a>
             </div>
@@ -84,6 +84,7 @@
     </footer>
 
     {{ flash() | raw }}
+    {{ livecomponents_scripts | raw }}
     <script src="/assets/main.js"></script>
 </body>
 </html>

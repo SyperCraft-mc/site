@@ -1966,7 +1966,7 @@ h1.hero-title {
 
 .danger-card {
     border: 1px solid var(--danger-b);
-    background: rgba(40,10,10,.60);
+    background: rgba(40,10,10,.40);
     padding: 20px 24px;
     backdrop-filter: blur(2px);
 }
