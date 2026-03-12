@@ -4,6 +4,7 @@ import fr.kainovaii.obsidian.app.domain.faction.models.FactionRank;
 import fr.kainovaii.obsidian.di.annotations.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class FactionRankRepository
@@ -14,6 +15,12 @@ public class FactionRankRepository
 
     public List<FactionRank> findByFactionId(int factionId) {
         return FactionRank.<FactionRank>where("factionID = ?", factionId).load();
+    }
+
+    public List<FactionRank> findByFactionIds(List<Integer> factionIds) {
+        if (factionIds.isEmpty()) return List.of();
+        String placeholders = factionIds.stream().map(i -> "?").collect(Collectors.joining(", "));
+        return FactionRank.<FactionRank>where("factionID IN (" + placeholders + ")", factionIds.toArray()).load();
     }
 
     public boolean save(FactionRank rank) {

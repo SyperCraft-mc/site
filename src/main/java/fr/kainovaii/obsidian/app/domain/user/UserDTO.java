@@ -60,6 +60,33 @@ public class UserDTO
                 .build();
     }
 
+    public static UserDTO fromBatch(
+            User user,
+            StaffRank staffRank,
+            VipRank vipRank,
+            FPlayer fplayer,
+            Faction faction,
+            boolean online,
+            String currentServer)
+    {
+        return new Builder()
+                .uuid(user.getUUID())
+                .pseudo(user.getPseudo())
+                .discordId(user.getDiscordId())
+                .playtimeSeconds(user.getPlaytimeSeconds())
+                .pointBoutique(user.getPointBoutique())
+                .combat(user.isInCombat())
+                .firstConnection(user.firstConnection())
+                .lastConnection(user.lastConnection())
+                .online(online)
+                .currentServer(currentServer)
+                .staffRank(staffRank != null ? StaffRankDTO.from(staffRank) : null)
+                .vipRank(vipRank != null ? VipRankDTO.from(vipRank) : null)
+                .faction(fplayer != null && fplayer.hasFaction() && faction != null
+                        ? FactionDTO.from(faction, fplayer) : null)
+                .build();
+    }
+
     public String getUuid() { return uuid; }
     public String getPseudo() { return pseudo; }
     public String getDiscordId() { return discordId; }
@@ -84,8 +111,6 @@ public class UserDTO
     public boolean hasLastConnection() {
         return lastConnection != null;
     }
-
-    // --- Nested DTOs ---
 
     public record StaffRankDTO(
             int id,
@@ -152,8 +177,6 @@ public class UserDTO
             );
         }
     }
-
-    // --- Builder ---
 
     public static class Builder
     {

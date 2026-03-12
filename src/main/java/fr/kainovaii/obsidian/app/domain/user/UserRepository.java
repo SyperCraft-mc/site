@@ -3,7 +3,8 @@ package fr.kainovaii.obsidian.app.domain.user;
 import fr.kainovaii.obsidian.di.annotations.Repository;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserRepository
@@ -18,6 +19,12 @@ public class UserRepository
 
     public List<User> findAll() {
         return User.findAll().load();
+    }
+
+    public List<User> findByUUIDs(Set<String> uuids) {
+        if (uuids.isEmpty()) return List.of();
+        String placeholders = uuids.stream().map(i -> "?").collect(Collectors.joining(", "));
+        return User.<User>where("UUID IN (" + placeholders + ")", uuids.toArray()).load();
     }
 
     public List<User> findByVipRank(int vipRankId) {

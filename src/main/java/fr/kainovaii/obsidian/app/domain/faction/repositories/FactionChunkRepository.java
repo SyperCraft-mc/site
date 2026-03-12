@@ -4,6 +4,7 @@ import fr.kainovaii.obsidian.app.domain.faction.models.FactionChunk;
 import fr.kainovaii.obsidian.di.annotations.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class FactionChunkRepository
@@ -14,6 +15,12 @@ public class FactionChunkRepository
 
     public List<FactionChunk> findByFactionId(int factionId) {
         return FactionChunk.<FactionChunk>where("idOwner = ?", factionId).load();
+    }
+
+    public List<FactionChunk> findByFactionIds(List<Integer> factionIds) {
+        if (factionIds.isEmpty()) return List.of();
+        String placeholders = factionIds.stream().map(i -> "?").collect(Collectors.joining(", "));
+        return FactionChunk.<FactionChunk>where("idOwner IN (" + placeholders + ")", factionIds.toArray()).load();
     }
 
     public int countByFactionId(int factionId) {
