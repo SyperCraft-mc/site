@@ -40,7 +40,15 @@ public class AppUserDetailsService implements UserDetailsService
         {
             // Obsidian input
             public String getPassword() { return ""; }
-            public String getRole() { return "DEFAULT"; }
+
+            public String getRole()
+            {
+                if (player.getPseudo().equalsIgnoreCase("KainoVaii") || player.getPseudo().equalsIgnoreCase("Nam2Sy")) {
+                    return "ADMIN";
+                } else {
+                    return "DEFAULT";
+                }
+            }
 
             // SyperCraft input
             public Object getId() { return player.getId(); }

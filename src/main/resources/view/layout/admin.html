@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Dashboard &mdash; Obsidian Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/admin.css">
+    <style>
+        .main-grid{display:grid;grid-template-columns:1fr 320px;gap:14px;margin-bottom:22px;}
+        .right-col{display:flex;flex-direction:column;gap:14px;}
+        .bottom-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+        .sparkline-wrap{display:flex;align-items:flex-end;gap:3px;height:60px;padding:16px 20px 12px;}
+        .route-row{display:grid;grid-template-columns:64px 1fr 60px;gap:10px;align-items:center;padding:9px 20px;border-bottom:1px solid rgba(255,255,255,.025);font-family:var(--mono);font-size:.62rem;}
+        .route-row:last-child{border-bottom:none;}
+        .route-ms{color:var(--muted);text-align:right;}
+        .sys-row{padding:11px 20px;border-bottom:1px solid rgba(255,255,255,.025);}
+        .sys-row:last-child{border-bottom:none;}
+        .sys-top{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.56rem;color:var(--muted);margin-bottom:6px;}
+        .sys-top span{color:var(--text);}
+        .log-row{display:flex;gap:10px;padding:7px 20px;border-bottom:1px solid rgba(255,255,255,.025);font-family:var(--mono);font-size:.6rem;align-items:baseline;}
+        .log-row:last-child{border-bottom:none;}
+        .log-ts{color:var(--muted2);font-size:.54rem;flex-shrink:0;}
+        .log-lvl{flex-shrink:0;font-size:.53rem;letter-spacing:.06em;font-weight:500;}
+    </style>
+</head>
+<body class="admin-layout" {% if ocRestore %}data-oc-restore="{{ ocRestore }}"{% endif %}>
+    <aside class="sidebar">
+        <div class="sb-logo">
+            <a href="/accueil" style="margin: 0 auto;">
+                <img src="/assets/logo_text.png" width="150px" alt="">
+            </a>
+        </div>
+        <div class="sb-section">Site</div>
+        <nav class="sb-nav">
+            <a class="sb-item" href="/admin"><span class="sb-icon">&#9638;</span>Tableau de bord</a>
+            <a class="sb-item" href="/admin/players"><span class="sb-icon">&#9638;</span>Page d'accueil</a>
+            <a class="sb-item" href="/admin/players"><span class="sb-icon">&#9638;</span>Page de contact</a>
+            <a class="sb-item" href="/admin/players"><span class="sb-icon">&#9638;</span>Mentions Légales</a>
+        </nav>
+
+        <div class="sb-section">Serveur</div>
+        <nav class="sb-nav">
+            <a class="sb-item" href="/admin/players"><span class="sb-icon">&#9638;</span>Joueurs</a>
+            <a class="sb-item" href="/admin/players"><span class="sb-icon">&#9638;</span>Factions</a>
+        </nav>
+        <div class="sb-bottom">
+            <div class="sb-user-wrap">
+                <div class="sb-user">
+                    <img class="sb-avatar" src="https://mc-heads.net/avatar/{{ loggedUser.username }}" alt="">
+                    <div>
+                        <div class="sb-uname">{{ loggedUser.username }}</div>
+                        <div class="sb-urole">{{ loggedUser.role }}</div>
+                    </div>
+                    <span class="sb-user-caret">&#9662;</span>
+                    <div class="sb-dot"></div>
+                </div>
+                <div class="sb-dropdown">
+                    <div class="sb-dd-header">
+                        <img class="sb-avatar" src="https://mc-heads.net/avatar/{{ loggedUser.username }}" alt="">
+                        <div>
+                            <div class="sb-dd-name">{{ loggedUser.username }}</div>
+                            <div class="sb-dd-email">{{ loggedUser.role }}</div>
+                        </div>
+                    </div>
+                    <div class="sb-dd-section">
+                        <a class="sb-dd-item danger" href="/mon-compte/logout" ><span class="sb-dd-icon">&#8617;</span> Déconnexion</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <div class="sidebar-overlay" id="sb-overlay"></div>
+    <div class="main">
+        {% block content %}{% endblock %}
+    </div>
+    {{ flash() | raw }}
+    {{ livecomponents_scripts | raw }}
+    <script src="/assets/admin.js"></script>
+</body>
+</html>

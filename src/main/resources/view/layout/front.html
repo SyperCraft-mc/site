@@ -25,7 +25,7 @@
                 <div class="nav-user" id="navUser">
                     <button class="nav-user-btn" onclick="toggleUserMenu()">
                         <img src="https://mc-heads.net/avatar/{{ loggedUser.username }}/28" class="nav-avatar avatar" alt="avatar" />
-                        <span class="nav-user-name">{{ loggedUser.username }}</span>
+                        <span class="nav-user-name">♕ {{ loggedUser.username }}</span>
                         <span class="nav-caret">▼</span>
                     </button>
                     <div class="nav-dropdown">
@@ -36,6 +36,7 @@
                                 <span class="nav-dd-rank">{{ loggedUser.role }}</span>
                             </div>
                         </div>
+                        <a href="/admin" class="nav-dd-item danger">♕ Administration</a>
                         <a href="/joueurs/s/{{ loggedUser.username }}" class="nav-dd-item">⚔ Mon profil</a>
                         <a href="/mon-compte/faction" class="nav-dd-item">◈ Ma faction</a>
                         <div class="nav-dd-sep"></div>
