@@ -18,12 +18,9 @@
                 <li><a href="/accueil">Accueil</a></li>
                 <li><a href="/factions">Factions</a></li>
                 <li><a href="/joueurs">Joueurs</a></li>
+                <li><a href="/classements">Classements</a></li>
             </ul>
             <div class="nav-right">
-                <div class="nav-pill">
-                    <span class="nav-pill-dot ab"></span>
-                    <span id="">{{ allPlayerOnline }} joueurs en ligne</span>
-                </div>
                 {% if isLogged %}
                 <div class="nav-user" id="navUser">
                     <button class="nav-user-btn" onclick="toggleUserMenu()">
@@ -46,7 +43,10 @@
                     </div>
                 </div>
                 {% else %}
-
+                <div class="nav-pill">
+                    <span class="nav-pill-dot ab"></span>
+                    <span id="">{{ allPlayerOnline }} joueurs en ligne</span>
+                </div>
                 {% endif %}
             </div>
         </div>

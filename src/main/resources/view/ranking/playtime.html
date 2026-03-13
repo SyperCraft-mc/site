@@ -1,0 +1,76 @@
+{% extends "view/layout/front.html" %}
+{% block content %}
+<div class="relative z-10 max-w-[1280px] mx-auto px-14 pt-20 pb-20">
+
+    <div class="page-header-box mb-1">
+        <div class="max-w-[1280px] mx-auto px-14">
+            <div class="page-eyebrow">— HALL OF FAME —</div>
+            <h1 class="font-display font-black page-h1">Classements <em class="em-accent">Saison 1</em></h1>
+            <div class="page-rule"></div>
+            {% if users | length > 0 %}
+            <div class="cl-champion-strip">
+                <div class="cl-champion-crown">⏱</div>
+                <div>
+                    <div class="cl-champion-label">JOUEUR LE PLUS ACTIF</div>
+                    <div class="cl-champion-name">{{ users[0].pseudo }}</div>
+                </div>
+                <div class="mono-muted" style="margin-left:10px">
+                    {% if users[0].hasFaction %}{{ users[0].faction.name }}{% else %}Sans faction{% endif %}
+                </div>
+                <div class="cl-champion-val">{{ users[0].playtimeFormatted }} <span class="cl-champion-unit">de jeu</span></div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="cl-tabs reveal">
+        <a href="/classements/faction"  class="cl-tab">🏰 FACTIONS</a>
+        <a href="/classements/richesse" class="cl-tab">◈ RICHESSE</a>
+        <a href="/classements/temps"    class="cl-tab on">⏱ TEMPS</a>
+    </div>
+
+    <div class="scard reveal">
+        <div class="cl-table-head cl-table-head-temps">
+            <span class="cl-th">#</span>
+            <span class="cl-th">JOUEUR</span>
+            <span class="cl-th cl-th-r">TEMPS DE JEU</span>
+            <span class="cl-th cl-th-r">DERNIÈRE CONNEXION</span>
+            <span class="cl-th cl-th-r">STATUT</span>
+        </div>
+
+        {% for user in users %}
+        <div class="cl-row cl-row-temps
+            {% if loop.index == 0 %}cl-row-1
+            {% elseif loop.index == 1 %}cl-row-2
+            {% elseif loop.index == 2 %}cl-row-3
+            {% elseif user.pseudo == loggedUser.username %}cl-row-me
+            {% endif %}">
+            <span class="cl-rank">
+                {% if loop.index == 0 %}①
+                {% elseif loop.index == 1 %}②
+                {% elseif loop.index == 2 %}③
+                {% else %}{{ loop.index + 1 }}{% endif %}
+            </span>
+            <a href="/joueurs/s/{{ user.pseudo }}" class="cl-player">
+                <img class="avatar cl-av" src="https://mc-heads.net/avatar/{{ user.pseudo }}"/>
+                <div>
+                    <div class="cl-name">{{ user.pseudo }}</div>
+                    <div class="cl-sub">
+                        {% if user.hasFaction %}{{ user.faction.name }}{% else %}Sans faction{% endif %}
+                    </div>
+                </div>
+            </a>
+            <span class="cl-val">{{ user.playtimeFormatted }}</span>
+            <span class="cl-kd">
+                {% if user.hasLastConnection %}{{ user.lastConnection }}{% else %}—{% endif %}
+            </span>
+            <div class="cl-badge">
+                {% if user.online %}<span class="c-gr">En ligne</span>
+                {% else %}<span class="c-gr">Hors ligne</span>{% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

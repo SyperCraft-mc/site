@@ -1,0 +1,91 @@
+{% extends "view/layout/front.html" %}
+{% block content %}
+<div class="relative z-10 max-w-[1280px] mx-auto px-14 pt-20 pb-20">
+
+    <div class="page-header-box mb-1">
+        <div class="max-w-[1280px] mx-auto px-14">
+            <div class="page-eyebrow">— HALL OF FAME —</div>
+            <h1 class="font-display font-black page-h1">Classements <em class="em-accent">Saison 1</em></h1>
+            <div class="page-rule"></div>
+            {% if factions | length > 0 %}
+            <div class="cl-champion-strip">
+                <div class="cl-champion-crown">🏆</div>
+                <div>
+                    <div class="cl-champion-label">FACTION N°1</div>
+                    <div class="cl-champion-name">{{ factions[0].name }}</div>
+                </div>
+                <div class="mono-muted" style="margin-left:10px">{{ factions[0].memberCount }} membres · LVL {{ factions[0].level }}</div>
+                <div class="cl-champion-val">{{ factions[0].points }} <span class="cl-champion-unit">points</span></div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="cl-tabs reveal">
+        <a href="/classements/faction"  class="cl-tab on">🏰 FACTIONS</a>
+        <a href="/classements/richesse" class="cl-tab">◈ RICHESSE</a>
+        <a href="/classements/temps"    class="cl-tab">⏱ TEMPS</a>
+    </div>
+
+    <div class="scard reveal">
+        <div class="cl-table-head cl-table-head-factions">
+            <span class="cl-th">#</span>
+            <span class="cl-th">FACTION</span>
+            <span class="cl-th cl-th-r">POINTS</span>
+            <span class="cl-th cl-th-r">MEMBRES</span>
+            <span class="cl-th cl-th-r">CHUNKS</span>
+            <span class="cl-th cl-th-r">NIVEAU</span>
+        </div>
+
+        {% for faction in factions %}
+        <div class="cl-row cl-row-factions
+            {% if loop.index == 0 %}cl-row-1
+            {% elseif loop.index == 1 %}cl-row-2
+            {% elseif loop.index == 2 %}cl-row-3
+            {% elseif faction.name == currentFaction %}cl-row-me
+            {% endif %}">
+            <span class="cl-rank">
+                {% if loop.index == 0 %}①
+                {% elseif loop.index == 1 %}②
+                {% elseif loop.index == 2 %}③
+                {% else %}{{ loop.index + 1 }}{% endif %}
+            </span>
+            <div class="cl-player">
+                <div class="cl-faction-em">🏰</div>
+                <div>
+                    <div class="cl-name">{{ faction.name }}</div>
+                    <div class="cl-sub">{{ faction.description }}</div>
+                </div>
+            </div>
+            <span class="cl-val">{{ faction.points }}</span>
+            <span class="cl-kd">{{ faction.memberCount }}/100</span>
+            <span class="cl-kd">{{ faction.chunkCount }}</span>
+            <div class="cl-badge"><span>Lv.{{ faction.level }}</span></div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if currentFaction %}
+    <div class="scard mt-px reveal">
+        <div class="cl-row cl-row-factions cl-row-me">
+            <span class="cl-rank">{{ currentFactionRank }}</span>
+            <div class="cl-player">
+                <div class="cl-faction-em">🏰</div>
+                <div>
+                    <div class="cl-name">{{ currentFaction }}</div>
+                    <div class="cl-sub">Votre faction</div>
+                </div>
+            </div>
+            <span class="cl-val">{{ currentFactionPoints }}</span>
+            <span class="cl-kd">{{ currentFactionMembers }}/100</span>
+            <span class="cl-kd">{{ currentFactionChunks }}</span>
+            <div class="cl-badge"><span>Lv.{{ currentFactionLevel }}</span></div>
+        </div>
+        <div class="cl-footer">
+            Votre faction · <span class="c-e">{{ currentFactionGap }} points</span> de retard sur la 1ère place
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

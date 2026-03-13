@@ -2478,11 +2478,34 @@ h1.hero-title {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 2px 9px;
+    padding: 3px 8px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 10px;
     letter-spacing: .08em;
-    border: 1px solid
+    border: 1px solid;
+    border-radius: 3px;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+
+.tag.white {
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+}
+
+.tag.dark-red {
+    border-color: #aa0000;
+    color: #aa0000;
+}
+
+.tag.light-red {
+    border-color: #ff5555;
+    color: #ff5555;
+}
+
+.tag.yellow {
+    border-color: #ffaa00;
+    color: #ffaa00;
 }
 
 .lb-row {
@@ -2820,11 +2843,16 @@ h1.hero-title {
     background: var(--white-02);
     border: 1px solid var(--bdd);
     border-bottom: 1px solid var(--bdr);
-    padding: 0 16px;
+    padding: 0 20px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 14px;
     color: var(--t2);
-    outline: none
+    outline: none;
+    width: auto;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238a7858' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
 }
 
 /* ── CLASSEMENT / TABLE COLONNES ── */
@@ -4985,7 +5013,7 @@ h1.hero-title {
 
 @media(min-width:600px) {
     .mb-filter-grid {
-        grid-template-columns: 1fr auto auto auto
+        grid-template-columns: 0.80fr auto auto
     }
 }
 
@@ -5512,7 +5540,7 @@ h1.hero-title {
 .mb-card-pseudo {
     font-family: 'Philosopher', serif;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 18px;
     color: var(--t);
     line-height: 1;
     margin-bottom: 5px
@@ -6339,4 +6367,157 @@ h1.hero-title {
     display: flex;
     gap: 10px;
     flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════
+   CLASSEMENTS
+══════════════════════════════════════ */
+
+.cl-champion-strip {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(212,160,23,.06);
+    border: 1px solid rgba(212,160,23,.2);
+    padding: 10px 14px;
+    margin-top: 14px;
+}
+.cl-champion-crown { font-size: 22px; }
+.cl-champion-label { font-size: 12px; color: var(--t2); letter-spacing: .14em; }
+.cl-champion-name { font-family: 'Philosopher', serif; font-size: 1.2rem; font-weight: 900; color: #f0c040; }
+.cl-champion-val { margin-left: auto; font-family: 'Philosopher', serif; font-size: 1.4rem; font-weight: 900; color: var(--e); }
+.cl-champion-unit { font-size: 12px; color: var(--t2); margin-left: 4px; }
+
+.cl-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--bdd);
+    margin-bottom: 1px;
+}
+.cl-tab {
+    padding: 14px 22px;
+    font-size: 13px;
+    color: var(--t2);
+    letter-spacing: .1em;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: color .2s;
+}
+.cl-tab:hover { color: var(--t); }
+.cl-tab.on { color: var(--e); border-bottom-color: var(--e); }
+
+.cl-table-head {
+    display: grid;
+    grid-template-columns: 48px 1fr 110px 80px 110px;
+    padding: 10px 24px;
+    border-bottom: 1px solid var(--bdd);
+}
+.cl-table-head-factions {
+    grid-template-columns: 48px 1fr 110px 100px 90px 90px;
+}
+.cl-table-head-richesse,
+.cl-table-head-temps {
+    grid-template-columns: 48px 1fr 130px 160px 110px;
+}
+.cl-th {
+    font-size: 12px;
+    color: var(--t2);
+    letter-spacing: .12em;
+}
+.cl-th-r { text-align: right; }
+
+.cl-row {
+    display: grid;
+    grid-template-columns: 48px 1fr 110px 80px 110px;
+    align-items: center;
+    padding: 13px 24px;
+    border-bottom: 1px solid rgba(58,40,20,.25);
+    transition: background .15s;
+}
+.cl-row-factions {
+    grid-template-columns: 48px 1fr 110px 100px 90px 90px;
+}
+.cl-row-richesse,
+.cl-row-temps {
+    grid-template-columns: 48px 1fr 130px 160px 110px;
+}
+.cl-row:hover { background: rgba(249,115,22,.03); }
+.cl-row:last-child { border-bottom: none; }
+
+.cl-row-1 { background: rgba(212,160,23,.05); border-left: 2px solid #d4a017; }
+.cl-row-2 { border-left: 2px solid rgba(170,170,170,.25); }
+.cl-row-3 { border-left: 2px solid rgba(205,127,50,.25); }
+.cl-row-me { background: rgba(249,115,22,.07); border-left: 2px solid var(--e); }
+
+.cl-rank {
+    font-size: 16px;
+    color: var(--t2);
+    font-weight: 700;
+}
+.cl-row-1 .cl-rank { color: #d4a017; font-size: 18px; }
+.cl-row-2 .cl-rank { color: #aaa; }
+.cl-row-3 .cl-rank { color: #cd7f32; }
+.cl-row-me .cl-rank { color: var(--e); }
+
+.cl-player {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+.cl-av {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    background: rgba(249,115,22,.1);
+}
+.cl-name {
+    font-family: 'Philosopher', serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--t);
+}
+.cl-row-1 .cl-name { color: #f0c040; }
+.cl-row-me .cl-name { color: var(--e); }
+.cl-sub { font-size: 13px; color: var(--t2); }
+
+.cl-val {
+    text-align: right;
+    font-family: 'Philosopher', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--t);
+}
+.cl-row-1 .cl-val { color: var(--e); }
+.cl-row-me .cl-val { color: var(--e); }
+
+.cl-kd {
+    text-align: right;
+    font-size: 14px;
+    color: var(--t2);
+}
+
+.cl-badge { text-align: right; }
+.cl-badge span {
+    font-size: 12px;
+    color: var(--t2);
+    border: 1px solid rgba(138,120,88,.25);
+    padding: 3px 10px;
+    letter-spacing: .06em;
+}
+.cl-row-1 .cl-badge span { color: #d4a017; border-color: rgba(212,160,23,.3); }
+.cl-row-me .cl-badge span { color: var(--e); border-color: var(--bdr); }
+
+.cl-faction-em {
+    font-size: 20px;
+    line-height: 1;
+    width: 32px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.cl-footer {
+    padding: 10px 24px;
+    font-size: 13px;
+    color: var(--t2);
+    border-top: 1px solid var(--bdd);
 }

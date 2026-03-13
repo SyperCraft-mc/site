@@ -23,6 +23,7 @@ public class UserDTO
     private final StaffRankDTO staffRank;
     private final VipRankDTO vipRank;
     private final FactionDTO faction;
+    private final long syscoins; // ajout
 
     private UserDTO(Builder builder)
     {
@@ -39,6 +40,7 @@ public class UserDTO
         this.staffRank = builder.staffRank;
         this.vipRank = builder.vipRank;
         this.faction = builder.faction;
+        this.syscoins = builder.syscoins;
     }
 
     public static UserDTO from(User user, StaffRank staffRank, VipRank vipRank, PlayerRepository playerRepository, FPlayer fplayer, Faction faction)
@@ -57,6 +59,7 @@ public class UserDTO
                 .staffRank(staffRank != null ? StaffRankDTO.from(staffRank) : null)
                 .vipRank(vipRank != null ? VipRankDTO.from(vipRank) : null)
                 .faction(fplayer != null && fplayer.hasFaction() && faction != null ? FactionDTO.from(faction, fplayer) : null)
+                .syscoins(fplayer != null ? fplayer.getSyscoins() : 0L)
                 .build();
     }
 
@@ -84,6 +87,7 @@ public class UserDTO
                 .vipRank(vipRank != null ? VipRankDTO.from(vipRank) : null)
                 .faction(fplayer != null && fplayer.hasFaction() && faction != null
                         ? FactionDTO.from(faction, fplayer) : null)
+                .syscoins(fplayer != null ? fplayer.getSyscoins() : 0L)
                 .build();
     }
 
@@ -101,6 +105,7 @@ public class UserDTO
     public VipRankDTO getVipRank() { return vipRank; }
     public FactionDTO getFaction() { return faction; }
     public boolean hasFaction() { return faction != null; }
+    public long getSyscoins() { return syscoins; }
 
     public String getPlaytimeFormatted() {
         long hours = playtimeSeconds / 3600;
@@ -110,6 +115,12 @@ public class UserDTO
 
     public boolean hasLastConnection() {
         return lastConnection != null;
+    }
+
+    public String getRankLabel() {
+        if (staffRank != null) return staffRank.label();
+        if (vipRank != null) return vipRank.label();
+        return "Joueur";
     }
 
     public record StaffRankDTO(
@@ -193,6 +204,7 @@ public class UserDTO
         private StaffRankDTO staffRank;
         private VipRankDTO vipRank;
         private FactionDTO faction;
+        private long syscoins;
 
         public Builder uuid(String uuid) { this.uuid = uuid; return this; }
         public Builder pseudo(String pseudo) { this.pseudo = pseudo; return this; }
@@ -207,6 +219,7 @@ public class UserDTO
         public Builder staffRank(StaffRankDTO staffRank) { this.staffRank = staffRank; return this; }
         public Builder vipRank(VipRankDTO vipRank) { this.vipRank = vipRank; return this; }
         public Builder faction(FactionDTO faction) { this.faction = faction; return this; }
+        public Builder syscoins(long syscoins) { this.syscoins = syscoins; return this; }
 
         public UserDTO build() { return new UserDTO(this); }
     }

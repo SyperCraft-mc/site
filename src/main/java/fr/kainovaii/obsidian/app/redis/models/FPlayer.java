@@ -10,6 +10,7 @@ public class FPlayer
     private int factionId;
     private int factionRankId;
     private String joinedAt;
+    private long syscoins;
 
     private FPlayer() {}
 
@@ -20,6 +21,7 @@ public class FPlayer
         fp.factionId     = ApiUtile.parseIntOrZero(data.get("FACTIONID"));
         fp.factionRankId = ApiUtile.parseIntOrZero(data.get("FACTIONRANKID"));
         fp.joinedAt      = data.getOrDefault("JOINEDAT", null);
+        fp.syscoins = ApiUtile.parseIntOrZero(data.get("SYSCOINS"));
         return fp;
     }
 
@@ -31,4 +33,5 @@ public class FPlayer
     public int getFactionId()     { return factionId; }
     public int getFactionRankId() { return factionRankId; }
     public String getJoinedAt()   { return joinedAt; }
+    public long getSyscoins() { return syscoins; }
 }
