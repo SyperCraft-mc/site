@@ -9,6 +9,7 @@ import fr.kainovaii.obsidian.app.redis.models.Faction;
 import fr.kainovaii.obsidian.app.redis.models.FPlayer;
 import fr.kainovaii.obsidian.app.redis.repositories.FactionRepository;
 import fr.kainovaii.obsidian.app.redis.repositories.PlayerRepository;
+import fr.kainovaii.obsidian.database.DB;
 import fr.kainovaii.obsidian.di.annotations.Inject;
 import fr.kainovaii.obsidian.di.annotations.Service;
 
@@ -71,6 +72,10 @@ public class UserService
         return users.stream()
                 .map(u -> toDTOBatch(u, staffRanks, vipRanks, onlineMap, fplayers, factions))
                 .toList();
+    }
+
+    public long countAllerUser() {
+        return DB.withConnection(() -> (long) User.findAll().size());
     }
 
     private Map<String, String> buildOnlineMap() {

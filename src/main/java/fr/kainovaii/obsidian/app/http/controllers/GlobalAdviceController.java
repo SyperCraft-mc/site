@@ -3,6 +3,7 @@ package fr.kainovaii.obsidian.app.http.controllers;
 import fr.kainovaii.obsidian.Main;
 import fr.kainovaii.obsidian.app.domain.user.UserService;
 import fr.kainovaii.obsidian.app.security.AppUserDetails;
+import fr.kainovaii.obsidian.database.DB;
 import fr.kainovaii.obsidian.di.annotations.Inject;
 import fr.kainovaii.obsidian.http.controller.AdviceControllerInterface;
 import fr.kainovaii.obsidian.http.controller.BaseController;
@@ -29,5 +30,6 @@ public class GlobalAdviceController extends BaseController implements AdviceCont
         setGlobal("loggedUser", appUserDetails);
 
         setGlobal("allPlayerOnline", userService.allPlayerOnline());
+        setGlobal("allPlayers", userService.countAllerUser());
     }
 }

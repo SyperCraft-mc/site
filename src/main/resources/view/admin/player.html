@@ -10,17 +10,18 @@
 <div class="content">
     <div class="stats-grid stats-3 mb-22">
         <div class="stat-mini">
-            <div class="sm-val" data-target="0"></div>
-            <div class="sm-label">Joueurs inscrits</div>
+            <div class="sm-val" data-target="{{ allPlayers }}"></div>
+            <div class="sm-label">Total utilisateurs</div>
         </div>
         <div class="stat-mini">
-            <div class="sm-val" data-target="0"></div>
-            <div class="sm-label">Joueurs en ligne</div>
+            <div class="sm-val" data-target="{{ allPlayerOnline }}"></div>
+            <div class="sm-label">En ligne</div>
         </div>
         <div class="stat-mini">
-            <div class="sm-val" data-target="0"></div>
-            <div class="sm-label">Factions</div>
+            <div class="sm-val" data-target="">NaN</div>
+            <div class="sm-label">Staff en ligne</div>
         </div>
     </div>
+    {{ component('PlayerSearchAdmin') | raw }}
 </div>
 {% endblock %}

@@ -1,0 +1,120 @@
+<div live:id="{{ _id }}" xmlns:live="http://www.w3.org/1999/xhtml">
+
+    <div class="card mb-14">
+        <div class="filter-bar">
+            <div class="search-bar search-bar-lg">
+                <span class="search-icon">⌕</span>
+                <input
+                        live:model="search"
+                        live:debounce="300"
+                        type="text"
+                        placeholder="Rechercher un joueur…"
+                        value="{{ search }}"
+                >
+            </div>
+            <select class="select-sm" live:model="rankFilter">
+                <option value="">Tous rangs</option>
+                <option value="Développeur">Développeur</option>
+                <option value="Admin">Admin</option>
+                <option value="Manager">Manager</option>
+                <option value="Responsable">Responsable</option>
+                <option value="Superviseur">Superviseur</option>
+                <option value="Modérateur+">Modérateur+</option>
+                <option value="Modérateur">Modérateur</option>
+            </select>
+            <select class="select-sm" live:model="statusFilter">
+                <option value="">Tous statuts</option>
+                <option value="online">🟢 En ligne</option>
+                <option value="offline">⚫ Hors ligne</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">// {{ totalCount }} utilisateurs</div>
+            <div class="card-actions">
+                <span class="badge badge-orange2">ActiveJDBC Model</span>
+            </div>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Joueur</th>
+                    <th>Rang</th>
+                    <th>Faction</th>
+                    <th>Statut</th>
+                    <th>Dernière connexion</th>
+                    <th>Temps de jeu</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for player in filteredPlayers %}
+                <tr>
+                    <td>
+                        <div class="td-cell">
+                            <div class="td-avatar">
+                                <img src="https://mc-heads.net/avatar/{{ player.pseudo }}" alt="{{ player.pseudo }}" style="width:100%;height:100%;object-fit:cover;border-radius:2px;">
+                            </div>
+                            {{ player.pseudo }}
+                        </div>
+                    </td>
+                    <td>
+                        {% if player.staffRank != null and player.staffRank.label %}
+                        {% if player.staffRank.label == "Admin" or player.staffRank.label == "Manager" or player.staffRank.label == "Responsable" %}
+                        <span class="badge badge-red">{{ player.staffRank.label }}</span>
+                        {% elseif player.staffRank.label == "Modérateur+" or player.staffRank.label == "Modérateur" or player.staffRank.label == "Superviseur" %}
+                        <span class="badge badge-orange">{{ player.staffRank.label }}</span>
+                        {% elseif player.staffRank.label == "Développeur" %}
+                        <span class="badge badge-muted">{{ player.staffRank.label }}</span>
+                        {% endif %}
+                        {% else %}
+                        <span class="td-muted">—</span>
+                        {% endif %}
+                    </td>
+                    <td class="td-muted">
+                        {% if player.hasFaction %}{{ player.getFaction.name }}{% else %}Sans faction{% endif %}
+                    </td>
+                    <td>
+                        {% if player.online %}
+                        <span class="badge badge-green">● En ligne</span>
+                        {% else %}
+                        <span class="badge badge-muted">○ Hors ligne</span>
+                        {% endif %}
+                    </td>
+                    <td class="td-muted">
+                        {% if player.hasLastConnection %}{{ player.lastConnection | date("dd MMM yyyy") }}{% else %}N/A{% endif %}
+                    </td>
+                    <td class="td-muted">{{ player.getPlaytimeFormatted }}</td>
+                    <td>
+                        <a class="btn btn-ghost btn-xs" href="/joueurs/s/{{ player.pseudo }}">Voir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            <span>Affichage {{ page * 12 + 1 }}–{{ page * 12 + filteredPlayers | length }} sur {{ totalCount }}</span>
+
+            {% if totalPages > 1 %}
+            <div style="display:flex;align-items:center;gap:8px;">
+                {% if hasPrev %}
+                <button live:click="prev" class="btn btn-ghost btn-xs">← Préc.</button>
+                {% else %}
+                <button disabled class="btn btn-ghost btn-xs" style="opacity:.3;">← Préc.</button>
+                {% endif %}
+                <span class="tb-crumb">{{ page + 1 }} / {{ totalPages }}</span>
+                {% if hasNext %}
+                <button live:click="next" class="btn btn-ghost btn-xs">Suiv. →</button>
+                {% else %}
+                <button disabled class="btn btn-ghost btn-xs" style="opacity:.3;">Suiv. →</button>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
