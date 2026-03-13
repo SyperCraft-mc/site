@@ -1,0 +1,13 @@
+{% extends "view/layout/admin.html" %}
+{% block content %}
+<div class="topbar">
+    <div class="topbar-left">
+        <div class="tb-title">Dashboard</div>
+        <div class="tb-crumb">Vue d'ensemble</div>
+    </div>
+</div>
+
+<div class="content">
+    {{ component('ReportSearchAdmin') | raw }}
+</div>
+{% endblock %}

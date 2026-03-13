@@ -36,7 +36,7 @@ public class AdminController extends BaseController
 
     @HasRole("ADMIN")
     @Before(SessionMiddleware.class)
-    @GET(value = "/admin/players", name = "admin.dashboard")
+    @GET(value = "/admin/players", name = "admin.players")
     private Object players()
     {
         return render("admin/player.html", Map.of());
@@ -44,9 +44,17 @@ public class AdminController extends BaseController
 
     @HasRole("ADMIN")
     @Before(SessionMiddleware.class)
-    @GET(value = "/admin/factions", name = "admin.dashboard")
+    @GET(value = "/admin/factions", name = "admin.factions")
     private Object faction()
     {
         return render("admin/faction.html", Map.of());
+    }
+
+    @HasRole("ADMIN")
+    @Before(SessionMiddleware.class)
+    @GET(value = "/admin/reports", name = "admin.reports")
+    private Object reports()
+    {
+        return render("admin/report.html", Map.of());
     }
 }
