@@ -6,47 +6,51 @@
         <div class="flex items-start gap-8">
             <!-- Avatar -->
             <div class="relative flex-shrink-0">
-                <div class="w-28 h-28 grid place-items-center text-5xl" class="pf-av-bg">
+                <div class="w-[130px] grid place-items-center text-5xl pf-av-bg">
                     <img class="avatar" src="https://mc-heads.net/avatar/{{ player.pseudo }}" alt="">
                 </div>
+                {% if player.online %}
+                <span class="pf-online-dot"></span>
+                {% endif %}
             </div>
+
             <!-- Infos -->
             <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-3 mb-2 flex-wrap">
                     <h1 class="font-display font-black text-[2rem]">{{ player.pseudo }}</h1>
+                    {% if player.combat %}
+                    <span class="tag red">⚔ En combat</span>
+                    {% endif %}
                     {% if player.vipRank.label %}
                     <span class="tag yellow">⭐ {{ player.vipRank.label }}</span>
                     {% endif %}
                     {% if player.staffRank.label %}
-                        {% if player.staffRank.label == "Admin" %}
-                        <span class="ml-[3px] tag dark-red">{{ player.staffRank.label }}</span>
-                        {% endif %}
-                        {% if player.staffRank.label == "Manager" %}
-                        <span class="ml-[3px] tag dark-red">{{ player.staffRank.label }}</span>
-                        {% endif %}
-                        {% if player.staffRank.label == "Responsable" %}
-                        <span class="ml-[3px] tag dark-red">{{ player.staffRank.label }}</span>
-                        {% endif %}
-                        {% if player.staffRank.label == "Modérateur+" %}
-                        <span class="ml-[3px] tag light-red">{{ player.staffRank.label }}</span>
-                        {% endif %}
-                        {% if player.staffRank.label == "Modérateur" %}
-                        <span class="ml-[3px] tag light-red">{{ player.staffRank.label }}</span>
-                        {% endif %}
-                        {% if player.staffRank.label == "Développeur" %}
-                        <span class="ml-[3px] tag white">{{ player.staffRank.label }}</span>
-                        {% endif %}
+                    {% if player.staffRank.label == "Admin" %}
+                    <span class="ml-[3px] tag dark-red">{{ player.staffRank.label }}</span>
+                    {% endif %}
+                    {% if player.staffRank.label == "Manager" %}
+                    <span class="ml-[3px] tag dark-red">{{ player.staffRank.label }}</span>
+                    {% endif %}
+                    {% if player.staffRank.label == "Responsable" %}
+                    <span class="ml-[3px] tag dark-red">{{ player.staffRank.label }}</span>
+                    {% endif %}
+                    {% if player.staffRank.label == "Modérateur+" %}
+                    <span class="ml-[3px] tag light-red">{{ player.staffRank.label }}</span>
+                    {% endif %}
+                    {% if player.staffRank.label == "Modérateur" %}
+                    <span class="ml-[3px] tag light-red">{{ player.staffRank.label }}</span>
+                    {% endif %}
+                    {% if player.staffRank.label == "Développeur" %}
+                    <span class="ml-[3px] tag white">{{ player.staffRank.label }}</span>
+                    {% endif %}
                     {% endif %}
                 </div>
+
                 <p class="pf-bio">
-                    Membre depuis <span>{{ player.firstConnection | date("dd MMM yyy") }}</span> ·
-                    Dernière connexion
-                    {% if player.online %}
-                    <span class="pf-val-gr">En ligne</span>
-                    {% else %}
-                    <span>{{ player.lastConnection | date("dd MMM yyy") }}</span>
-                    {% endif %}
+                    Membre depuis: <span>{{ player.firstConnection | date("dd MMM yyy") }}</span> ·
+                    Dernière connexion: <span>{{ player.lastConnection | date("dd MMM yyy") }}</span>
                 </p>
+
                 <div class="flex gap-8 mb-5 flex-wrap">
                     <div>
                         {% if player.hasFaction %}
@@ -58,36 +62,87 @@
                         {% endif %}
                         <div class="stat-sub">Faction</div>
                     </div>
-                    <div><div class="font-display font-semibold text-[.9rem]">0</div><div class="stat-sub">Classement</div></div>
+                    <div>
+                        <div class="font-display font-semibold text-[.9rem]">0</div>
+                        <div class="stat-sub">Classement</div>
+                    </div>
                 </div>
             </div>
+
             <!-- Stats rapides -->
-            <!--
-            <div class="grid grid-cols-2 gap-px flex-shrink-0" class="pf-grid-stats">
-                <div class="scard px-5 py-4 text-center" class="pf-stat-min"><div class="font-display font-bold text-[1.1rem]">1.2M</div><div class="stat-sub">Points</div></div>
-                <div class="scard px-5 py-4 text-center"><div class="font-display font-bold text-[1.1rem]">847h</div><div class="stat-sub">Jeu</div></div>
-                <div class="scard px-5 py-4 text-center"><div class="font-display font-bold text-[1.1rem]">14 230</div><div class="stat-sub">Kills</div></div>
-                <div class="scard px-5 py-4 text-center"><div class="font-display font-bold text-[1.1rem]">47</div><div class="stat-sub">Morts</div></div>
+            <div class="flex flex-col gap-px flex-shrink-0 pf-grid-stats" style="min-width: 180px;">
+                <div class="scard px-5 py-4 text-center">
+                    {% if player.online %}
+                    <div class="font-display font-bold text-[1.1rem] pf-val-gr">
+                        En ligne
+                        <!--{{ player.currentServer ? player.currentServer : "En ligne" }}-->
+                    </div>
+                    {% else %}
+                    <div class="font-display font-bold text-[1.1rem] pf-val-off">Hors ligne</div>
+                    {% endif %}
+                    <div class="stat-sub">Statut</div>
+                </div>
             </div>
-            -->
         </div>
     </div>
 
-    <div id="p-stats" class="">
-        <div class="grid grid-cols-2 gap-px mb-px pf-grid-stats">
+    <div class="grid gap-2 ef-main-grid">
+        <div>
+            {% if player.hasFaction %}
+            <div class="scard reveal mb-1">
+                <div class="lb-wrap">
+                    <div class="lb-head" style="grid-template-columns: 100%">
+                        <span>Historique des factions:</span>
+                    </div>
+                    <div>
+                        <div class="lb-row" style="grid-template-columns: 1fr 120px 120px 120px">
+                            <div class="font-display font-semibold text-[.84rem]">{{ player.getFaction.name }}</div>
+                            <span class="text-right">{{ player.getFaction.power }}/{{ player.getFaction.maxPower }}</span>
+                            <span class="text-right">{{ player.getFaction.joinedAt }}</span>
+                            <span class="lb-badge">{{ player.getFaction.factionGradeName }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="scard reveal mb-1">
+                <div class="lb-wrap">
+                    <div class="lb-head" style="grid-template-columns: 100%">
+                        <span class="w-100">Historique des factions:</span>
+                    </div>
+                    <div>
+                        <div class="text-center py-5">
+                            <div class="font-display font-semibold text-[.84rem]">Aucun résultat</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div id="p-stats" class="">
+                <div class="scard p-6 reveal">
+                    <div class="sidebar-label sidebar-label--mb16">Activité — 30 derniers jours</div>
+                    <div class="flex items-end gap-px h-16"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-col gap-px">
             <div class="scard p-5 reveal">
                 <div class="font-display font-bold text-[1.35rem] mb-1 c-t">{{ player.getPlaytimeFormatted }}</div>
                 <div class="stat-sub">Temps de jeu</div>
             </div>
             <div class="scard p-5 reveal">
-                <div class="font-display font-bold text-[1.35rem] mb-1 c-t">NaN</div>
-                <div class="stat-sub">Balance</div>
+                <div class="sec-title">Solde</div>
+                <div class="flex items-center justify-between mb-3">
+                    <span class="mn-68m">Points Boutique</span>
+                    <span class="font-display font-bold ef-treasury-val">{{ player.getPointBoutique }}</span>
+                </div>
+                <div class="flex items-center justify-between mb-3">
+                    <span class="mn-68m">SysCoins</span>
+                    <span class="font-display font-bold ef-treasury-val">{{ player.getSyscoins }}</span>
+                </div>
             </div>
-        </div>
-
-        <div class="scard p-6 reveal">
-            <div class="sidebar-label sidebar-label--mb16">Activité — 30 derniers jours</div>
-            <div class="flex items-end gap-px h-16" id="abars"></div>
         </div>
     </div>
 </div>

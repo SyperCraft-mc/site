@@ -1,5 +1,6 @@
 package fr.kainovaii.obsidian.app.domain.user;
 
+import fr.kainovaii.obsidian.app.domain.faction.FactionGrade;
 import fr.kainovaii.obsidian.app.domain.staffrank.StaffRank;
 import fr.kainovaii.obsidian.app.domain.viprank.VipRank;
 import fr.kainovaii.obsidian.app.redis.models.Faction;
@@ -174,6 +175,7 @@ public class UserDTO
             int power,
             int maxPower,
             int factionRankId,
+            String factionGradeName,
             String joinedAt
     ) {
         public static FactionDTO from(Faction faction, FPlayer fplayer) {
@@ -184,6 +186,7 @@ public class UserDTO
                     faction.getPower(),
                     faction.getMaxPower(),
                     fplayer.getFactionRankId(),
+                    FactionGrade.fromLevel(fplayer.getFactionRankId()).getDisplayName(),
                     fplayer.getJoinedAt()
             );
         }

@@ -1395,6 +1395,7 @@ h1.hero-title {
 }
 
 .lb-badge {
+    text-align: center;
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     letter-spacing: .1em;
@@ -2544,8 +2545,6 @@ h1.hero-title {
 }
 
 .lb-badge {
-    display: inline-flex;
-    align-items: center;
     padding: 2px 9px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
