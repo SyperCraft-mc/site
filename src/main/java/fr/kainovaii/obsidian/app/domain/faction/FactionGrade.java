@@ -1,5 +1,8 @@
 package fr.kainovaii.obsidian.app.domain.faction;
 
+/**
+ * @author Nam2Sy
+ */
 public enum FactionGrade
 {
 
