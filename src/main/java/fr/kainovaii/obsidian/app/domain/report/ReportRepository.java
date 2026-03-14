@@ -9,7 +9,7 @@ import java.util.Optional;
 public class ReportRepository
 {
     public List<Report> findAll() {
-        return Report.findAll().load();
+        return Report.where("1=1").orderBy("date_signalement ASC").load();
     }
 
     public Optional<Report> findById(int id) {

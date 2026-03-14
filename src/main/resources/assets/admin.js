@@ -198,9 +198,10 @@
     b.classList.remove('open');
     document.body.style.overflow = '';
   }
-  document.querySelectorAll('[data-modal-open]').forEach(btn =>
-    btn.addEventListener('click', () => openModal(btn.dataset.modalOpen))
-  );
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-modal-open]');
+    if (btn) openModal(btn.dataset.modalOpen);
+  });
   document.querySelectorAll('[data-modal-close]').forEach(btn =>
     btn.addEventListener('click', () => {
       const b = btn.closest('.modal-backdrop');
@@ -226,9 +227,10 @@
     document.querySelector(`.oc-backdrop[data-oc-for="${id}"]`)?.classList.remove('open');
     document.body.style.overflow = '';
   }
-  document.querySelectorAll('[data-oc-open]').forEach(btn =>
-    btn.addEventListener('click', () => openOC(btn.dataset.ocOpen))
-  );
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-oc-open]');
+    if (btn) openOC(btn.dataset.ocOpen);
+  });
   document.querySelectorAll('[data-oc-close]').forEach(btn =>
     btn.addEventListener('click', () => {
       const p = btn.closest('.offcanvas');

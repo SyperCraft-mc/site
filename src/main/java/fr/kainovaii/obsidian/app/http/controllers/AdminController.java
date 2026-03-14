@@ -2,6 +2,8 @@ package fr.kainovaii.obsidian.app.http.controllers;
 
 import fr.kainovaii.obsidian.app.domain.faction.FactionDTO;
 import fr.kainovaii.obsidian.app.domain.faction.FactionService;
+import fr.kainovaii.obsidian.app.domain.report.ReportDTO;
+import fr.kainovaii.obsidian.app.domain.report.ReportService;
 import fr.kainovaii.obsidian.app.domain.user.UserRepository;
 import fr.kainovaii.obsidian.app.security.AppUserDetails;
 import fr.kainovaii.obsidian.database.DB;
@@ -14,12 +16,13 @@ import fr.kainovaii.obsidian.security.role.HasRole;
 import spark.Request;
 import spark.Response;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
 public class AdminController extends BaseController
 {
-    @HasRole("ADMIN")
+    @HasRole("DEFAULT")
     @GET(value = "/admin", name = "admin.index")
     private Object index(Response res)
     {
@@ -27,14 +30,14 @@ public class AdminController extends BaseController
         return "";
     }
 
-    @HasRole("ADMIN")
+    @HasRole("DEFAULT")
     @GET(value = "/admin/dashboard", name = "admin.dashboard")
     private Object dashboard()
     {
         return render("admin/dashboard.html", Map.of());
     }
 
-    @HasRole("ADMIN")
+    @HasRole("DEFAULT")
     @Before(SessionMiddleware.class)
     @GET(value = "/admin/players", name = "admin.players")
     private Object players()
@@ -42,7 +45,7 @@ public class AdminController extends BaseController
         return render("admin/player.html", Map.of());
     }
 
-    @HasRole("ADMIN")
+    @HasRole("DEFAULT")
     @Before(SessionMiddleware.class)
     @GET(value = "/admin/factions", name = "admin.factions")
     private Object faction()
@@ -50,11 +53,12 @@ public class AdminController extends BaseController
         return render("admin/faction.html", Map.of());
     }
 
-    @HasRole("ADMIN")
+    @HasRole("DEFAULT")
     @Before(SessionMiddleware.class)
     @GET(value = "/admin/reports", name = "admin.reports")
-    private Object reports()
+    private Object reports(ReportService reportService)
     {
-        return render("admin/report.html", Map.of());
+        List<ReportDTO> reports = DB.withConnection(() -> reportService.findAll().stream().toList());
+        return render("admin/report.html", Map.of("reports", reports));
     }
 }

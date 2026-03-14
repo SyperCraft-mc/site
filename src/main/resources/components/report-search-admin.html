@@ -5,11 +5,11 @@
             <div class="search-bar search-bar-lg">
                 <span class="search-icon">⌕</span>
                 <input
-                        live:model="search"
-                        live:debounce="300"
-                        type="text"
-                        placeholder="Rechercher un joueur ou un message…"
-                        value="{{ search }}"
+                    live:model="search"
+                    live:debounce="300"
+                    type="text"
+                    placeholder="Rechercher un joueur ou un message…"
+                    value="{{ search }}"
                 >
             </div>
             <select class="select-sm" live:model="statusFilter">
@@ -75,7 +75,7 @@
                     </td>
                     <td class="td-muted">{{ report.reportDate | date("dd MMM yyyy") }}</td>
                     <td>
-                        <a class="btn btn-ghost btn-xs" href="/admin/signalements/{{ report.id }}">Voir</a>
+                        <a class="btn btn-ghost btn-xs" data-modal-open="modal-report-{{ report.id }}">Voir</a>
                     </td>
                 </tr>
                 {% endfor %}

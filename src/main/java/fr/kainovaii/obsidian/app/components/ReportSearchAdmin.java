@@ -30,7 +30,7 @@ public class ReportSearchAdmin extends LiveComponent
     @State
     private int page = 0;
 
-    private static final int PAGE_SIZE = 12;
+    private static final int PAGE_SIZE = 10;
 
     private transient List<ReportDTO> cachedAll      = null;
     private transient List<ReportDTO> cachedFiltered = null;
