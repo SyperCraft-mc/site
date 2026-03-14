@@ -22,7 +22,7 @@
     <dependency>
       <groupId>com.github.obsidian-framework</groupId>
       <artifactId>core</artifactId>
-      <version>603a32e4a6</version>
+      <version>3b2f2ae5b1</version>
     </dependency>
     <dependency>
       <groupId>redis.clients</groupId>
@@ -59,7 +59,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.6.3</version>
         <configuration>
-          <mainClass>fr.kainovaii.obsidian.Main</mainClass>
+          <mainClass>fr.kainovaii.sypercraft.Main</mainClass>
         </configuration>
       </plugin>
       <!-- Compiler -->
@@ -102,7 +102,7 @@
               <transformers>
                 <!-- Définir la classe main -->
                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>fr.kainovaii.obsidian.Main</mainClass>
+                  <mainClass>fr.kainovaii.sypercraft.Main</mainClass>
                 </transformer>
                 <!-- Merger tous les activejdbc_models.properties -->
                 <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
