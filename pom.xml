@@ -22,7 +22,7 @@
     <dependency>
       <groupId>com.github.obsidian-framework</groupId>
       <artifactId>core</artifactId>
-      <version>efce6e627a</version>
+      <version>v1.4.2</version>
     </dependency>
     <dependency>
       <groupId>redis.clients</groupId>

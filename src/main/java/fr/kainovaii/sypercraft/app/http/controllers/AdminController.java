@@ -1,6 +1,7 @@
 package fr.kainovaii.sypercraft.app.http.controllers;
 
 import fr.kainovaii.obsidian.di.annotations.Inject;
+import fr.kainovaii.obsidian.security.user.RequireLogin;
 import fr.kainovaii.sypercraft.app.domain.report.ReportDTO;
 import fr.kainovaii.sypercraft.app.domain.report.ReportService;
 import fr.kainovaii.obsidian.database.DB;
@@ -15,13 +16,13 @@ import spark.Response;
 import java.util.List;
 import java.util.Map;
 
+@RequireLogin
 @Controller
 public class AdminController extends BaseController
 {
     @Inject
     ReportService reportService;
 
-    @HasRole("DEFAULT")
     @GET(value = "/admin", name = "admin.index")
     private Object index(Response res)
     {
@@ -29,14 +30,12 @@ public class AdminController extends BaseController
         return "";
     }
 
-    @HasRole("DEFAULT")
     @GET(value = "/admin/dashboard", name = "admin.dashboard")
     private Object dashboard()
     {
         return render("admin/dashboard.html", Map.of());
     }
 
-    @HasRole("DEFAULT")
     @Before(SessionMiddleware.class)
     @GET(value = "/admin/players", name = "admin.players")
     private Object players()
@@ -44,7 +43,6 @@ public class AdminController extends BaseController
         return render("admin/player.html", Map.of());
     }
 
-    @HasRole("DEFAULT")
     @Before(SessionMiddleware.class)
     @GET(value = "/admin/factions", name = "admin.factions")
     private Object faction()
@@ -52,7 +50,6 @@ public class AdminController extends BaseController
         return render("admin/faction.html", Map.of());
     }
 
-    @HasRole("DEFAULT")
     @Before(SessionMiddleware.class)
     @GET(value = "/admin/reports", name = "admin.reports")
     private Object reports()

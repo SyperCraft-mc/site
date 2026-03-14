@@ -25,7 +25,7 @@ public class AuthController extends BaseController
     @Inject
     MicrosoftAuthService minecraftDeviceAuth;
 
-    @GET(value = "/users/login", name = "redirectLogin")
+    @GET(value = "/login", name = "redirectLogin")
     public Object redirectLogin(Request req, Response res)
     {
         res.redirect("/mon-compte/login");

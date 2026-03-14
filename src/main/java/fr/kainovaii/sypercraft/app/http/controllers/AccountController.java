@@ -1,6 +1,8 @@
 package fr.kainovaii.sypercraft.app.http.controllers;
 
 import fr.kainovaii.obsidian.di.annotations.Inject;
+import fr.kainovaii.obsidian.security.user.CurrentUser;
+import fr.kainovaii.obsidian.security.user.RequireLogin;
 import fr.kainovaii.sypercraft.app.domain.faction.FactionDTO;
 import fr.kainovaii.sypercraft.app.domain.faction.FactionService;
 import fr.kainovaii.sypercraft.app.domain.user.UserRepository;
@@ -26,11 +28,10 @@ public class AccountController extends BaseController
         return render("home.html", Map.of());
     }
 
-    @HasRole("DEFAULT")
+    @RequireLogin
     @GET(value = "/mon-compte/faction", name = "account.index")
-    private Object editFaction(Request req)
+    private Object editFaction(Request req, @CurrentUser AppUserDetails loggedUser)
     {
-        AppUserDetails loggedUser = getLoggedUser(req);
         FactionDTO faction = factionService.findByUser(loggedUser.getUUID());
         return render("faction/edit.html", Map.of("faction", faction));
     }
