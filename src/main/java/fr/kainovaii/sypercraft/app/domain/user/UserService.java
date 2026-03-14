@@ -75,7 +75,7 @@ public class UserService
     }
 
     public long countAllerUser() {
-        return DB.withConnection(() -> (long) User.findAll().size());
+        return (long) User.findAll().size();
     }
 
     private Map<String, String> buildOnlineMap() {
