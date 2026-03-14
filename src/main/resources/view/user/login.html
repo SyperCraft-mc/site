@@ -131,7 +131,12 @@
 
             show('view-device');
 
+            {% if getEnv == "PROD" %}
             ssoSocket = new WebSocket(`wss://${location.host}/ws/auth?sid=${data.sessionId}`);
+            {% else %}
+            ssoSocket = new WebSocket(`ws://${location.host}/ws/auth?sid=${data.sessionId}`);
+            {% endif %}
+
             ssoSocket.onmessage = (e) => {
                 const msg = JSON.parse(e.data);
                 console.log(msg)

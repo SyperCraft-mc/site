@@ -1,5 +1,6 @@
 package fr.kainovaii.sypercraft.app.http.controllers;
 
+import fr.kainovaii.obsidian.di.annotations.Inject;
 import fr.kainovaii.sypercraft.app.domain.user.UserDTO;
 import fr.kainovaii.sypercraft.app.domain.user.UserService;
 import fr.kainovaii.obsidian.database.DB;
@@ -17,11 +18,14 @@ import java.util.Map;
 @Controller
 public class PlayerController extends BaseController
 {
+    @Inject
+    UserService userService;
+
     @Before(SessionMiddleware.class)
     @GET(value = "/joueurs", name = "player.index")
-    private Object index(UserService userService)
+    private Object index()
     {
-        List<UserDTO> players = DB.withConnection(() -> userService.findAll().stream().toList());
+        List<UserDTO> players = userService.findAll().stream().toList();
         long allPlayerOnline = players.stream().filter(UserDTO::isOnline).count();
 
         return render("player/index.html", Map.of(
@@ -31,15 +35,14 @@ public class PlayerController extends BaseController
     }
 
     @GET(value = "/joueurs/s/:username", name = "player.single")
-    private Object single(Request req, Response res, UserService userService)
+    private Object single(Request req, Response res)
     {
         String username = req.params("username");
-        return DB.withConnection(() -> {
-            UserDTO player = userService.findByPseudo(username);
-            if (player == null) {
-                return redirectWithFlash(req, res, "warning", "Player does not exist", "/joueurs");
-            }
-            return render("player/single.html", Map.of("player", player));
-        });
+
+        UserDTO player = userService.findByPseudo(username);
+        if (player == null) {
+            return redirectWithFlash(req, res, "warning", "Player does not exist", "/joueurs");
+        }
+        return render("player/single.html", Map.of("player", player));
     }
 }

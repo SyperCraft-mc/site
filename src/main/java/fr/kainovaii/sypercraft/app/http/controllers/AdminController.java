@@ -1,5 +1,6 @@
 package fr.kainovaii.sypercraft.app.http.controllers;
 
+import fr.kainovaii.obsidian.di.annotations.Inject;
 import fr.kainovaii.sypercraft.app.domain.report.ReportDTO;
 import fr.kainovaii.sypercraft.app.domain.report.ReportService;
 import fr.kainovaii.obsidian.database.DB;
@@ -17,6 +18,9 @@ import java.util.Map;
 @Controller
 public class AdminController extends BaseController
 {
+    @Inject
+    ReportService reportService;
+
     @HasRole("DEFAULT")
     @GET(value = "/admin", name = "admin.index")
     private Object index(Response res)
@@ -51,9 +55,9 @@ public class AdminController extends BaseController
     @HasRole("DEFAULT")
     @Before(SessionMiddleware.class)
     @GET(value = "/admin/reports", name = "admin.reports")
-    private Object reports(ReportService reportService)
+    private Object reports()
     {
-        List<ReportDTO> reports = DB.withConnection(() -> reportService.findAll().stream().toList());
+        List<ReportDTO> reports = reportService.findAll().stream().toList();
         return render("admin/report.html", Map.of("reports", reports));
     }
 }

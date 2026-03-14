@@ -1,5 +1,6 @@
 package fr.kainovaii.sypercraft.app.http.controllers;
 
+import fr.kainovaii.sypercraft.Main;
 import fr.kainovaii.sypercraft.app.domain.user.UserService;
 import fr.kainovaii.sypercraft.app.security.AppUserDetails;
 import fr.kainovaii.obsidian.di.annotations.Inject;
@@ -25,5 +26,6 @@ public class GlobalAdviceController extends BaseController implements AdviceCont
 
         setGlobal("allPlayerOnline", userService.allPlayerOnline());
         setGlobal("allPlayers", userService.countAllerUser());
+        setGlobal("getEnv", Main.loadEnv().get("ENVIRONMENT"));
     }
 }

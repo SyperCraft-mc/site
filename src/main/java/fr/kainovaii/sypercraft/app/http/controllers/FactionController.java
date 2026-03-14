@@ -1,5 +1,6 @@
 package fr.kainovaii.sypercraft.app.http.controllers;
 
+import fr.kainovaii.obsidian.di.annotations.Inject;
 import fr.kainovaii.sypercraft.app.domain.faction.FactionDTO;
 import fr.kainovaii.sypercraft.app.domain.faction.FactionService;
 import fr.kainovaii.obsidian.database.DB;
@@ -15,6 +16,9 @@ import java.util.Map;
 @Controller
 public class FactionController extends BaseController
 {
+    @Inject
+    FactionService factionService;
+
     @Before(SessionMiddleware.class)
     @GET(value = "/factions", name = "faction.index")
     private Object index()
@@ -23,11 +27,10 @@ public class FactionController extends BaseController
     }
 
     @GET(value = "/factions/s/:name", name = "faction.single")
-    private Object single(Request req, FactionService factionService)
+    private Object single(Request req)
     {
         String name = req.params("name");
-
-        FactionDTO faction = DB.withConnection(() -> factionService.findByName(name));
+        FactionDTO faction = factionService.findByName(name);
 
         return render("faction/single.html", Map.of("faction", faction));
     }

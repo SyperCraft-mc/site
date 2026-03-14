@@ -1,10 +1,14 @@
 package fr.kainovaii.sypercraft.app.http.controllers;
 
+import fr.kainovaii.obsidian.di.annotations.Inject;
 import fr.kainovaii.obsidian.http.controller.BaseController;
 import fr.kainovaii.obsidian.http.controller.annotations.Controller;
 import fr.kainovaii.obsidian.routing.methods.GET;
+import fr.kainovaii.sypercraft.app.domain.user.User;
+import fr.kainovaii.sypercraft.app.domain.user.UserRepository;
 import spark.Response;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller

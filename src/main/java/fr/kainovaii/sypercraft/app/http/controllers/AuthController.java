@@ -1,5 +1,6 @@
 package fr.kainovaii.sypercraft.app.http.controllers;
 
+import fr.kainovaii.obsidian.di.annotations.Inject;
 import fr.kainovaii.sypercraft.app.domain.user.User;
 import fr.kainovaii.sypercraft.app.domain.user.UserRepository;
 import fr.kainovaii.sypercraft.app.http.websockets.AuthWebSocket;
@@ -18,6 +19,12 @@ import java.util.Map;
 @Controller
 public class AuthController extends BaseController
 {
+    @Inject
+    UserRepository userRepository;
+
+    @Inject
+    MicrosoftAuthService minecraftDeviceAuth;
+
     @GET(value = "/users/login", name = "redirectLogin")
     public Object redirectLogin(Request req, Response res)
     {
@@ -32,7 +39,7 @@ public class AuthController extends BaseController
     }
 
     @GET("/minecraft-auth/start")
-    public Object startAuth(Request req, Response res, MicrosoftAuthService minecraftDeviceAuth)
+    public Object startAuth(Request req, Response res)
     {
         String sessionId = req.session().id();
 
@@ -57,7 +64,7 @@ public class AuthController extends BaseController
     }
 
     @GET("/minecraft-auth/session")
-    public Object saveSession(Request req, Response res, UserRepository userRepository)
+    public Object saveSession(Request req, Response res)
     {
         String sessionId = req.session().id();
         var profile = AuthWebSocket.readyProfiles.remove(sessionId);
@@ -67,12 +74,12 @@ public class AuthController extends BaseController
             return "No profile ready for this session.";
         }
 
-        if (!DB.withConnection(() -> UserRepository.userExist(profile.getName()))) {
+        if (!UserRepository.userExist(profile.getName())) {
             res.status(401);
             return "No profile ready for this session.";
         }
 
-        User user = DB.withConnection(() -> userRepository.findByPseudo(profile.getName()));
+        User user = userRepository.findByPseudo(profile.getName());
 
         Session session = req.session(true);
         session.attribute("logged", true);
