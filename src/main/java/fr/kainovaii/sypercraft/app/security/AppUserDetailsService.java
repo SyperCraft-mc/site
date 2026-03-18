@@ -2,9 +2,9 @@ package fr.kainovaii.sypercraft.app.security;
 
 import fr.kainovaii.sypercraft.app.domain.user.User;
 import fr.kainovaii.sypercraft.app.domain.user.UserRepository;
-import fr.kainovaii.obsidian.database.DB;
-import fr.kainovaii.obsidian.security.user.UserDetailsService;
-import fr.kainovaii.obsidian.security.user.UserDetailsServiceImpl;
+import com.obsidian.core.database.DB;
+import com.obsidian.core.security.user.UserDetailsService;
+import com.obsidian.core.security.user.UserDetailsServiceImpl;
 
 @UserDetailsServiceImpl
 public class AppUserDetailsService implements UserDetailsService

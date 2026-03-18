@@ -1,7 +1,7 @@
 package fr.kainovaii.sypercraft.app.services;
 
 import fr.kainovaii.sypercraft.app.http.websockets.AuthWebSocket;
-import fr.kainovaii.obsidian.di.annotations.Service;
+import com.obsidian.core.di.annotations.Service;
 import net.raphimc.minecraftauth.MinecraftAuth;
 import net.raphimc.minecraftauth.step.java.StepMCProfile;
 import net.raphimc.minecraftauth.step.msa.StepMsaDeviceCode;

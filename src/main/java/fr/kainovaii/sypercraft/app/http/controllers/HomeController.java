@@ -1,19 +1,20 @@
 package fr.kainovaii.sypercraft.app.http.controllers;
 
-import fr.kainovaii.obsidian.di.annotations.Inject;
-import fr.kainovaii.obsidian.http.controller.BaseController;
-import fr.kainovaii.obsidian.http.controller.annotations.Controller;
-import fr.kainovaii.obsidian.routing.methods.GET;
-import fr.kainovaii.sypercraft.app.domain.user.User;
-import fr.kainovaii.sypercraft.app.domain.user.UserRepository;
+import com.obsidian.core.di.annotations.Inject;
+import com.obsidian.core.http.controller.BaseController;
+import com.obsidian.core.http.controller.annotations.Controller;
+import com.obsidian.core.routing.methods.GET;
+import fr.kainovaii.sypercraft.app.services.RedisService;
 import spark.Response;
 
-import java.util.List;
 import java.util.Map;
 
 @Controller
 public class HomeController extends BaseController
 {
+    @Inject
+    RedisService redisService;
+
     @GET(value = "/", name = "site.home")
     private Object index(Response res)
     {

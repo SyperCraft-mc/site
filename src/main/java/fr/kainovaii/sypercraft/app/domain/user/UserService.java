@@ -9,9 +9,9 @@ import fr.kainovaii.sypercraft.app.redis.models.Faction;
 import fr.kainovaii.sypercraft.app.redis.models.FPlayer;
 import fr.kainovaii.sypercraft.app.redis.repositories.FactionRepository;
 import fr.kainovaii.sypercraft.app.redis.repositories.PlayerRepository;
-import fr.kainovaii.obsidian.database.DB;
-import fr.kainovaii.obsidian.di.annotations.Inject;
-import fr.kainovaii.obsidian.di.annotations.Service;
+import com.obsidian.core.database.DB;
+import com.obsidian.core.di.annotations.Inject;
+import com.obsidian.core.di.annotations.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;

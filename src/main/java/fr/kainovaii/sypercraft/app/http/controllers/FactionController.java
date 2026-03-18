@@ -1,14 +1,14 @@
 package fr.kainovaii.sypercraft.app.http.controllers;
 
-import fr.kainovaii.obsidian.di.annotations.Inject;
+import com.obsidian.core.di.annotations.Inject;
 import fr.kainovaii.sypercraft.app.domain.faction.FactionDTO;
 import fr.kainovaii.sypercraft.app.domain.faction.FactionService;
-import fr.kainovaii.obsidian.database.DB;
-import fr.kainovaii.obsidian.http.controller.BaseController;
-import fr.kainovaii.obsidian.http.controller.annotations.Controller;
-import fr.kainovaii.obsidian.http.middleware.annotations.Before;
-import fr.kainovaii.obsidian.livecomponents.session.SessionMiddleware;
-import fr.kainovaii.obsidian.routing.methods.GET;
+import com.obsidian.core.database.DB;
+import com.obsidian.core.http.controller.BaseController;
+import com.obsidian.core.http.controller.annotations.Controller;
+import com.obsidian.core.http.middleware.annotations.Before;
+import com.obsidian.core.livecomponents.session.SessionMiddleware;
+import com.obsidian.core.routing.methods.GET;
 import spark.Request;
 
 import java.util.Map;
@@ -19,7 +19,6 @@ public class FactionController extends BaseController
     @Inject
     FactionService factionService;
 
-    @Before(SessionMiddleware.class)
     @GET(value = "/factions", name = "faction.index")
     private Object index()
     {

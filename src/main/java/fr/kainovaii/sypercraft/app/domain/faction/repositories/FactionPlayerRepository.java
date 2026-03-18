@@ -1,7 +1,7 @@
 package fr.kainovaii.sypercraft.app.domain.faction.repositories;
 
 import fr.kainovaii.sypercraft.app.domain.faction.models.FactionPlayer;
-import fr.kainovaii.obsidian.di.annotations.Repository;
+import com.obsidian.core.di.annotations.Repository;
 
 import java.util.List;
 import java.util.stream.Collectors;

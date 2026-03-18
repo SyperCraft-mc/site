@@ -1,8 +1,8 @@
 package fr.kainovaii.sypercraft;
 
 import fr.kainovaii.sypercraft.app.services.RedisService;
-import fr.kainovaii.obsidian.core.EnvLoader;
-import fr.kainovaii.obsidian.core.Obsidian;
+import com.obsidian.core.core.EnvLoader;
+import com.obsidian.core.core.Obsidian;
 
 public class Main
 {

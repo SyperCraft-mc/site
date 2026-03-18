@@ -1,17 +1,16 @@
 package fr.kainovaii.sypercraft.app.services;
 
 import fr.kainovaii.sypercraft.Main;
-import fr.kainovaii.obsidian.di.annotations.Service;
+import com.obsidian.core.di.annotations.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.Response;
+import redis.clients.jedis.params.ScanParams;
+import redis.clients.jedis.resps.ScanResult;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Service wrapper around Jedis providing pooled Redis access.
@@ -128,5 +127,52 @@ public class RedisService
             pipeline.sync();
             return responses.stream().map(Response::get).toList();
         }
+    }
+
+    /**
+     * Scans keys matching the given pattern using cursor-based iteration.
+     * Safer than KEYS for production use.
+     */
+    public Set<String> scan(String pattern)
+    {
+        try (Jedis jedis = pool.getResource()) {
+            Set<String> result = new HashSet<>();
+            String cursor = "0";
+
+            do {
+                ScanResult<String> scanResult = jedis.scan(cursor, new ScanParams().match(pattern).count(100));
+                result.addAll(scanResult.getResult());
+                cursor = scanResult.getCursor();
+            } while (!cursor.equals("0"));
+
+            return result;
+        }
+    }
+
+    public Map<String, Object> getAllKitMapData()
+    {
+        Map<String, Object> data = new HashMap<>();
+
+        Set<String> keys = keys("KITMAP_*");
+
+        for (String key : keys) {
+            if (key.startsWith("KITMAP_FACTION:") && !key.contains("_")) {
+                data.put(key, getAll(key));
+            } else if (key.startsWith("KITMAP_FACTION_MEMBERS:")) {
+                data.put(key, smembers(key));
+            } else if (key.startsWith("KITMAP_FACTION_CHUNKS:")) {
+                data.put(key, smembers(key));
+            } else if (key.startsWith("KITMAP_FPLAYER:")) {
+                data.put(key, getAll(key));
+            } else if (key.startsWith("KITMAP_FCHUNK:")) {
+                data.put(key, getAll(key));
+            } else if (key.equals("KITMAP_FACTION_IDS")) {
+                data.put(key, smembers(key));
+            } else if (key.startsWith("KITMAP_FACTION_NAME_IDX:")) {
+                data.put(key, get(key));
+            }
+        }
+
+        return data;
     }
 }

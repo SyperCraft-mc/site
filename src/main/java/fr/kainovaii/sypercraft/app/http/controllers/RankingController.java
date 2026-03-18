@@ -1,14 +1,14 @@
 package fr.kainovaii.sypercraft.app.http.controllers;
 
-import fr.kainovaii.obsidian.di.annotations.Inject;
+import com.obsidian.core.di.annotations.Inject;
 import fr.kainovaii.sypercraft.app.domain.faction.FactionDTO;
 import fr.kainovaii.sypercraft.app.domain.faction.FactionService;
 import fr.kainovaii.sypercraft.app.domain.user.UserDTO;
 import fr.kainovaii.sypercraft.app.domain.user.UserService;
-import fr.kainovaii.obsidian.database.DB;
-import fr.kainovaii.obsidian.http.controller.BaseController;
-import fr.kainovaii.obsidian.http.controller.annotations.Controller;
-import fr.kainovaii.obsidian.routing.methods.GET;
+import com.obsidian.core.database.DB;
+import com.obsidian.core.http.controller.BaseController;
+import com.obsidian.core.http.controller.annotations.Controller;
+import com.obsidian.core.routing.methods.GET;
 import spark.Response;
 
 import java.util.Comparator;

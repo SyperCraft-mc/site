@@ -10,8 +10,8 @@ import fr.kainovaii.sypercraft.app.domain.faction.repositories.FactionRankReposi
 import fr.kainovaii.sypercraft.app.domain.faction.repositories.FactionRepository;
 import fr.kainovaii.sypercraft.app.domain.user.User;
 import fr.kainovaii.sypercraft.app.domain.user.UserRepository;
-import fr.kainovaii.obsidian.di.annotations.Inject;
-import fr.kainovaii.obsidian.di.annotations.Service;
+import com.obsidian.core.di.annotations.Inject;
+import com.obsidian.core.di.annotations.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;

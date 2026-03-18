@@ -1,38 +1,48 @@
 package fr.kainovaii.sypercraft.app.http.controllers;
 
-import fr.kainovaii.obsidian.di.annotations.Inject;
-import fr.kainovaii.obsidian.security.user.CurrentUser;
-import fr.kainovaii.obsidian.security.user.RequireLogin;
+import com.obsidian.core.di.annotations.Inject;
+import com.obsidian.core.security.user.CurrentUser;
+import com.obsidian.core.security.user.RequireLogin;
 import fr.kainovaii.sypercraft.app.domain.faction.FactionDTO;
 import fr.kainovaii.sypercraft.app.domain.faction.FactionService;
+import fr.kainovaii.sypercraft.app.domain.user.UserDTO;
 import fr.kainovaii.sypercraft.app.domain.user.UserRepository;
+import fr.kainovaii.sypercraft.app.domain.user.UserService;
 import fr.kainovaii.sypercraft.app.security.AppUserDetails;
-import fr.kainovaii.obsidian.database.DB;
-import fr.kainovaii.obsidian.http.controller.BaseController;
-import fr.kainovaii.obsidian.http.controller.annotations.Controller;
-import fr.kainovaii.obsidian.routing.methods.GET;
-import fr.kainovaii.obsidian.security.role.HasRole;
+import com.obsidian.core.http.controller.BaseController;
+import com.obsidian.core.http.controller.annotations.Controller;
+import com.obsidian.core.routing.methods.GET;
 import spark.Request;
+import spark.Response;
 
 import java.util.Map;
 
-@Controller
+@Controller("/mon-compte")
 public class AccountController extends BaseController
 {
     @Inject
     FactionService factionService;
 
-    @GET(value = "/mon-compte", name = "account.index")
+    @Inject
+    UserService userService;
+
+    @GET(value = "", name = "account.index")
     private Object index(UserRepository userRepository)
     {
         return render("home.html", Map.of());
     }
 
     @RequireLogin
-    @GET(value = "/mon-compte/faction", name = "account.index")
-    private Object editFaction(Request req, @CurrentUser AppUserDetails loggedUser)
+    @GET(value = "/faction", name = "account.index")
+    private Object editFaction(Request req, Response res, @CurrentUser AppUserDetails loggedUser)
     {
-        FactionDTO faction = factionService.findByUser(loggedUser.getUUID());
-        return render("faction/edit.html", Map.of("faction", faction));
+        UserDTO player = userService.findByUUID(loggedUser.getUUID());
+        if (player.hasFaction()) {
+            FactionDTO faction = factionService.findByUser(loggedUser.getUUID());
+            return render("faction/edit.html", Map.of("faction", faction));
+        } else {
+            redirectWithFlash(req, res, "error", "Vous n'avez pas de faction", "/joueurs/s/" + player.getPseudo());
+        }
+        return "";
     }
 }

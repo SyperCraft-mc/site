@@ -1,15 +1,17 @@
 package fr.kainovaii.sypercraft.app.http.controllers;
 
-import fr.kainovaii.obsidian.di.annotations.Inject;
+import com.obsidian.core.di.annotations.Inject;
+import com.obsidian.core.security.auth.Auth;
+import com.obsidian.core.security.user.RequireLogin;
 import fr.kainovaii.sypercraft.app.domain.user.User;
 import fr.kainovaii.sypercraft.app.domain.user.UserRepository;
 import fr.kainovaii.sypercraft.app.http.websockets.AuthWebSocket;
 import fr.kainovaii.sypercraft.app.services.MicrosoftAuthService;
-import fr.kainovaii.obsidian.database.DB;
-import fr.kainovaii.obsidian.http.controller.BaseController;
-import fr.kainovaii.obsidian.http.controller.annotations.Controller;
-import fr.kainovaii.obsidian.routing.methods.GET;
-import fr.kainovaii.obsidian.security.role.HasRole;
+import com.obsidian.core.database.DB;
+import com.obsidian.core.http.controller.BaseController;
+import com.obsidian.core.http.controller.annotations.Controller;
+import com.obsidian.core.routing.methods.GET;
+import com.obsidian.core.security.role.HasRole;
 import spark.Request;
 import spark.Response;
 import spark.Session;
@@ -90,11 +92,11 @@ public class AuthController extends BaseController
         return profile;
     }
 
-    @HasRole("DEFAULT")
+    @RequireLogin
     @GET("/mon-compte/logout")
     private Object logout(Request req, Response res)
     {
-        logout(req.session(true));
+        Auth.logout(req.session());
         return redirectWithFlash(req, res, "success","Logged out", "/");
     }
 }

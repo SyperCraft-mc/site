@@ -1,6 +1,6 @@
 package fr.kainovaii.sypercraft.app.http.websockets;
 
-import fr.kainovaii.obsidian.routing.methods.WebSocket;
+import com.obsidian.core.routing.methods.WebSocket;
 import net.raphimc.minecraftauth.step.java.StepMCProfile;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;

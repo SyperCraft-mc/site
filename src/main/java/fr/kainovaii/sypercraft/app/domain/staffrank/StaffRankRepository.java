@@ -1,6 +1,6 @@
 package fr.kainovaii.sypercraft.app.domain.staffrank;
 
-import fr.kainovaii.obsidian.di.annotations.Repository;
+import com.obsidian.core.di.annotations.Repository;
 
 import java.util.List;
 import java.util.Optional;

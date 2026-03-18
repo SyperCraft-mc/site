@@ -2,11 +2,12 @@ package fr.kainovaii.sypercraft.app.components;
 
 import fr.kainovaii.sypercraft.app.domain.user.UserDTO;
 import fr.kainovaii.sypercraft.app.domain.user.UserService;
-import fr.kainovaii.obsidian.database.DB;
-import fr.kainovaii.obsidian.di.annotations.Inject;
-import fr.kainovaii.obsidian.livecomponents.annotations.LiveComponentImpl;
-import fr.kainovaii.obsidian.livecomponents.annotations.State;
-import fr.kainovaii.obsidian.livecomponents.core.LiveComponent;
+import com.obsidian.core.database.DB;
+import com.obsidian.core.di.annotations.Inject;
+import com.obsidian.core.livecomponents.annotations.Action;
+import com.obsidian.core.livecomponents.annotations.LiveComponentImpl;
+import com.obsidian.core.livecomponents.annotations.State;
+import com.obsidian.core.livecomponents.core.LiveComponent;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,32 +18,33 @@ public class PlayerSearch extends LiveComponent
     @Inject
     private UserService userService;
 
-    @State
-    private String search = "";
-
-    @State
-    private String factionFilter = "";
-
-    @State
-    private String rankFilter = "";
-
-    @State
-    private String statusFilter = "";
-
-    @State
-    private int page = 0;
+    @State private String search       = "";
+    @State private String factionFilter = "";
+    @State private String rankFilter    = "";
+    @State private String statusFilter  = "";
+    @State private int    page          = 0;
 
     private static final int PAGE_SIZE = 12;
 
     private transient List<UserDTO> cachedFiltered = null;
+    private transient String lastSearch        = null;
+    private transient String lastFactionFilter = null;
+    private transient String lastRankFilter    = null;
+    private transient String lastStatusFilter  = null;
 
     @Override
-    public void updateField(String fieldName, Object value)
+    public void onUpdate()
     {
-        super.updateField(fieldName, value);
-        if (!fieldName.equals("page")) {
+        if (!search.equals(lastSearch)
+                || !factionFilter.equals(lastFactionFilter)
+                || !rankFilter.equals(lastRankFilter)
+                || !statusFilter.equals(lastStatusFilter)) {
             page = 0;
             cachedFiltered = null;
+            lastSearch        = search;
+            lastFactionFilter = factionFilter;
+            lastRankFilter    = rankFilter;
+            lastStatusFilter  = statusFilter;
         }
     }
 
@@ -75,18 +77,18 @@ public class PlayerSearch extends LiveComponent
         return all.subList(from, Math.min(from + PAGE_SIZE, all.size()));
     }
 
-    public int getTotalCount() { return filtered().size(); }
-    public int getTotalPages() { return (int) Math.ceil((double) filtered().size() / PAGE_SIZE); }
-    public boolean isHasPrev() { return page > 0; }
-    public boolean isHasNext() { return (page + 1) * PAGE_SIZE < filtered().size(); }
-    public int getPage() { return page; }
-    public String getSearch() { return search; }
+    public int getTotalCount()       { return filtered().size(); }
+    public int getTotalPages()       { return (int) Math.ceil((double) filtered().size() / PAGE_SIZE); }
+    public boolean isHasPrev()      { return page > 0; }
+    public boolean isHasNext()      { return (page + 1) * PAGE_SIZE < filtered().size(); }
+    public int getPage()             { return page; }
+    public String getSearch()        { return search; }
     public String getFactionFilter() { return factionFilter; }
-    public String getRankFilter() { return rankFilter; }
-    public String getStatusFilter() { return statusFilter; }
+    public String getRankFilter()    { return rankFilter; }
+    public String getStatusFilter()  { return statusFilter; }
 
-    public void prev() { if (page > 0) page--; }
-    public void next() { if (isHasNext()) page++; }
+    @Action public void prev() { if (page > 0) page--; }
+    @Action public void next() { if (isHasNext()) page++; }
 
     @Override
     public String template() { return "components/player-search.html"; }

@@ -6,7 +6,7 @@ import fr.kainovaii.sypercraft.app.redis.models.StaffRank;
 import fr.kainovaii.sypercraft.app.redis.models.VipRank;
 import fr.kainovaii.sypercraft.app.services.RedisService;
 import fr.kainovaii.sypercraft.app.utils.ApiUtile;
-import fr.kainovaii.obsidian.di.annotations.Repository;
+import com.obsidian.core.di.annotations.Repository;
 
 import java.util.ArrayList;
 import java.util.List;

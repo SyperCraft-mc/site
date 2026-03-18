@@ -3,14 +3,14 @@ package fr.kainovaii.sypercraft.app.http.controllers;
 import fr.kainovaii.sypercraft.Main;
 import fr.kainovaii.sypercraft.app.domain.user.UserService;
 import fr.kainovaii.sypercraft.app.security.AppUserDetails;
-import fr.kainovaii.obsidian.di.annotations.Inject;
-import fr.kainovaii.obsidian.http.controller.AdviceControllerInterface;
-import fr.kainovaii.obsidian.http.controller.BaseController;
-import fr.kainovaii.obsidian.http.controller.annotations.GlobalAdvice;
+import com.obsidian.core.di.annotations.Inject;
+import com.obsidian.core.http.controller.AdviceControllerInterface;
+import com.obsidian.core.http.controller.BaseController;
+import com.obsidian.core.http.controller.annotations.GlobalAdvice;
 import spark.Request;
 import spark.Response;
 
-import static fr.kainovaii.obsidian.template.TemplateManager.setGlobal;
+import static com.obsidian.core.template.TemplateManager.setGlobal;
 
 @GlobalAdvice
 public class GlobalAdviceController extends BaseController implements AdviceControllerInterface

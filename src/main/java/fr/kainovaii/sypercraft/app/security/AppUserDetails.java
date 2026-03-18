@@ -1,6 +1,6 @@
 package fr.kainovaii.sypercraft.app.security;
 
-import fr.kainovaii.obsidian.security.user.UserDetails;
+import com.obsidian.core.security.user.UserDetails;
 
 public interface AppUserDetails extends UserDetails
 {
