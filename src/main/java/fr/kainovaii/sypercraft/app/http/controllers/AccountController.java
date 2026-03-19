@@ -41,7 +41,7 @@ public class AccountController extends BaseController
             FactionDTO faction = factionService.findByUser(loggedUser.getUUID());
             return render("faction/edit.html", Map.of("faction", faction));
         } else {
-            redirectWithFlash(req, res, "error", "Vous n'avez pas de faction", "/joueurs/s/" + player.getPseudo());
+            redirectWithError("Vous n'avez pas de faction", "/joueurs/s/" + player.getPseudo());
         }
         return "";
     }

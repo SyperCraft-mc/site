@@ -96,7 +96,7 @@ public class AuthController extends BaseController
     @GET("/mon-compte/logout")
     private Object logout(Request req, Response res)
     {
-        Auth.logout(req.session());
-        return redirectWithFlash(req, res, "success","Logged out", "/");
+        Auth.logout();
+        return redirectWithSuccess("Logged out", "/");
     }
 }

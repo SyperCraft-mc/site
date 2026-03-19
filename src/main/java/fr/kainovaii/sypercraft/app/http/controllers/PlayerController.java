@@ -40,7 +40,7 @@ public class PlayerController extends BaseController
 
         UserDTO player = userService.findByPseudo(username);
         if (player == null) {
-            return redirectWithFlash(req, res, "warning", "Player does not exist", "/joueurs");
+            return redirectWithWarning("Player does not exist", "/joueurs");
         }
         return render("player/single.html", Map.of("player", player));
     }

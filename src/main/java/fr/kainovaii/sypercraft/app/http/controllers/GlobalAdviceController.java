@@ -1,5 +1,7 @@
 package fr.kainovaii.sypercraft.app.http.controllers;
 
+import com.obsidian.core.security.auth.Auth;
+import com.obsidian.core.security.user.CurrentUser;
 import fr.kainovaii.sypercraft.Main;
 import fr.kainovaii.sypercraft.app.domain.user.UserService;
 import fr.kainovaii.sypercraft.app.security.AppUserDetails;
@@ -21,8 +23,12 @@ public class GlobalAdviceController extends BaseController implements AdviceCont
     @Override
     public void applyGlobals(Request req, Response res)
     {
-        AppUserDetails appUserDetails = getLoggedUser(req);
-        setGlobal("loggedUser", appUserDetails);
+        if (Auth.isLogged()) {
+            AppUserDetails appUserDetails = Auth.user();
+            setGlobal("loggedUser", appUserDetails);
+        } else {
+            setGlobal("loggedUser", "");
+        }
 
         setGlobal("allPlayerOnline", userService.allPlayerOnline());
         setGlobal("allPlayers", userService.countAllerUser());
