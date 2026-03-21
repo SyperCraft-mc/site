@@ -1,7 +1,7 @@
 package fr.kainovaii.sypercraft.app.domain.faction.models;
 
-import org.javalite.activejdbc.Model;
-import org.javalite.activejdbc.annotations.Table;
+import com.obsidian.core.database.orm.model.Model;
+import com.obsidian.core.database.orm.model.Table;
 
 @Table("faction_list")
 public class Faction extends Model
@@ -94,6 +94,6 @@ public class Faction extends Model
     }
 
     public static Faction findByName(String name) {
-        return findFirst("name = ?", name);
+        return Model.query(Faction.class).where("name", name).first();
     }
 }

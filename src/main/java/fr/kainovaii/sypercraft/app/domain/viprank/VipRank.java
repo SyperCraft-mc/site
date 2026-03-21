@@ -1,7 +1,8 @@
 package fr.kainovaii.sypercraft.app.domain.viprank;
 
-import org.javalite.activejdbc.Model;
-import org.javalite.activejdbc.annotations.Table;
+
+import com.obsidian.core.database.orm.model.Model;
+import com.obsidian.core.database.orm.model.Table;
 
 @Table("game_viprank")
 public class VipRank extends Model
@@ -43,10 +44,10 @@ public class VipRank extends Model
     }
 
     public static VipRank findByLabel(String label) {
-        return findFirst("label = ?", label);
+        return Model.query(VipRank.class).where("label", label).first();
     }
 
     public static VipRank findHighestPriority() {
-        return findFirst("1=1 ORDER BY priority DESC");
+        return Model.query(VipRank.class).orderByDesc("priority").first();
     }
 }

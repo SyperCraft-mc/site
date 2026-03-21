@@ -1,8 +1,8 @@
 package fr.kainovaii.sypercraft.app.domain.faction.repositories;
 
-
 import fr.kainovaii.sypercraft.app.domain.faction.models.Faction;
 import fr.kainovaii.sypercraft.app.domain.faction.models.FactionPlayer;
+import com.obsidian.core.database.orm.model.Model;
 import com.obsidian.core.di.annotations.Repository;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 public class FactionRepository
 {
     public Faction findById(int id) {
-        return Faction.findById(id);
+        return Model.find(Faction.class, id);
     }
 
     public Faction findByName(String name) {
@@ -19,30 +19,33 @@ public class FactionRepository
     }
 
     public List<Faction> findAll() {
-        return Faction.findAll().load();
+        return Model.all(Faction.class);
     }
 
-    public Faction findByUser(String uuid)
-    {
+    public Faction findByUser(String uuid) {
         FactionPlayer fp = FactionPlayer.findByUUID(uuid);
         if (fp == null || !fp.hasFaction()) return null;
         return findById(fp.getFactionId());
     }
 
     public List<Faction> findByLevel(int level) {
-        return Faction.<Faction>where("level = ?", level).load();
+        return Model.query(Faction.class)
+                .where("level", level)
+                .get();
     }
 
     public List<Faction> findByMinBalance(long minBalance) {
-        return Faction.<Faction>where("balance >= ?", minBalance).load();
+        return Model.query(Faction.class)
+                .where("balance", ">=", minBalance)
+                .get();
     }
 
     public boolean save(Faction faction) {
-        return faction.saveIt();
+        return faction.save();
     }
 
     public boolean delete(int id) {
-        Faction faction = Faction.findById(id);
+        Faction faction = Model.find(Faction.class, id);
         if (faction == null) return false;
         return faction.delete();
     }

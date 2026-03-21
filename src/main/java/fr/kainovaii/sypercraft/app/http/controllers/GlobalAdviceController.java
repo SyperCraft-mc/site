@@ -31,7 +31,7 @@ public class GlobalAdviceController extends BaseController implements AdviceCont
         }
 
         setGlobal("allPlayerOnline", userService.allPlayerOnline());
-        setGlobal("allPlayers", userService.countAllerUser());
+        setGlobal("allPlayers", userService.countAllUsers());
         setGlobal("getEnv", Main.loadEnv().get("ENVIRONMENT"));
     }
 }

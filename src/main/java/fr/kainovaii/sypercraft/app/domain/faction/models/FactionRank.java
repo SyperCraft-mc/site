@@ -1,7 +1,7 @@
 package fr.kainovaii.sypercraft.app.domain.faction.models;
 
-import org.javalite.activejdbc.Model;
-import org.javalite.activejdbc.annotations.Table;
+import com.obsidian.core.database.orm.model.Model;
+import com.obsidian.core.database.orm.model.Table;
 
 @Table("faction_ranks")
 public class FactionRank extends Model
@@ -24,6 +24,6 @@ public class FactionRank extends Model
     public void setTaxe(int taxe) { set("taxe", taxe); }
 
     public static FactionRank findByFactionId(int factionId) {
-        return findFirst("factionID = ?", factionId);
+        return Model.query(FactionRank.class).where("factionID", factionId).first();
     }
 }

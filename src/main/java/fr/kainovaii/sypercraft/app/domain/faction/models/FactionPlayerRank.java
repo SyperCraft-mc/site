@@ -1,7 +1,7 @@
 package fr.kainovaii.sypercraft.app.domain.faction.models;
 
-import org.javalite.activejdbc.Model;
-import org.javalite.activejdbc.annotations.Table;
+import com.obsidian.core.database.orm.model.Model;
+import com.obsidian.core.database.orm.model.Table;
 
 @Table("faction_playerrank")
 public class FactionPlayerRank extends Model

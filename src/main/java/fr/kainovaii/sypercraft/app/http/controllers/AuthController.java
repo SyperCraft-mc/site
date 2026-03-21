@@ -76,7 +76,7 @@ public class AuthController extends BaseController
             return "No profile ready for this session.";
         }
 
-        if (!UserRepository.userExist(profile.getName())) {
+        if (userRepository.findByPseudo(profile.getName()) == null) {
             res.status(401);
             return "No profile ready for this session.";
         }

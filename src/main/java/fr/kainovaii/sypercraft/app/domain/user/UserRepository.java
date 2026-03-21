@@ -1,10 +1,10 @@
 package fr.kainovaii.sypercraft.app.domain.user;
 
+import com.obsidian.core.database.orm.model.Model;
 import com.obsidian.core.di.annotations.Repository;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Repository
 public class UserRepository
@@ -18,33 +18,42 @@ public class UserRepository
     }
 
     public List<User> findAll() {
-        return User.findAll().load();
+        return Model.all(User.class);
     }
 
     public List<User> findByUUIDs(Set<String> uuids) {
         if (uuids.isEmpty()) return List.of();
-        String placeholders = uuids.stream().map(i -> "?").collect(Collectors.joining(", "));
-        return User.<User>where("UUID IN (" + placeholders + ")", uuids.toArray()).load();
+        return Model.query(User.class)
+                .whereIn("UUID", List.copyOf(uuids))
+                .get();
     }
 
     public List<User> findByVipRank(int vipRankId) {
-        return User.<User>where("VipRankID = ?", vipRankId).load();
+        return Model.query(User.class)
+                .where("VipRankID", vipRankId)
+                .get();
     }
 
     public List<User> findByStaffRank(int staffRankId) {
-        return User.<User>where("StaffRankID = ?", staffRankId).load();
+        return Model.query(User.class)
+                .where("StaffRankID", staffRankId)
+                .get();
     }
 
     public List<User> findInCombat() {
-        return User.<User>where("combat = ?", true).load();
+        return Model.query(User.class)
+                .where("combat", true)
+                .get();
     }
 
-    public static boolean userExist(String pseudo) {
-        return User.findFirst("Pseudo = ?", pseudo) != null;
+    public boolean userExists(String pseudo) {
+        return Model.query(User.class)
+                .where("Pseudo", pseudo)
+                .exists();
     }
 
     public boolean save(User user) {
-        return user.saveIt();
+        return user.save();
     }
 
     public boolean delete(String uuid) {

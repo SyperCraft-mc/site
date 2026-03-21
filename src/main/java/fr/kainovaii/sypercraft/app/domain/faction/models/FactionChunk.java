@@ -1,7 +1,7 @@
 package fr.kainovaii.sypercraft.app.domain.faction.models;
 
-import org.javalite.activejdbc.Model;
-import org.javalite.activejdbc.annotations.Table;
+import com.obsidian.core.database.orm.model.Model;
+import com.obsidian.core.database.orm.model.Table;
 
 @Table("faction_chunks")
 public class FactionChunk extends Model
@@ -21,6 +21,9 @@ public class FactionChunk extends Model
     public void setType(int type) { set("type", type); }
 
     public static FactionChunk findByCoords(int x, int z) {
-        return findFirst("x = ? AND z = ?", x, z);
+        return Model.query(FactionChunk.class)
+                .where("x", x)
+                .where("z", z)
+                .first();
     }
 }

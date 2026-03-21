@@ -1,7 +1,7 @@
 package fr.kainovaii.sypercraft.app.domain.staffrank;
 
-import org.javalite.activejdbc.Model;
-import org.javalite.activejdbc.annotations.Table;
+import com.obsidian.core.database.orm.model.Model;
+import com.obsidian.core.database.orm.model.Table;
 
 @Table("game_staffrank")
 public class StaffRank extends Model
@@ -81,10 +81,10 @@ public class StaffRank extends Model
     }
 
     public static StaffRank findByLabel(String label) {
-        return findFirst("label = ?", label);
+        return Model.query(StaffRank.class).where("label", label).first();
     }
 
     public static StaffRank findByHierarchy(int hierarchy) {
-        return findFirst("hierarchy = ?", hierarchy);
+        return Model.query(StaffRank.class).where("hierarchy", hierarchy).first();
     }
 }

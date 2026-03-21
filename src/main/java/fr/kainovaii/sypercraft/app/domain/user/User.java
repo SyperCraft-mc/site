@@ -1,15 +1,18 @@
 package fr.kainovaii.sypercraft.app.domain.user;
 
-import org.javalite.activejdbc.Model;
-import org.javalite.activejdbc.annotations.Table;
-import org.javalite.activejdbc.annotations.IdName;
+import com.obsidian.core.database.orm.model.Model;
+import com.obsidian.core.database.orm.model.Table;
 
 import java.sql.Date;
 
 @Table("game_users")
-@IdName("UUID")
 public class User extends Model
 {
+    @Override
+    public String primaryKey() {
+        return "UUID";
+    }
+
     public String getUUID() {
         return getString("UUID");
     }
@@ -85,11 +88,11 @@ public class User extends Model
     }
 
     public static User findByUUID(String uuid) {
-        return findFirst("UUID = ?", uuid);
+        return Model.query(User.class).where("UUID", uuid).first();
     }
 
     public static User findByPseudo(String pseudo) {
-        return findFirst("Pseudo = ?", pseudo);
+        return Model.query(User.class).where("Pseudo", pseudo).first();
     }
 
     public Date firstConnection() {

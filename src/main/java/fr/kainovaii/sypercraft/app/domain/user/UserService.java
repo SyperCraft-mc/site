@@ -1,5 +1,6 @@
 package fr.kainovaii.sypercraft.app.domain.user;
 
+import com.obsidian.core.database.orm.model.Model;
 import fr.kainovaii.sypercraft.Main;
 import fr.kainovaii.sypercraft.app.domain.staffrank.StaffRank;
 import fr.kainovaii.sypercraft.app.domain.staffrank.StaffRankRepository;
@@ -74,8 +75,8 @@ public class UserService
                 .toList();
     }
 
-    public long countAllerUser() {
-        return (long) User.findAll().size();
+    public long countAllUsers() {
+        return Model.query(User.class).count();
     }
 
     private Map<String, String> buildOnlineMap() {

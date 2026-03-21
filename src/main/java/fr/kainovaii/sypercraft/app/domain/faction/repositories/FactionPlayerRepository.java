@@ -1,10 +1,10 @@
 package fr.kainovaii.sypercraft.app.domain.faction.repositories;
 
 import fr.kainovaii.sypercraft.app.domain.faction.models.FactionPlayer;
+import com.obsidian.core.database.orm.model.Model;
 import com.obsidian.core.di.annotations.Repository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class FactionPlayerRepository
@@ -14,21 +14,26 @@ public class FactionPlayerRepository
     }
 
     public List<FactionPlayer> findByFactionId(int factionId) {
-        return FactionPlayer.<FactionPlayer>where("FactionID = ?", factionId).load();
+        return Model.query(FactionPlayer.class)
+                .where("FactionID", factionId)
+                .get();
     }
 
     public List<FactionPlayer> findByFactionIds(List<Integer> factionIds) {
         if (factionIds.isEmpty()) return List.of();
-        String placeholders = factionIds.stream().map(i -> "?").collect(Collectors.joining(", "));
-        return FactionPlayer.<FactionPlayer>where("FactionID IN (" + placeholders + ")", factionIds.toArray()).load();
+        return Model.query(FactionPlayer.class)
+                .whereIn("FactionID", List.copyOf(factionIds))
+                .get();
     }
 
     public int countByFactionId(int factionId) {
-        return FactionPlayer.count("FactionID = ?", factionId).intValue();
+        return (int) Model.query(FactionPlayer.class)
+                .where("FactionID", factionId)
+                .count();
     }
 
     public boolean save(FactionPlayer fp) {
-        return fp.saveIt();
+        return fp.save();
     }
 
     public boolean delete(String uuid) {

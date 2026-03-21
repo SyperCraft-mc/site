@@ -1,5 +1,6 @@
 package fr.kainovaii.sypercraft.app.security;
 
+import com.obsidian.core.database.orm.model.Model;
 import fr.kainovaii.sypercraft.app.domain.user.User;
 import fr.kainovaii.sypercraft.app.domain.user.UserRepository;
 import com.obsidian.core.database.DB;
@@ -19,8 +20,8 @@ public class AppUserDetailsService implements UserDetailsService
     public AppUserDetails loadByUsername(String username)
     {
         return DB.withConnection(() -> {
-            if (!UserRepository.userExist(username)) return null;
             User user = userRepository.findByPseudo(username);
+            if (user == null) return null;
             return adapt(user);
         });
     }
@@ -29,7 +30,8 @@ public class AppUserDetailsService implements UserDetailsService
     public AppUserDetails loadById(Object id)
     {
         return DB.withConnection(() -> {
-            User user = User.findById(id);
+            User user = Model.find(User.class, id);
+            if (user == null) return null;
             return adapt(user);
         });
     }
