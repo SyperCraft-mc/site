@@ -1,13 +1,13 @@
 package fr.kainovaii.sypercraft.app.components;
 
-import com.obsidian.core.livecomponents.core.LiveComponent;
-import fr.kainovaii.sypercraft.app.domain.faction.FactionDTO;
-import fr.kainovaii.sypercraft.app.domain.faction.FactionService;
 import com.obsidian.core.database.DB;
 import com.obsidian.core.di.annotations.Inject;
 import com.obsidian.core.livecomponents.annotations.Action;
 import com.obsidian.core.livecomponents.annotations.LiveComponentImpl;
 import com.obsidian.core.livecomponents.annotations.State;
+import com.obsidian.core.livecomponents.core.LiveComponent;
+import fr.kainovaii.sypercraft.app.domain.faction.models.Faction;
+import fr.kainovaii.sypercraft.app.domain.faction.FactionRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,17 +16,14 @@ import java.util.stream.Collectors;
 public class FactionSearch extends LiveComponent
 {
     @Inject
-    private FactionService factionService;
+    private FactionRepository factionRepository;
 
-    @State
-    private String search = "";
-
-    @State
-    private int page = 0;
+    @State private String search = "";
+    @State private int    page   = 0;
 
     private static final int PAGE_SIZE = 8;
 
-    private transient List<FactionDTO> cachedFiltered = null;
+    private transient List<Faction> cachedFiltered = null;
     private transient String lastSearch = null;
 
     @Override
@@ -39,23 +36,22 @@ public class FactionSearch extends LiveComponent
         }
     }
 
-    private List<FactionDTO> filtered()
+    private List<Faction> filtered()
     {
         if (cachedFiltered != null) return cachedFiltered;
 
-        List<FactionDTO> all = DB.withConnection(() -> factionService.findAll().stream().toList());
+        List<Faction> all = DB.withConnection(() -> factionRepository.findAll());
 
         cachedFiltered = all.stream()
-                .filter(f -> search.isEmpty() ||
-                        f.getName().toLowerCase().contains(search.toLowerCase()))
+                .filter(f -> search.isEmpty() || f.getName().toLowerCase().contains(search.toLowerCase()))
                 .collect(Collectors.toList());
 
         return cachedFiltered;
     }
 
-    public List<FactionDTO> getFilteredFactions()
+    public List<Faction> getFilteredFactions()
     {
-        List<FactionDTO> all = filtered();
+        List<Faction> all = filtered();
         int from = page * PAGE_SIZE;
         if (from >= all.size()) return List.of();
         return all.subList(from, Math.min(from + PAGE_SIZE, all.size()));
@@ -63,8 +59,8 @@ public class FactionSearch extends LiveComponent
 
     public int getTotalCount()  { return filtered().size(); }
     public int getTotalPages()  { return (int) Math.ceil((double) filtered().size() / PAGE_SIZE); }
-    public boolean isHasPrev() { return page > 0; }
-    public boolean isHasNext() { return (page + 1) * PAGE_SIZE < filtered().size(); }
+    public boolean isHasPrev()  { return page > 0; }
+    public boolean isHasNext()  { return (page + 1) * PAGE_SIZE < filtered().size(); }
     public int getPage()        { return page; }
     public String getSearch()   { return search; }
 

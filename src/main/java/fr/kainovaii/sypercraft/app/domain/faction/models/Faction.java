@@ -2,10 +2,31 @@ package fr.kainovaii.sypercraft.app.domain.faction.models;
 
 import com.obsidian.core.database.orm.model.Model;
 import com.obsidian.core.database.orm.model.Table;
+import com.obsidian.core.database.orm.model.relation.HasMany;
 
 @Table("faction_list")
 public class Faction extends Model
 {
+    // -------------------------------------------------------------------------
+    // Relations
+    // -------------------------------------------------------------------------
+
+    public HasMany<FactionPlayer> players() {
+        return hasMany(FactionPlayer.class, "FactionID");
+    }
+
+    public HasMany<FactionRank> ranks() {
+        return hasMany(FactionRank.class, "factionID");
+    }
+
+    public HasMany<FactionChunk> chunks() {
+        return hasMany(FactionChunk.class, "idOwner");
+    }
+
+    // -------------------------------------------------------------------------
+    // Accessors
+    // -------------------------------------------------------------------------
+
     public Object getId() {
         return getInteger("id");
     }
@@ -82,8 +103,7 @@ public class Faction extends Model
         set("xp", xp);
     }
 
-    public void addXp(int amount)
-    {
+    public void addXp(int amount) {
         int newXp = getXp() + amount;
         if (newXp >= 100) {
             setLevel(getLevel() + 1);
@@ -93,7 +113,17 @@ public class Faction extends Model
         }
     }
 
+    // -------------------------------------------------------------------------
+    // Static finders
+    // -------------------------------------------------------------------------
+
     public static Faction findByName(String name) {
         return Model.query(Faction.class).where("name", name).first();
+    }
+
+    public static Faction findByUser(String uuid) {
+        FactionPlayer fp = FactionPlayer.findByUUID(uuid);
+        if (fp == null || !fp.hasFaction()) return null;
+        return Model.find(Faction.class, fp.getFactionId());
     }
 }

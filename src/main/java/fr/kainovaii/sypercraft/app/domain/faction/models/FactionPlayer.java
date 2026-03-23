@@ -2,6 +2,8 @@ package fr.kainovaii.sypercraft.app.domain.faction.models;
 
 import com.obsidian.core.database.orm.model.Model;
 import com.obsidian.core.database.orm.model.Table;
+import com.obsidian.core.database.orm.model.relation.BelongsTo;
+import fr.kainovaii.sypercraft.app.domain.user.User;
 
 @Table("faction_players")
 public class FactionPlayer extends Model
@@ -9,6 +11,18 @@ public class FactionPlayer extends Model
     @Override
     public String primaryKey() {
         return "UUID";
+    }
+
+    public BelongsTo<Faction> faction() {
+        return belongsTo(Faction.class, "FactionID");
+    }
+
+    public BelongsTo<User> user() {
+        return belongsTo(User.class, "UUID");
+    }
+
+    public BelongsTo<FactionRank> factionRank() {
+        return belongsTo(FactionRank.class, "FactionRankID");
     }
 
     public String getUUID()               { return getString("UUID"); }

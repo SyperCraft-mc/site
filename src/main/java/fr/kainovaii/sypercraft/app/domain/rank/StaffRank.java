@@ -1,4 +1,4 @@
-package fr.kainovaii.sypercraft.app.domain.staffrank;
+package fr.kainovaii.sypercraft.app.domain.rank;
 
 import com.obsidian.core.database.orm.model.Model;
 import com.obsidian.core.database.orm.model.Table;
