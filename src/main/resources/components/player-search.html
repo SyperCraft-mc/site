@@ -12,12 +12,6 @@
                         value="{{ search }}"
                 >
             </div>
-            <!--
-            <select class="f-select" live:model="factionFilter">
-                <option value="">Toutes factions</option>
-                <option value="Mock">⚔ Mock</option>
-            </select>
-            -->
             <select class="f-select" live:model="rankFilter">
                 <option value="">Tous rangs</option>
                 <option value="Développeur">Développeur</option>
@@ -36,7 +30,7 @@
         </div>
     </div>
 
-    <div class="mn-58m mb-2">Affichage de {{ totalCount }} joueurs · page {{ page + 1 }}/{{ totalPages }}</div>
+    <div class="mn-58m mb-2">Affichage de {{ totalCount }} joueurs · page {{ page }}/{{ totalPages }}</div>
 
     <div class="grid mb-grid-new">
         {% for player in filteredPlayers %}
@@ -50,36 +44,36 @@
                         <div class="mb-card-pseudo">
                             {{ player.pseudo }}
                             {% if player.staffRank != null and player.staffRank.label %}
-                                {% if player.staffRank.label == "Admin" %}
-                                <span class="ml-[3px] tag dark-red">{{ player.staffRank.label }}</span>
-                                {% endif %}
-                                {% if player.staffRank.label == "Manager" %}
-                                <span class="ml-[3px] tag dark-red">{{ player.staffRank.label }}</span>
-                                {% endif %}
-                                {% if player.staffRank.label == "Responsable" %}
-                                <span class="ml-[3px] tag dark-red">{{ player.staffRank.label }}</span>
-                                {% endif %}
-                                {% if player.staffRank.label == "Modérateur+" %}
-                                <span class="ml-[3px] tag light-red">{{ player.staffRank.label }}</span>
-                                {% endif %}
-                                {% if player.staffRank.label == "Modérateur" %}
-                                <span class="ml-[3px] tag light-red">{{ player.staffRank.label }}</span>
-                                {% endif %}
-                                {% if player.staffRank.label == "Développeur" %}
-                                <span class="ml-[3px] tag white">{{ player.staffRank.label }}</span>
-                                {% endif %}
+                            {% if player.staffRank.label == "Admin" %}
+                            <span class="ml-[3px] tag dark-red">{{ player.staffRank.label }}</span>
+                            {% endif %}
+                            {% if player.staffRank.label == "Manager" %}
+                            <span class="ml-[3px] tag dark-red">{{ player.staffRank.label }}</span>
+                            {% endif %}
+                            {% if player.staffRank.label == "Responsable" %}
+                            <span class="ml-[3px] tag dark-red">{{ player.staffRank.label }}</span>
+                            {% endif %}
+                            {% if player.staffRank.label == "Modérateur+" %}
+                            <span class="ml-[3px] tag light-red">{{ player.staffRank.label }}</span>
+                            {% endif %}
+                            {% if player.staffRank.label == "Modérateur" %}
+                            <span class="ml-[3px] tag light-red">{{ player.staffRank.label }}</span>
+                            {% endif %}
+                            {% if player.staffRank.label == "Développeur" %}
+                            <span class="ml-[3px] tag white">{{ player.staffRank.label }}</span>
+                            {% endif %}
                             {% endif %}
                         </div>
                         <div class="mb-card-lvl capitalize">LVL <span>0</span> ·
-                            {% if player.hasFaction %}
-                            {{ player.getFaction.name }}
+                            {% if factionNames[player.UUID] %}
+                            {{ factionNames[player.UUID] }}
                             {% else %}
                             Sans faction
                             {% endif %}
                         </div>
                     </div>
                 </div>
-                {% if player.online %}
+                {% if onlineUuids contains player.UUID %}
                 <span class="mb-card-sdot online" title="En ligne"></span>
                 {% else %}
                 <span class="mb-card-sdot offline" title="Hors ligne"></span>
@@ -96,7 +90,7 @@
                 </div>
                 <div class="mb-stat-col">
                     <div class="mb-stat-lbl2">Temps de jeu</div>
-                    <div class="mb-stat-time">{{ player.getPlaytimeFormatted }}</div>
+                    <div class="mb-stat-time">{{ player.playtimeFormatted }}</div>
                 </div>
             </div>
             <a href="/joueurs/s/{{ player.pseudo }}" class="mb-card-link">Voir le profil →</a>
@@ -112,7 +106,7 @@
         <button disabled class="fc-btn-base px-5 py-2 font-display text-[.68rem] tracking-[.14em] uppercase opacity-30">← Préc.</button>
         {% endif %}
 
-        <span class="mn-58m">{{ page + 1 }} / {{ totalPages }}</span>
+        <span class="mn-58m">{{ page }} / {{ totalPages }}</span>
 
         {% if hasNext %}
         <button live:click="next" class="fc-btn-base tag-red px-5 py-2 font-display text-[.68rem] tracking-[.14em] uppercase">Suiv. →</button>

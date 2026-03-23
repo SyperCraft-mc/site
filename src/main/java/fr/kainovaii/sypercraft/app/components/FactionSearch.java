@@ -1,13 +1,13 @@
 package fr.kainovaii.sypercraft.app.components;
 
-import com.obsidian.core.database.DB;
+import com.obsidian.core.cache.Cache;
 import com.obsidian.core.di.annotations.Inject;
 import com.obsidian.core.livecomponents.annotations.Action;
 import com.obsidian.core.livecomponents.annotations.LiveComponentImpl;
 import com.obsidian.core.livecomponents.annotations.State;
 import com.obsidian.core.livecomponents.core.LiveComponent;
-import fr.kainovaii.sypercraft.app.domain.faction.models.Faction;
 import fr.kainovaii.sypercraft.app.domain.faction.FactionRepository;
+import fr.kainovaii.sypercraft.app.domain.faction.models.Faction;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,30 +23,12 @@ public class FactionSearch extends LiveComponent
 
     private static final int PAGE_SIZE = 8;
 
-    private transient List<Faction> cachedFiltered = null;
-    private transient String lastSearch = null;
-
-    @Override
-    public void onUpdate()
-    {
-        if (!search.equals(lastSearch)) {
-            page = 0;
-            cachedFiltered = null;
-            lastSearch = search;
-        }
-    }
-
     private List<Faction> filtered()
     {
-        if (cachedFiltered != null) return cachedFiltered;
-
-        List<Faction> all = DB.withConnection(() -> factionRepository.findAll());
-
-        cachedFiltered = all.stream()
-                .filter(f -> search.isEmpty() || f.getName().toLowerCase().contains(search.toLowerCase()))
-                .collect(Collectors.toList());
-
-        return cachedFiltered;
+        return Cache.remember("factions:all", 30, () -> factionRepository.findAll())
+            .stream()
+            .filter(f -> search.isEmpty() ||  f.getName().toLowerCase().contains(search.toLowerCase()))
+            .collect(Collectors.toList());
     }
 
     public List<Faction> getFilteredFactions()

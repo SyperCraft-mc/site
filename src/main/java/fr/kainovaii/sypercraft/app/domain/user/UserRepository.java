@@ -1,7 +1,10 @@
 package fr.kainovaii.sypercraft.app.domain.user;
 
+import com.obsidian.core.database.orm.model.ModelQueryBuilder;
+import com.obsidian.core.database.orm.pagination.Paginator;
 import com.obsidian.core.database.orm.repository.BaseRepository;
 import com.obsidian.core.di.annotations.Repository;
+import fr.kainovaii.sypercraft.app.domain.rank.StaffRank;
 
 import java.util.List;
 import java.util.Set;
@@ -11,6 +14,32 @@ public class UserRepository extends BaseRepository<User>
 {
     public UserRepository() {
         super(User.class);
+    }
+
+    public Paginator<User> paginate(int page, int perPage, String search, String rankFilter, Set<String> onlineUuids, String statusFilter)
+    {
+        ModelQueryBuilder<User> q = query().with("staffRank", "vipRank", "factionPlayer");
+
+        if (!search.isEmpty()) {
+            q.where("Pseudo", "LIKE", "%" + search + "%");
+        }
+
+        if (!rankFilter.isEmpty()) {
+            q.whereHas(StaffRank.class, "id", "StaffRankID", r -> r.where("label", "Admin"));
+        }
+
+        if (!statusFilter.isEmpty()) {
+            if (statusFilter.equals("online")) {
+                if (onlineUuids.isEmpty()) return new Paginator<>(List.of(), 0, perPage, page);
+                q.whereIn("UUID", List.copyOf(onlineUuids));
+            } else {
+                if (!onlineUuids.isEmpty()) {
+                    q.whereNotIn("UUID", List.copyOf(onlineUuids));
+                }
+            }
+        }
+
+        return q.paginate(page, perPage);
     }
 
     public User findByUUID(String uuid) {

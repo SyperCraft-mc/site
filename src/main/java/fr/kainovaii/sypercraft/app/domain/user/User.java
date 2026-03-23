@@ -4,6 +4,7 @@ import com.obsidian.core.database.orm.model.Model;
 import com.obsidian.core.database.orm.model.Table;
 import com.obsidian.core.database.orm.model.relation.BelongsTo;
 import com.obsidian.core.database.orm.model.relation.HasOne;
+import fr.kainovaii.sypercraft.app.domain.faction.models.Faction;
 import fr.kainovaii.sypercraft.app.domain.faction.models.FactionPlayer;
 import fr.kainovaii.sypercraft.app.domain.rank.StaffRank;
 import fr.kainovaii.sypercraft.app.domain.rank.VipRank;
@@ -18,6 +19,8 @@ public class User extends Model
         return "UUID";
     }
 
+    // Relations
+
     public BelongsTo<StaffRank> staffRank() {
         return belongsTo(StaffRank.class, "StaffRankID");
     }
@@ -29,6 +32,8 @@ public class User extends Model
     public HasOne<FactionPlayer> factionPlayer() {
         return hasOne(FactionPlayer.class, "UUID");
     }
+
+    // Accessors
 
     public String getUUID() {
         return getString("UUID");
@@ -123,6 +128,16 @@ public class User extends Model
 
     public boolean hasLastConnection() {
         return lastConnection() != null;
+    }
+
+    public boolean hasFaction() {
+        FactionPlayer fp = factionPlayer().first();
+        return fp != null && fp.hasFaction();
+    }
+
+    public long getSyscoins() {
+        FactionPlayer fp = factionPlayer().first();
+        return fp != null ? fp.getSyscoins() : 0;
     }
 
     public static User findByUUID(String uuid) {
