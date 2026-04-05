@@ -10,6 +10,7 @@ import fr.kainovaii.sypercraft.Main;
 import fr.kainovaii.sypercraft.app.domain.user.User;
 import fr.kainovaii.sypercraft.app.domain.user.UserRepository;
 import fr.kainovaii.sypercraft.app.security.AppUserDetails;
+import fr.kainovaii.sypercraft.app.services.DiscordService;
 import spark.Request;
 import spark.Response;
 
@@ -21,6 +22,9 @@ public class GlobalAdviceController extends BaseController implements AdviceCont
     @Inject
     private UserRepository userRepository;
 
+    @Inject
+    private DiscordService discordService;
+
     @Override
     public void applyGlobals(Request req, Response res)
     {
@@ -31,6 +35,7 @@ public class GlobalAdviceController extends BaseController implements AdviceCont
 
         setGlobal("allPlayerOnline", Main.loadRedis().keys("SERVER:*").size());
         setGlobal("allPlayers", userRepository.count());
+        setGlobal("discordMemberCount", discordService.memberCount());
         setGlobal("getEnv", Main.loadEnv().get("ENVIRONMENT"));
     }
 }

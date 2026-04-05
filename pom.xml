@@ -19,9 +19,14 @@
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>com.github.obsidian-framework</groupId>
+      <groupId>com.obsidian-java</groupId>
       <artifactId>core</artifactId>
-      <version>v3.3.0</version>
+      <version>3.8.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20240303</version>
     </dependency>
     <dependency>
       <groupId>redis.clients</groupId>
@@ -59,13 +64,7 @@
         <version>3.6.3</version>
         <configuration>
           <mainClass>fr.kainovaii.sypercraft.Main</mainClass>
-          <!-- dev only — SSL désactivé sur le MySQL local -->
-          <systemProperties>
-            <systemProperty>
-              <key>OBSIDIAN_DB_DISABLE_SSL</key>
-              <value>true</value>
-            </systemProperty>
-          </systemProperties>
+
         </configuration>
       </plugin>
       <plugin>

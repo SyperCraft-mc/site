@@ -11,6 +11,7 @@ import fr.kainovaii.sypercraft.Main;
 import spark.Request;
 import spark.Response;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -44,11 +45,12 @@ public class PlayerController extends BaseController
                 ? player.factionPlayer().first().faction().first()
                 : null;
 
-        return render("player/single.html", Map.of(
-                "player",     player,
-                "online",     online,
-                "faction",    faction,
-                "hasFaction", faction != null
-        ));
+        Map<String, Object> model = new HashMap<>();
+        model.put("player",     player);
+        model.put("online",     online);
+        model.put("faction",    faction);
+        model.put("hasFaction", faction != null);
+
+        return render("player/single.html", model);
     }
 }
