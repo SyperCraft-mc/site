@@ -4,7 +4,6 @@ import com.obsidian.core.database.orm.model.Model;
 import com.obsidian.core.database.orm.model.Table;
 import com.obsidian.core.database.orm.model.relation.BelongsTo;
 import com.obsidian.core.database.orm.model.relation.HasOne;
-import fr.kainovaii.sypercraft.app.domain.faction.models.Faction;
 import fr.kainovaii.sypercraft.app.domain.faction.models.FactionPlayer;
 import fr.kainovaii.sypercraft.app.domain.rank.StaffRank;
 import fr.kainovaii.sypercraft.app.domain.rank.VipRank;
